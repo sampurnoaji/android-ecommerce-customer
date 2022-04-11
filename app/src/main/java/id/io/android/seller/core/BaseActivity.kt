@@ -3,15 +3,16 @@ package id.io.android.seller.core
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 
 
-abstract class BaseActivity<VM: ViewModel>(private val vmClass: Class<VM>) : AppCompatActivity() {
+abstract class BaseActivity<B : ViewBinding, VM : ViewModel> : AppCompatActivity() {
 
-    open lateinit var vm: VM
+    abstract val binding: B
+    abstract val vm: VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm = ViewModelProvider(this).get(vmClass)
+        setContentView(binding.root)
     }
 }
