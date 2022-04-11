@@ -22,5 +22,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        vm.user.observe(this) {
+            binding.tv.text = it?.id.toString()
+        }
     }
 }
