@@ -35,11 +35,29 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        dev {
+            applicationIdSuffix ".dev"
+            dimension "version"
+            resValue "string", "app_name", "App-Dev"
+            buildConfigField "String", "API_BASE_URL", API_BASE_URL_DEV
+        }
+        production {
+            dimension "version"
+            resValue "string", "app_name", "App"
+            buildConfigField "String", "API_BASE_URL", API_BASE_URL
+        }
+    }
 }
 
 dependencies {
     def hilt = "2.38.1"
     def room = "2.4.0"
+    def retrofit = "2.9.0"
+    def logging_interceptor = "4.9.3"
+
     def ktx_fragment = "1.4.1"
     def ktx_livedata = "2.4.1"
     def ktx_room = "2.4.2"
@@ -65,4 +83,9 @@ dependencies {
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-ktx:$room"
     kapt "androidx.room:room-compiler:$room"
+
+    // Network
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor"
 }
