@@ -9,7 +9,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "id.io.android.seller"
+        applicationId "id.petersam.android.starter"
         minSdk 23
         targetSdk 31
         versionCode 1
@@ -41,12 +41,12 @@ android {
         dev {
             applicationIdSuffix ".dev"
             dimension "version"
-            resValue "string", "app_name", "App-Dev"
+            resValue "string", "app_name", "Starter-Dev"
             buildConfigField "String", "API_BASE_URL", API_BASE_URL_DEV
         }
         production {
             dimension "version"
-            resValue "string", "app_name", "App"
+            resValue "string", "app_name", "Starter"
             buildConfigField "String", "API_BASE_URL", API_BASE_URL
         }
     }
@@ -58,11 +58,11 @@ dependencies {
     def retrofit = "2.9.0"
     def logging_interceptor = "4.9.3"
 
+    def ktx_core = "1.7.0"
     def ktx_fragment = "1.4.1"
     def ktx_livedata = "2.4.1"
     def ktx_room = "2.4.2"
 
-    implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
@@ -75,6 +75,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt"
 
     // Kotlin Extension
+    implementation("androidx.core:core-ktx:$ktx_core")
     implementation("androidx.fragment:fragment-ktx:$ktx_fragment")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$ktx_livedata")
     implementation("androidx.room:room-ktx:$ktx_room")
