@@ -1,8 +1,13 @@
 package id.petersam.android.starter.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.petersam.android.starter.BuildConfig
 import id.petersam.android.starter.data.source.remote.ApiService
@@ -28,14 +33,33 @@ object ApiModule {
 
     @Singleton
     @Provides
+    fun providesChuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor {
+        val collector = ChuckerCollector(
+            context = context,
+            showNotification = true,
+            retentionPeriod = RetentionManager.Period.ONE_HOUR
+        )
+
+        return ChuckerInterceptor.Builder(context)
+            .collector(collector)
+            .maxContentLength(250_000L)
+            .redactHeaders(emptySet())
+            .alwaysReadResponseBody(false)
+            .build()
+    }
+
+    @Singleton
+    @Provides
     fun providesOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        mockNetworkInterceptor: MockNetworkInterceptor
+        mockNetworkInterceptor: MockNetworkInterceptor,
+        chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient =
         if (BuildConfig.DEBUG) {
             OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(mockNetworkInterceptor)
+                .addInterceptor(chuckerInterceptor)
                 .build()
         } else {
             OkHttpClient
