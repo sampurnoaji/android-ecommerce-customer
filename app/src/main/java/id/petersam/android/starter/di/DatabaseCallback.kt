@@ -1,8 +1,9 @@
-package id.petersam.android.starter.data.source.local
+package id.petersam.android.starter.di
 
 import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import id.petersam.android.starter.data.source.local.UserDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
