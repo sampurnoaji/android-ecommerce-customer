@@ -1,17 +1,21 @@
-package id.petersam.android.starter.util
+package id.petersam.android.starter.util.remote
 
+import id.petersam.android.starter.util.LoadState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
 
-object LoadStateUtil {
-    private const val JSON_KEY_MESSAGE = "message"
+open class ResponseHelper {
 
-    fun <T> map(data: T): LoadState<T> {
-        return try {
-            LoadState.Success(data)
-        } catch (e: Exception) {
-            e.mapError()
+    suspend fun <T> call(api: suspend () -> T): LoadState<T> {
+        return withContext(Dispatchers.IO) {
+            try {
+                LoadState.Success(api.invoke())
+            } catch (e: Exception) {
+                e.mapError()
+            }
         }
     }
 
@@ -43,5 +47,9 @@ object LoadStateUtil {
         } catch (e: JSONException) {
             null
         }
+    }
+
+    companion object {
+        private const val JSON_KEY_MESSAGE = "message"
     }
 }
