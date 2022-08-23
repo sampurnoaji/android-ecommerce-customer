@@ -9,7 +9,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "id.petersam.android.starter"
+        applicationId "id.io.android.olebsai.customer"
         minSdk 23
         targetSdk 31
         versionCode 1
@@ -41,12 +41,12 @@ android {
         dev {
             applicationIdSuffix ".dev"
             dimension "version"
-            resValue "string", "app_name", "Starter-Dev"
+            resValue "string", "app_name", "Oleb Sai-Dev"
             buildConfigField "String", "API_BASE_URL", API_BASE_URL_DEV
         }
         production {
             dimension "version"
-            resValue "string", "app_name", "Starter"
+            resValue "string", "app_name", "Oleb Sai"
             buildConfigField "String", "API_BASE_URL", API_BASE_URL
         }
     }
