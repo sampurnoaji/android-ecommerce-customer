@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.petersam.android.starter.BuildConfig
 import id.petersam.android.starter.data.source.remote.ApiService
+import id.petersam.android.starter.util.remote.MockNetworkInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

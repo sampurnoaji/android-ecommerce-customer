@@ -1,4 +1,4 @@
-package id.petersam.android.starter.di
+package id.petersam.android.starter.util.remote
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext

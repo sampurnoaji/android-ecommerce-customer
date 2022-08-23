@@ -1,4 +1,4 @@
-package id.petersam.android.starter.di
+package id.petersam.android.starter.util.local
 
 import android.content.Context
 import androidx.room.RoomDatabase

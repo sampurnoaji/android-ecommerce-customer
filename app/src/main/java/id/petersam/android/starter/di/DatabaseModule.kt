@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.petersam.android.starter.data.source.local.UserDao
 import id.petersam.android.starter.data.source.local.AppDatabase
+import id.petersam.android.starter.util.local.DatabaseCallback
 import javax.inject.Provider
 import javax.inject.Singleton
 

@@ -1,12 +1,15 @@
 package id.petersam.android.starter.data.source.remote
 
+import id.petersam.android.starter.data.model.response.BaseResponse
 import id.petersam.android.starter.data.model.response.UserResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
-import retrofit2.http.Path
 
 interface ApiService {
+    companion object {
+        const val USER = "/user"
+    }
     @Headers("mock:true")
-    @GET("/api/user/{id}")
-    suspend fun getUser(@Path("id") id: Int): UserResponse
+    @GET(USER)
+    suspend fun getUser(): BaseResponse<UserResponse>
 }

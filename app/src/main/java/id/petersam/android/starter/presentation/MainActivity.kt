@@ -5,7 +5,6 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.petersam.android.starter.core.BaseActivity
 import id.petersam.android.starter.databinding.ActivityMainBinding
-import id.petersam.android.starter.util.LoadState
 import id.petersam.android.starter.util.viewBinding
 
 @AndroidEntryPoint
@@ -17,12 +16,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        vm.user.observe(this) {
-            when (it) {
-                is LoadState.Loading -> {}
-                is LoadState.Success -> binding.tv.text = it.data?.id.toString()
-                is LoadState.Error -> binding.tv.text = it.message
-            }
-        }
+        vm.user.observe(
+            onLoading = {},
+            onSuccess = {
+                binding.tv.text = it?.id.toString()
+            },
+            onError = {
+                binding.tv.text = it?.message.orEmpty()
+            },
+        )
     }
 }

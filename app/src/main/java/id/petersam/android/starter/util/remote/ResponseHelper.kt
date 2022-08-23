@@ -9,13 +9,21 @@ import retrofit2.HttpException
 
 open class ResponseHelper {
 
-    suspend fun <T> call(api: suspend () -> T): LoadState<T> {
+    suspend fun <T> call(api: suspend () -> T): T {
         return withContext(Dispatchers.IO) {
             try {
-                LoadState.Success(api.invoke())
+                api.invoke()
             } catch (e: Exception) {
-                e.mapError()
+                throw e
             }
+        }
+    }
+
+    suspend fun <T> map(api: suspend () -> T): LoadState<T> {
+        return try {
+            LoadState.Success(api.invoke())
+        } catch (e: Exception) {
+            e.mapError()
         }
     }
 

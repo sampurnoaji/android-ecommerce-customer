@@ -4,5 +4,5 @@ import id.petersam.android.starter.domain.model.User
 import id.petersam.android.starter.util.LoadState
 
 interface UserRepository {
-    suspend fun getUser(id: Int): LoadState<User>
+    suspend fun getUser(): LoadState<User?>
 }
