@@ -7,9 +7,12 @@
         <entry key="app/src/main/res/drawable/dot_default.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/dot_selected.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/dot_selector.xml" value="0.118" />
+        <entry key="app/src/main/res/drawable/ic_craft.xml" value="0.24" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23278985507246377" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4155844155844156" />
         <entry key="app/src/main/res/layout/item_banner_image.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/item_category.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/item_voucher.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.41041666666666665" />
       </map>
     </option>

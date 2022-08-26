@@ -6,12 +6,14 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentHomeBinding
+import id.io.android.olebsai.domain.model.voucher.Voucher
 import id.io.android.olebsai.util.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,6 +30,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupBannerCarousel(vm.images)
+        setupCategoryList()
+        setupVoucherList()
     }
 
     private fun setupBannerCarousel(images: List<Int>) {
@@ -58,6 +62,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
             TabLayoutMediator(binding.dotBanner, this) { _, _ -> }.attach()
             binding.tvBannerViewMore.isVisible = images.isNotEmpty()
+        }
+    }
+
+    private fun setupCategoryList() {
+        binding.rvCategory.apply {
+            adapter = CategoryListAdapter(vm.categories)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun setupVoucherList() {
+        binding.rvVoucher.apply {
+            adapter = VoucherListAdapter(vm.vouchers)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
     }
 

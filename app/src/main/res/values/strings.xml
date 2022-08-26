@@ -2,8 +2,19 @@
     <string name="home">Beranda</string>
     <string name="home_banner_content">Banner</string>
     <string name="home_view_more">Lihat Semua</string>
+    <string name="home_voucher">Voucher Untukmu</string>
 
     <string name="category">Kategori</string>
+    <string name="category_all">Semua</string>
+    <string name="category_craft">Kerajinan</string>
+    <string name="category_fashion">Fashion</string>
+    <string name="category_culinary">Kuliner</string>
+    <string name="category_electronic">Elektronik</string>
+    <string name="category_topup">Tagihan</string>
+
+    <string name="voucher">Voucher</string>
+    <string name="voucher_label">Voucher Untukmu</string>
+
     <string name="basket">Keranjang</string>
     <string name="account">Akun</string>
 
