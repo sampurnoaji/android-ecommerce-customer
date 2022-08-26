@@ -1,60 +1,76 @@
 package id.io.android.olebsai.presentation.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.DisplayMetrics
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import id.io.android.olebsai.R
+import id.io.android.olebsai.core.BaseFragment
+import id.io.android.olebsai.databinding.FragmentHomeBinding
+import id.io.android.olebsai.util.viewBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
+    override val binding: FragmentHomeBinding by viewBinding(FragmentHomeBinding::bind)
+    override val vm: HomeViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var carouselJob: Job? = null
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupBannerCarousel(vm.images)
+    }
+
+    private fun setupBannerCarousel(images: List<Int>) {
+        binding.vpBanner.apply {
+            adapter = BannerListAdapter(images)
+            offscreenPageLimit = 2
+
+            val previewOffsetPx = 30.dpToPx(resources.displayMetrics)
+            setPadding(previewOffsetPx, 0, previewOffsetPx, 0)
+
+            val pageMarginPx = 8.dpToPx(resources.displayMetrics)
+            val marginTransformer = MarginPageTransformer(pageMarginPx)
+            setPageTransformer(marginTransformer)
+
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    carouselJob?.cancel()
+                    carouselJob = lifecycleScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                        currentItem =
+                            if (position >= images.size - 1) 0
+                            else position + 1
+                    }
+                }
+            })
+
+            TabLayoutMediator(binding.dotBanner, this) { _, _ -> }.attach()
+            binding.tvBannerViewMore.isVisible = images.isNotEmpty()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    private fun Int.dpToPx(displayMetrics: DisplayMetrics): Int =
+        (this * displayMetrics.density).toInt()
+
+    override fun onResume() {
+        super.onResume()
+        carouselJob?.start()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onPause() {
+        super.onPause()
+        carouselJob?.cancel()
     }
 }
