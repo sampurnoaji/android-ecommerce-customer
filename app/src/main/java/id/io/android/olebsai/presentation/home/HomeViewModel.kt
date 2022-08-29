@@ -36,11 +36,11 @@ class HomeViewModel @Inject constructor(
 
     val categories = listOf(
         Category(id = 1, CategoryType.ALL),
-        Category(id = 1, CategoryType.CRAFT),
-        Category(id = 1, CategoryType.FASHION),
-        Category(id = 1, CategoryType.CULINARY),
-        Category(id = 1, CategoryType.ELECTRONIC),
-        Category(id = 1, CategoryType.TOPUP),
+        Category(id = 2, CategoryType.CRAFT),
+        Category(id = 3, CategoryType.FASHION),
+        Category(id = 4, CategoryType.CULINARY),
+        Category(id = 5, CategoryType.ELECTRONIC),
+        Category(id = 6, CategoryType.TOPUP),
     )
 
     val vouchers = listOf(

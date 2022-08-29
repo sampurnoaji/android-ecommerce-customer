@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import id.io.android.olebsai.databinding.ItemCategoryBinding
 import id.io.android.olebsai.domain.model.category.Category
 
-class CategoryListAdapter(private val categories: List<Category>) :
+class CategoryListAdapter(private val categories: List<Category>, private val listener: Listener) :
     RecyclerView.Adapter<CategoryListAdapter.ContentViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -15,7 +15,7 @@ class CategoryListAdapter(private val categories: List<Category>) :
     }
 
     override fun onBindViewHolder(holder: ContentViewHolder, position: Int) {
-        holder.bind(categories[position])
+        holder.bind(categories[position], listener)
     }
 
     override fun getItemCount(): Int {
@@ -24,9 +24,17 @@ class CategoryListAdapter(private val categories: List<Category>) :
 
     class ContentViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(category: Category) {
+        fun bind(category: Category, listener: Listener) {
             binding.imgCategory.setImageResource(category.type.imageRes)
             binding.tvName.text = binding.root.context.getString(category.type.stringRes)
+
+            binding.root.setOnClickListener {
+                listener.onCategoryClicked(category)
+            }
         }
+    }
+
+    interface Listener {
+        fun onCategoryClicked(category: Category)
     }
 }

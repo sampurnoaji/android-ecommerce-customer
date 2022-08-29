@@ -1,5 +1,6 @@
 package id.io.android.olebsai.presentation
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,10 @@ class MainViewModel @Inject constructor(private val userUseCases: UserUseCases) 
     val user: LiveData<LoadState<User?>>
         get() = _user
 
+    private val _navigationBundle = MutableLiveData<Bundle?>()
+    val navigationBundle: LiveData<Bundle?>
+        get() = _navigationBundle
+
     init {
         getUser()
     }
@@ -28,5 +33,13 @@ class MainViewModel @Inject constructor(private val userUseCases: UserUseCases) 
         viewModelScope.launch {
             _user.value = userUseCases.getUserUseCase(NoParams)
         }
+    }
+
+    fun addBundleToNavigation(args: Bundle) {
+        _navigationBundle.value = args
+    }
+
+    fun resetBundleNavigation() {
+        _navigationBundle.value = null
     }
 }

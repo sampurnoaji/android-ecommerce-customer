@@ -20,6 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentHomeBinding
+import id.io.android.olebsai.domain.model.category.Category
+import id.io.android.olebsai.presentation.MainActivity
+import id.io.android.olebsai.presentation.category.CategoryFragment
 import id.io.android.olebsai.presentation.home.adapter.BannerListAdapter
 import id.io.android.olebsai.presentation.home.adapter.CategoryListAdapter
 import id.io.android.olebsai.presentation.home.adapter.ProductListAdapter
@@ -42,7 +45,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private var carouselJob: Job? = null
 
     private val bannerListAdapter by lazy { BannerListAdapter(vm.images) }
-    private val categoryListAdapter by lazy { CategoryListAdapter(vm.categories) }
+    private val categoryListAdapter by lazy {
+        CategoryListAdapter(vm.categories, object : CategoryListAdapter.Listener {
+            override fun onCategoryClicked(category: Category) {
+                (requireActivity() as MainActivity).navigateToCategory(
+                    Bundle().apply {
+                        putInt(CategoryFragment.CATEGORY_KEY, category.id)
+                    }
+                )
+            }
+        })
+    }
     private val voucherListAdapter by lazy { VoucherListAdapter(vm.vouchers) }
     private val productListAdapter by lazy { ProductListAdapter() }
 

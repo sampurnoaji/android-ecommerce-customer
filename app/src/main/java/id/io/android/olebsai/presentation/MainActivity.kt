@@ -73,4 +73,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         if (currentFragment != homeFragment) binding.bottomNavigation.selectedItemId = R.id.menuHome
         else super.onBackPressed()
     }
+
+    internal fun navigateToCategory(args: Bundle? = null) {
+        args?.let {
+            vm.addBundleToNavigation(args)
+        }
+        binding.bottomNavigation.selectedItemId = R.id.menuCategory
+    }
 }
