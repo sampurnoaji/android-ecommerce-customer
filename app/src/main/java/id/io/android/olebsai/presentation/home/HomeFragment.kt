@@ -24,6 +24,7 @@ import id.io.android.olebsai.presentation.home.adapter.BannerListAdapter
 import id.io.android.olebsai.presentation.home.adapter.CategoryListAdapter
 import id.io.android.olebsai.presentation.home.adapter.ProductListAdapter
 import id.io.android.olebsai.presentation.home.adapter.VoucherListAdapter
+import id.io.android.olebsai.util.dpToPx
 import id.io.android.olebsai.util.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -51,8 +52,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         setupCategoryList()
         setupVoucherList()
         setupProductList()
-
-
     }
 
     private fun setupBannerCarousel(images: List<Int>) {
@@ -122,9 +121,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             }
         }
     }
-
-    private fun Int.dpToPx(displayMetrics: DisplayMetrics): Int =
-        (this * displayMetrics.density).toInt()
 
     override fun onResume() {
         super.onResume()

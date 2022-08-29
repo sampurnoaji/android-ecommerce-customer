@@ -13,10 +13,13 @@
         <entry key="app/src/main/res/drawable/strike_through_text.xml" value="0.24" />
         <entry key="app/src/main/res/drawable/text_discount.xml" value="0.24" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23278985507246377" />
+        <entry key="app/src/main/res/layout/fragment_category.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4155844155844156" />
         <entry key="app/src/main/res/layout/item_banner_image.xml" value="0.375" />
         <entry key="app/src/main/res/layout/item_category.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/item_category_vertical.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/item_product.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/item_product_vertical.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_voucher.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.41041666666666665" />
       </map>
