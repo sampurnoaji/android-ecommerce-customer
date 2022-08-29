@@ -1,6 +1,6 @@
 package id.io.android.olebsai.data.repository
 
-import id.io.android.olebsai.data.source.remote.UserRemoteDataSource
+import id.io.android.olebsai.data.source.remote.user.UserRemoteDataSource
 import id.io.android.olebsai.domain.model.User
 import id.io.android.olebsai.domain.repository.UserRepository
 import id.io.android.olebsai.util.LoadState

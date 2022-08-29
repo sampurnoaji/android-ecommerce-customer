@@ -10,7 +10,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.io.android.olebsai.BuildConfig
-import id.io.android.olebsai.data.source.remote.ApiService
+import id.io.android.olebsai.data.source.remote.product.ProductService
+import id.io.android.olebsai.data.source.remote.user.UserService
 import id.io.android.olebsai.util.remote.MockNetworkInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -77,5 +78,11 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideUserService(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideProductService(retrofit: Retrofit): ProductService =
+        retrofit.create(ProductService::class.java)
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="home">Beranda</string>
     <string name="home_banner_content">Banner</string>
     <string name="home_view_more">Lihat Semua</string>
@@ -14,6 +14,9 @@
 
     <string name="voucher">Voucher</string>
     <string name="voucher_label">Voucher Untukmu</string>
+
+    <string name="product">Produk</string>
+    <string name="product_popular" tools:ignore="Typos">Produk Populer</string>
 
     <string name="basket">Keranjang</string>
     <string name="account">Akun</string>

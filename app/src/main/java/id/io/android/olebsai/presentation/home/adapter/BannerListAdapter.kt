@@ -1,4 +1,4 @@
-package id.io.android.olebsai.presentation.home
+package id.io.android.olebsai.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

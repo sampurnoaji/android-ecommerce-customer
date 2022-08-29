@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background">#f7f8fa</color>
+
+    <color name="green_primary">#27AE60</color>
+    <color name="green_primary_20">#3327AE60</color>
+
+    <color name="orange_primary">#FF9800</color>
 </resources>

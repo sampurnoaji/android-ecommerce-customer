@@ -1,4 +1,4 @@
-package id.io.android.olebsai.data.model.response
+package id.io.android.olebsai.data.model.response.user
 
 
 import com.squareup.moshi.Json
