@@ -1,4 +1,4 @@
-package id.io.android.olebsai.domain.usecase
+package id.io.android.olebsai.domain.usecase.user
 
 import javax.inject.Inject
 

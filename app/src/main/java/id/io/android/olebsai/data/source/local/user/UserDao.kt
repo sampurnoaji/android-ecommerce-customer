@@ -1,4 +1,4 @@
-package id.io.android.olebsai.data.source.local
+package id.io.android.olebsai.data.source.local.user
 
 import androidx.room.Dao
 import androidx.room.Query

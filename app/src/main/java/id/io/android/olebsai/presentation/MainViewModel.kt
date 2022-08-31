@@ -7,14 +7,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.io.android.olebsai.domain.model.User
-import id.io.android.olebsai.domain.usecase.UserUseCases
+import id.io.android.olebsai.domain.model.product.Product
+import id.io.android.olebsai.domain.usecase.product.ProductUseCases
+import id.io.android.olebsai.domain.usecase.user.UserUseCases
 import id.io.android.olebsai.util.LoadState
 import id.io.android.olebsai.util.NoParams
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val userUseCases: UserUseCases) : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val userUseCases: UserUseCases,
+    private val productUseCases: ProductUseCases
+) : ViewModel() {
 
     private val _user = MutableLiveData<LoadState<User?>>()
     val user: LiveData<LoadState<User?>>
@@ -24,8 +29,13 @@ class MainViewModel @Inject constructor(private val userUseCases: UserUseCases) 
     val navigationBundle: LiveData<Bundle?>
         get() = _navigationBundle
 
+    private val _basketProducts = MutableLiveData<List<Product>>()
+    val basketProducts: LiveData<List<Product>>
+        get() = _basketProducts
+
     init {
         getUser()
+        getBasketProducts()
     }
 
     private fun getUser() {
@@ -39,7 +49,11 @@ class MainViewModel @Inject constructor(private val userUseCases: UserUseCases) 
         _navigationBundle.value = args
     }
 
-    fun resetBundleNavigation() {
-        _navigationBundle.value = null
+    private fun getBasketProducts() {
+        viewModelScope.launch {
+            productUseCases.getBasketProductsUseCase(NoParams).collect {
+                _basketProducts.value = it
+            }
+        }
     }
 }

@@ -9,8 +9,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import id.io.android.olebsai.data.source.local.UserDao
+import id.io.android.olebsai.data.source.local.user.UserDao
 import id.io.android.olebsai.data.source.local.AppDatabase
+import id.io.android.olebsai.data.source.local.product.ProductDao
 import id.io.android.olebsai.util.local.DatabaseCallback
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -33,12 +34,17 @@ object DatabaseModule {
             .build()
     }
 
+    val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(database: SupportSQLiteDatabase) {}
+    }
+
     @Provides
-    fun provideAppDao(db: AppDatabase): UserDao {
+    fun provideUserDao(db: AppDatabase): UserDao {
         return db.userDao()
     }
 
-    val MIGRATION_1_2 = object : Migration(1, 2) {
-        override fun migrate(database: SupportSQLiteDatabase) {}
+    @Provides
+    fun provideProductDao(db: AppDatabase): ProductDao {
+        return db.productDao()
     }
 }

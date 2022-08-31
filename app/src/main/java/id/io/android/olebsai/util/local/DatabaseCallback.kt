@@ -3,7 +3,7 @@ package id.io.android.olebsai.util.local
 import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import id.io.android.olebsai.data.source.local.UserDao
+import id.io.android.olebsai.data.source.local.user.UserDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -20,11 +20,11 @@ class DatabaseCallback(
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
         applicationScope.launch(Dispatchers.IO) {
-            populateDatabase(context)
+            populateDatabase()
         }
     }
 
-    private suspend fun populateDatabase(context: Context) {
+    private fun populateDatabase() {
         // init data
     }
 }

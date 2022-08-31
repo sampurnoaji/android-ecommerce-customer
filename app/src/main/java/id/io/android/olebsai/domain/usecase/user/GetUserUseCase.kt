@@ -1,4 +1,4 @@
-package id.io.android.olebsai.domain.usecase
+package id.io.android.olebsai.domain.usecase.user
 
 import id.io.android.olebsai.core.BaseUseCase
 import id.io.android.olebsai.domain.model.User
