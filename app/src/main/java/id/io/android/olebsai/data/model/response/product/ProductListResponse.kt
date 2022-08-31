@@ -26,6 +26,8 @@ data class ProductListResponse(
         val rating: Float? = null,
         @field:Json(name = "soldCount")
         val soldCount: Int? = null,
+        @field:Json(name = "shopName")
+        val shopName: String? = null
     ) {
         fun toDomain(): ProductDomain = ProductDomain(
             id = id ?: 0,
@@ -35,7 +37,8 @@ data class ProductListResponse(
             originalPrice = originalPrice ?: 0,
             percentDiscount = percentDiscount?.roundToInt() ?: 0,
             rating = rating ?: 5.0f,
-            soldCount = soldCount ?: 0
+            soldCount = soldCount ?: 0,
+            shopName = shopName.orEmpty(),
         )
     }
 }

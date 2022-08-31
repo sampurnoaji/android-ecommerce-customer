@@ -8,5 +8,6 @@ data class Product(
     val originalPrice: Long,
     val percentDiscount: Int,
     val rating: Float,
-    val soldCount: Int
+    val soldCount: Int,
+    val shopName: String,
 )

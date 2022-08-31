@@ -17,8 +17,11 @@
 
     <string name="product">Produk</string>
     <string name="product_popular" tools:ignore="Typos">Produk Populer</string>
+    <string name="product_empty">Produk Kosong</string>
 
     <string name="basket">Keranjang</string>
+    <string name="basket_delete">Hapus</string>
+
     <string name="account">Akun</string>
 
     <string name="login">Login</string>
