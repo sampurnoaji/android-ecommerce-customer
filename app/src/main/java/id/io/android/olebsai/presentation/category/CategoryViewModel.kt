@@ -49,6 +49,10 @@ class CategoryViewModel @Inject constructor(
         pagingSourceFactory = { getProductPagingSourceUseCase() }
     ).flow.cachedIn(viewModelScope)
 
+    init {
+        onCategoryChanged(initialCategories[0].data.id)
+    }
+
     fun onCategoryChanged(id: Int) {
         _categories.value = initialCategories.map {
             it.copy(isSelected = it.data.id == id)
