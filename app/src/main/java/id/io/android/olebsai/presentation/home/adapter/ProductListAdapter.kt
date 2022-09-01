@@ -11,12 +11,12 @@ import id.io.android.olebsai.databinding.ItemProductBinding
 import id.io.android.olebsai.domain.model.product.Product
 import id.io.android.olebsai.util.toRupiah
 
-class ProductListAdapter
+class ProductListAdapter(private val listener: Listener)
     : PagingDataAdapter<Product, ProductListAdapter.ContentViewHolder>(DIFF_CALLBACK) {
 
     override fun onBindViewHolder(holder: ContentViewHolder, position: Int) {
         val product = getItem(position)
-        if (product != null) holder.bind(product)
+        if (product != null) holder.bind(product, listener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentViewHolder {
@@ -31,7 +31,7 @@ class ProductListAdapter
 
     class ContentViewHolder(private val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
+        fun bind(product: Product, listener: Listener) {
             binding.imgProduct.load(product.imageUrl) {
                 placeholder(R.color.background)
             }
@@ -41,6 +41,10 @@ class ProductListAdapter
             binding.tvPercentDiscount.text = "${product.percentDiscount}%"
             binding.tvRating.text = product.rating.toString()
             binding.tvSoldCount.text = "Terjual ${product.soldCount}"
+
+            binding.root.setOnClickListener {
+                listener.onProductClicked(product.id)
+            }
         }
     }
 
@@ -52,5 +56,9 @@ class ProductListAdapter
             override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean =
                 oldItem == newItem
         }
+    }
+
+    interface Listener {
+        fun onProductClicked(id: Int)
     }
 }

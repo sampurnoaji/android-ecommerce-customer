@@ -16,15 +16,25 @@
     <string name="voucher_label">Voucher Untukmu</string>
 
     <string name="product">Produk</string>
-    <string name="product_popular" tools:ignore="Typos">Produk Populer</string>
     <string name="product_empty">Produk Kosong</string>
+    <string name="product_detail">Detail Produk</string>
+    <string name="product_popular" tools:ignore="Typos">Produk Populer</string>
+    <string name="product_condition">Kondisi</string>
+    <string name="product_dimension">Dimensi</string>
+    <string name="product_min_order">Min. Pemesanan</string>
+    <string name="product_category">Kategori</string>
+    <string name="product_desc">Deskripsi</string>
+    <string name="product_shop">Toko</string>
 
     <string name="basket">Keranjang</string>
     <string name="basket_delete">Hapus</string>
+    <string name="basket_add_product">+ Keranjang</string>
 
     <string name="account">Akun</string>
 
     <string name="login">Login</string>
+
+    <string name="detail">Rincian</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

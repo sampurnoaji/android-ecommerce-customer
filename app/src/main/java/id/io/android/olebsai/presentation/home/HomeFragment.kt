@@ -1,9 +1,8 @@
 package id.io.android.olebsai.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
-import android.widget.GridLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -27,12 +26,12 @@ import id.io.android.olebsai.presentation.home.adapter.BannerListAdapter
 import id.io.android.olebsai.presentation.home.adapter.CategoryListAdapter
 import id.io.android.olebsai.presentation.home.adapter.ProductListAdapter
 import id.io.android.olebsai.presentation.home.adapter.VoucherListAdapter
+import id.io.android.olebsai.presentation.product.ProductDetailActivity
 import id.io.android.olebsai.util.dpToPx
 import id.io.android.olebsai.util.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -57,7 +56,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         })
     }
     private val voucherListAdapter by lazy { VoucherListAdapter(vm.vouchers) }
-    private val productListAdapter by lazy { ProductListAdapter() }
+    private val productListAdapter by lazy {
+        ProductListAdapter(object : ProductListAdapter.Listener {
+            override fun onProductClicked(id: Int) {
+                startActivity(Intent(requireContext(), ProductDetailActivity::class.java))
+            }
+        })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

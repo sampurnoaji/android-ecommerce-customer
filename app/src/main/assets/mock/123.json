@@ -1,0 +1,18 @@
+{
+  "data": {
+    "id": 1,
+    "name": "Produk 1",
+    "imageUrl": "https://duanyam-prod.s3-ap-southeast-1.amazonaws.com/staging/media/630c735507eb7_JPEG_20220829_150459_8964635620138540025.jpg",
+    "price": 70000,
+    "originalPrice": 100000,
+    "percentDiscount": 30,
+    "rating": 4.9,
+    "soldCount": 24,
+    "shopName": "Toko Maju Jaya",
+    "condition": "Baru",
+    "dimension": "10 gram",
+    "minOrder": "1 Buah",
+    "category": "Elektronik",
+    "description": "Beli aneka produk di Toko Gondray store secara online sekarang. Kamu bisa beli produk dari Toko Gondray store dengan aman &amp; mudah dari Kota Bekasi. Ingin belanja lebih hemat &amp; terjangkau di Toko Gondray store?"
+  }
+}

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".presentation.product.ProductDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/product_detail" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/sectionButton"
+        app:layout_constraintTop_toBottomOf="@+id/appBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/imgProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/product"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintDimensionRatio="4:3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgProduct"
+                    tools:text="Baju Batik Anyam" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="?colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/tvName"
+                    app:layout_constraintStart_toStartOf="@id/tvName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvName"
+                    tools:text="Rp 70.000" />
+
+                <TextView
+                    android:id="@+id/tvOriginalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/text_strike_through"
+                    android:textSize="11sp"
+                    app:layout_constraintStart_toStartOf="@id/tvName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPrice"
+                    tools:text="Rp 100.000" />
+
+                <TextView
+                    android:id="@+id/tvPercentDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/text_discount"
+                    android:paddingHorizontal="4dp"
+                    android:textColor="@color/green_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/tvOriginalPrice"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPrice"
+                    tools:text="20%" />
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:drawablePadding="4dp"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    app:drawableStartCompat="@drawable/ic_baseline_star_16"
+                    app:drawableTint="@color/orange_primary"
+                    app:layout_constraintStart_toStartOf="@+id/tvName"
+                    app:layout_constraintTop_toBottomOf="@id/tvOriginalPrice"
+                    tools:text="4.9" />
+
+                <TextView
+                    android:id="@+id/tvSoldCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvRating"
+                    app:layout_constraintStart_toEndOf="@+id/tvRating"
+                    app:layout_constraintTop_toTopOf="@+id/tvRating"
+                    tools:text="Terjual 17" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/labelDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/labelDetail">
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/product_shop"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvShopName"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="Toko Maju Terus" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/product_condition"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvCondition"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="Baru" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/product_dimension"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvDimension"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="100 gram" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/product_min_order"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvMinOrder"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="1 Buah" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/product_category"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvCategory"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="Kuliner" />
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:id="@+id/labelDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/product_desc"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+                <TextView
+                    android:id="@+id/tvDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/labelDesc"
+                    tools:text="Beli aneka produk di Toko Gondray store secara online sekarang. Kamu bisa beli produk dari Toko Gondray store dengan aman &amp; mudah dari Kota Bekasi. Ingin belanja lebih hemat &amp; terjangkau di Toko Gondray store?" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sectionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddToCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/basket_add_product"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

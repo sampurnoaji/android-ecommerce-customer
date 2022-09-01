@@ -12,6 +12,11 @@ data class Product(
     val rating: Float,
     val soldCount: Int,
     val shopName: String,
+    val condition: String? = null,
+    val dimension: String? = null,
+    val minOrder: String? = null,
+    val category: String? = null,
+    val description: String? = null,
 ) {
     fun toEntity() = ProductEntity(
         id = id,

@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/strike_through_text.xml" value="0.24" />
         <entry key="app/src/main/res/drawable/text_discount.xml" value="0.24" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23278985507246377" />
+        <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.3553921568627451" />
         <entry key="app/src/main/res/layout/fragment_basket.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_category.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4155844155844156" />
