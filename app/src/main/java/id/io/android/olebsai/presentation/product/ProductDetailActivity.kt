@@ -2,7 +2,9 @@ package id.io.android.olebsai.presentation.product
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseActivity
@@ -20,6 +22,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
+        setupActionView()
         observeViewModel()
     }
 
@@ -29,13 +32,41 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
+    private fun setupActionView() {
+        binding.btnAddToCart.setOnClickListener {
+            vm.addProductToBasket()
+        }
+    }
+
     private fun observeViewModel() {
         vm.product.observe(
-            onLoading = {},
+            onLoading = {
+                binding.pbLoading.isVisible = true
+            },
             onSuccess = {
+                binding.pbLoading.isVisible = false
                 inflateProductData(it)
             },
-            onError = {}
+            onError = {
+                binding.pbLoading.isVisible = false
+            }
+        )
+
+        vm.insertProduct.observe(
+            onLoading = {
+                binding.pbLoading.isVisible = true
+            },
+            onSuccess = {
+                binding.pbLoading.isVisible = false
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.basket_success_add_product_to_basket),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            },
+            onError = {
+                binding.pbLoading.isVisible = false
+            }
         )
     }
 

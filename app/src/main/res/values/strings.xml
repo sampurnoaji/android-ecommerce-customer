@@ -29,6 +29,9 @@
     <string name="basket">Keranjang</string>
     <string name="basket_delete">Hapus</string>
     <string name="basket_add_product">+ Keranjang</string>
+    <string name="basket_checkout">Checkout</string>
+    <string name="basket_total">Total</string>
+    <string name="basket_success_add_product_to_basket">Barang ditambahkan ke keranjang</string>
 
     <string name="account">Akun</string>
 

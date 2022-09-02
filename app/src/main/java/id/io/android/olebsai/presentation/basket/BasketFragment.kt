@@ -12,6 +12,7 @@ import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentBasketBinding
 import id.io.android.olebsai.presentation.MainViewModel
+import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.viewBinding
 
 @AndroidEntryPoint
@@ -26,8 +27,15 @@ class BasketFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupView()
         setupProductList()
         observeViewModel()
+    }
+
+    private fun setupView() {
+        binding.toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun setupProductList() {
@@ -38,10 +46,13 @@ class BasketFragment :
     }
 
     private fun observeViewModel() {
-        actVm.basketProducts.observe(viewLifecycleOwner) {
-            binding.groupEmpty.isVisible = it.isEmpty()
-            binding.rvProduct.isVisible = it.isNotEmpty()
-            productBasketListAdapter.submitList(it)
+        actVm.basketProducts.observe(viewLifecycleOwner) { products ->
+            binding.groupEmpty.isVisible = products.isEmpty()
+            binding.rvProduct.isVisible = products.isNotEmpty()
+            productBasketListAdapter.submitList(products)
+
+            binding.sectionButton.isVisible = products.isNotEmpty()
+            binding.tvTotal.text = products.sumOf { it.price }.toRupiah()
         }
     }
 }

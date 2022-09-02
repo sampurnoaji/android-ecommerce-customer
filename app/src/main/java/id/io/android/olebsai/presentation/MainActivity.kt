@@ -2,6 +2,7 @@ package id.io.android.olebsai.presentation
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,18 +37,22 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menuHome -> {
+                    showBottomNav()
                     showFragment(homeFragment)
                     true
                 }
                 R.id.menuCategory -> {
+                    showBottomNav()
                     showFragment(categoryFragment)
                     true
                 }
                 R.id.menuBasket -> {
+                    hideBottomNav()
                     showFragment(basketFragment)
                     true
                 }
                 R.id.menuAccount -> {
+                    showBottomNav()
                     showFragment(accountFragment)
                     true
                 }
@@ -79,5 +84,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             vm.addBundleToNavigation(args)
         }
         binding.bottomNavigation.selectedItemId = R.id.menuCategory
+    }
+
+    internal fun hideBottomNav() {
+        binding.bottomNavigation.isVisible = false
+    }
+
+    internal fun showBottomNav() {
+        binding.bottomNavigation.isVisible = true
     }
 }
