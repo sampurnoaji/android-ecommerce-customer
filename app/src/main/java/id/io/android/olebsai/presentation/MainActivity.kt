@@ -30,6 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupFragments()
+        observeViewModel()
     }
 
     private fun setupFragments() {
@@ -61,6 +62,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    private fun observeViewModel() {
+        vm.basketProducts.observe(this) {
+            setBasketProductsCountBadge(it.size)
+        }
+    }
+
     private fun showFragment(fragment: Fragment) {
         with(supportFragmentManager) {
             if (!fragment.isAdded) {
@@ -86,11 +93,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         binding.bottomNavigation.selectedItemId = R.id.menuCategory
     }
 
-    internal fun hideBottomNav() {
+    private fun hideBottomNav() {
         binding.bottomNavigation.isVisible = false
     }
 
-    internal fun showBottomNav() {
+    private fun showBottomNav() {
         binding.bottomNavigation.isVisible = true
+    }
+
+    private fun setBasketProductsCountBadge(count: Int) {
+        binding.bottomNavigation.getOrCreateBadge(R.id.menuBasket).number = count
     }
 }

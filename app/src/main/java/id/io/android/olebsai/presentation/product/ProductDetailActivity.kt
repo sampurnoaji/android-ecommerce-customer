@@ -1,6 +1,8 @@
 package id.io.android.olebsai.presentation.product
 
 import android.os.Bundle
+import android.view.Menu
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import coil.load
@@ -19,6 +21,8 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
     override val binding by viewBinding(ActivityProductDetailBinding::inflate)
     override val vm: ProductDetailViewModel by viewModels()
 
+    private var basketCountView: TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
@@ -27,15 +31,24 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
     }
 
     private fun setupView() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
+        with(binding.toolbar) {
+            setSupportActionBar(this)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            setNavigationOnClickListener { onBackPressed() }
+        }
     }
 
     private fun setupActionView() {
         binding.btnAddToCart.setOnClickListener {
             vm.addProductToBasket()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_product_detail, menu)
+        basketCountView = menu?.findItem(R.id.menuBasket)?.actionView?.findViewById(R.id.tvCount)
+        observeBasketProducts()
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun observeViewModel() {
@@ -70,6 +83,12 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         )
     }
 
+    private fun observeBasketProducts() {
+        vm.basketProducts.observe(this) {
+            setBasketProductsCountBadge(it.size)
+        }
+    }
+
     private fun inflateProductData(product: Product?) {
         product?.let {
             with(binding) {
@@ -91,5 +110,9 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
                 tvDesc.text = product.description
             }
         }
+    }
+
+    private fun setBasketProductsCountBadge(count: Int) {
+        basketCountView?.text = count.toString()
     }
 }

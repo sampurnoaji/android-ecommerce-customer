@@ -2,13 +2,13 @@ package id.io.android.olebsai.presentation.product
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.io.android.olebsai.domain.model.product.Product
 import id.io.android.olebsai.domain.usecase.product.ProductUseCases
 import id.io.android.olebsai.util.LoadState
+import id.io.android.olebsai.util.NoParams
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,8 +25,13 @@ class ProductDetailViewModel @Inject constructor(
     val insertProduct: LiveData<LoadState<Boolean>>
         get() = _insertProduct
 
+    private val _basketProducts = MutableLiveData<List<Product>>()
+    val basketProducts: LiveData<List<Product>>
+        get() = _basketProducts
+
     init {
         getProductDetail()
+        getBasketProducts()
     }
 
     private fun getProductDetail() {
@@ -48,6 +53,14 @@ class ProductDetailViewModel @Inject constructor(
                         _insertProduct.value = LoadState.Error()
                     }
                 }
+            }
+        }
+    }
+
+    private fun getBasketProducts() {
+        viewModelScope.launch {
+            productUseCases.getBasketProductsUseCase(NoParams).collect {
+                _basketProducts.value = it
             }
         }
     }
