@@ -12,7 +12,7 @@
         "soldCount": 24
       },
       {
-        "id": 1,
+        "id": 2,
         "name": "Handphone Kualitas Super Ori No minus",
         "imageUrl": "https://duanyam-prod.s3-ap-southeast-1.amazonaws.com/staging/media/630c735507eb7_JPEG_20220829_150459_8964635620138540025.jpg",
         "price": 70000,
@@ -22,8 +22,8 @@
         "soldCount": 24
       },
       {
-        "id": 1,
-        "name": "Produk 1",
+        "id": 3,
+        "name": "Produk 3",
         "imageUrl": "https://duanyam-prod.s3-ap-southeast-1.amazonaws.com/staging/media/630c735507eb7_JPEG_20220829_150459_8964635620138540025.jpg",
         "price": 70000,
         "originalPrice": 100000,
@@ -32,8 +32,8 @@
         "soldCount": 24
       },
       {
-        "id": 1,
-        "name": "Produk 1",
+        "id": 4,
+        "name": "Produk 4",
         "imageUrl": "https://duanyam-prod.s3-ap-southeast-1.amazonaws.com/staging/media/630c735507eb7_JPEG_20220829_150459_8964635620138540025.jpg",
         "price": 70000,
         "originalPrice": 100000,
@@ -42,8 +42,8 @@
         "soldCount": 24
       },
       {
-        "id": 1,
-        "name": "Produk 1",
+        "id": 5,
+        "name": "Produk 5",
         "imageUrl": "https://duanyam-prod.s3-ap-southeast-1.amazonaws.com/staging/media/630c735507eb7_JPEG_20220829_150459_8964635620138540025.jpg",
         "price": 70000,
         "originalPrice": 100000,

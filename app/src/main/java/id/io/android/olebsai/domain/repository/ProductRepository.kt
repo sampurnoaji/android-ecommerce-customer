@@ -10,4 +10,5 @@ interface ProductRepository {
     suspend fun getProductDetail(id: Int): LoadState<Product>
     fun getBasketProducts(): Flow<List<Product>>
     suspend fun insertProductToBasket(product: Product)
+    suspend fun deleteProductBasket(productId: Int)
 }

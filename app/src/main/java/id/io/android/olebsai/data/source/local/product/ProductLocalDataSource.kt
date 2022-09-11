@@ -13,4 +13,8 @@ class ProductLocalDataSource @Inject constructor(private val dao: ProductDao) {
     suspend fun insertProductToBasket(productEntity: ProductEntity) {
         dao.insertProductToBasket(productEntity)
     }
+
+    suspend fun deleteBasketProduct(productId: Int) {
+        dao.deleteBasketProduct(productId)
+    }
 }

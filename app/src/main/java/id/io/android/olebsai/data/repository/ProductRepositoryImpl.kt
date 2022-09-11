@@ -34,4 +34,8 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun insertProductToBasket(product: Product) {
         localDataSource.insertProductToBasket(product.toEntity())
     }
+
+    override suspend fun deleteProductBasket(productId: Int) {
+        localDataSource.deleteBasketProduct(productId)
+    }
 }

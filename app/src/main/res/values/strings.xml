@@ -1,4 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="cancel">Batal</string>
+
     <string name="home">Beranda</string>
     <string name="home_banner_content">Banner</string>
     <string name="home_view_more">Lihat Semua</string>
@@ -27,7 +29,9 @@
     <string name="product_shop">Toko</string>
 
     <string name="basket">Keranjang</string>
+    <string name="basket_check">Cek</string>
     <string name="basket_delete">Hapus</string>
+    <string name="basket_delete_confirmation">Apakah Anda ingin menghapus produk ini dari keranjang?</string>
     <string name="basket_add_product">+ Keranjang</string>
     <string name="basket_checkout">Checkout</string>
     <string name="basket_total">Total</string>
