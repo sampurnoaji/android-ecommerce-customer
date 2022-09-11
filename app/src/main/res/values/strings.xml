@@ -27,6 +27,8 @@
     <string name="product_category">Kategori</string>
     <string name="product_desc">Deskripsi</string>
     <string name="product_shop">Toko</string>
+    <string name="product_last_order">Produk Terakhir Dibeli</string>
+    <string name="product_order_again">Beli Lagi</string>
 
     <string name="basket">Keranjang</string>
     <string name="basket_check">Cek</string>
@@ -38,6 +40,10 @@
     <string name="basket_success_add_product_to_basket">Barang ditambahkan ke keranjang</string>
 
     <string name="account">Akun</string>
+    <string name="account_phone">Ho Handphone</string>
+    <string name="account_email">Email</string>
+
+    <string name="address">Alamat Kirim</string>
 
     <string name="login">Login</string>
 
