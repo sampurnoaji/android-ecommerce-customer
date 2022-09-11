@@ -26,9 +26,9 @@ class BasketViewModel @Inject constructor(
         it.filter { item ->
             item.viewType == ProductBasketListAdapter.CONTENT_TYPE
         }.filter { item ->
-            item.content!!.isSelected
+            item.content!!.second.isSelected
         }.map { item ->
-            item.content!!.data
+            item.content!!.second.data
         }
     }
 
@@ -42,13 +42,19 @@ class BasketViewModel @Inject constructor(
                     header = it.key
                 )
             )
-            it.value.forEach { product ->
+            val groupedProducts = it.value.groupBy { product -> product.id }
+            groupedProducts.forEach { groupedProduct ->
+                val count = groupedProduct.value.count { product ->
+                    product.id == groupedProduct.key
+                }
                 items.add(
                     ProductBasketListAdapter.Item(
                         viewType = ProductBasketListAdapter.CONTENT_TYPE,
-                        content = Selection(
-                            isSelected = true,
-                            data = product
+                        content = Pair(
+                            count, Selection(
+                                isSelected = true,
+                                data = groupedProduct.value[0]
+                            )
                         )
                     )
                 )
@@ -61,11 +67,12 @@ class BasketViewModel @Inject constructor(
         _items.value = _items.value!!.map {
             if (it.viewType == ProductBasketListAdapter.CONTENT_TYPE)
                 it.copy(
-                    content = Selection(
-                        isSelected =
-                        if (it.content?.data?.id == productId) !it.content.isSelected
-                        else it.content!!.isSelected,
-                        data = it.content.data
+                    content = it.content?.copy(
+                        second = it.content.second.copy(
+                            isSelected =
+                            if (it.content.second.data.id == productId) !it.content.second.isSelected
+                            else it.content.second.isSelected
+                        )
                     )
                 )
             else it

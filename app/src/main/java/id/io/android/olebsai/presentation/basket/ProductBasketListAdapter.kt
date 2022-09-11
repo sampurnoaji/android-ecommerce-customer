@@ -52,29 +52,31 @@ class ProductBasketListAdapter(private val listener: Listener) :
 
     class ContentViewHolder(private val binding: ItemProductBasketBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Selection<Product>?, listener: Listener) {
-            with(binding) {
-                item?.let {
-                    imgProduct.load(item.data.imageUrl) {
+        fun bind(item: Pair<Int, Selection<Product>>?, listener: Listener) {
+            item?.let {
+                with(it.second.data) {
+                    binding.imgProduct.load(imageUrl) {
                         placeholder(R.color.background)
                     }
-                    tvName.text = item.data.name
-                    tvPrice.text = item.data.price.toRupiah()
-                    tvOriginalPrice.text = item.data.originalPrice.toRupiah()
-                    tvPercentDiscount.text = "${item.data.percentDiscount}%"
+                    binding.tvQty.text =
+                        binding.root.context.getString(R.string.product_count_qty, it.first)
+                    binding.tvName.text = name
+                    binding.tvPrice.text = price.toRupiah()
+                    binding.tvOriginalPrice.text = originalPrice.toRupiah()
+                    binding.tvPercentDiscount.text = "${percentDiscount}%"
 
-                    imgCheck.apply {
+                    binding.imgCheck.apply {
                         setImageResource(
-                            if (item.isSelected) R.drawable.ic_baseline_check_box_24
+                            if (item.second.isSelected) R.drawable.ic_baseline_check_box_24
                             else R.drawable.ic_baseline_check_box_outline_blank_24
                         )
                         setOnClickListener {
-                            listener.onCheckItem(item.data.id)
+                            listener.onCheckItem(this@with.id)
                         }
                     }
 
-                    imgDelete.setOnClickListener {
-                        listener.onDeleteItem(item.data.id)
+                    binding.imgDelete.setOnClickListener {
+                        listener.onDeleteItem(this@with.id)
                     }
                 }
             }
@@ -84,7 +86,7 @@ class ProductBasketListAdapter(private val listener: Listener) :
     data class Item(
         val viewType: Int,
         val header: String? = null,
-        val content: Selection<Product>? = null
+        val content: Pair<Int, Selection<Product>>? = null
     )
 
     companion object {
@@ -100,7 +102,7 @@ class ProductBasketListAdapter(private val listener: Listener) :
             override fun areContentsTheSame(
                 oldItem: Item,
                 newItem: Item
-            ): Boolean = oldItem.content?.data?.id == newItem.content?.data?.id
+            ): Boolean = oldItem.content?.second?.data?.id == newItem.content?.second?.data?.id
         }
     }
 

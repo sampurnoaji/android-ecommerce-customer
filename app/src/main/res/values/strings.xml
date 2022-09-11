@@ -29,6 +29,7 @@
     <string name="product_shop">Toko</string>
     <string name="product_last_order">Produk Terakhir Dibeli</string>
     <string name="product_order_again">Beli Lagi</string>
+    <string name="product_count_qty">%d x</string>
 
     <string name="basket">Keranjang</string>
     <string name="basket_check">Cek</string>
