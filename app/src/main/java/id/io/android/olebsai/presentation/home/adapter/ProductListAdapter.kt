@@ -33,7 +33,8 @@ class ProductListAdapter(private val listener: Listener)
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product, listener: Listener) {
             binding.imgProduct.load(product.imageUrl) {
-                placeholder(R.color.background)
+                placeholder(android.R.color.darker_gray)
+                error(android.R.color.darker_gray)
             }
             binding.tvName.text = product.name
             binding.tvPrice.text = product.price.toRupiah()

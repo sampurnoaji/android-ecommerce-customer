@@ -37,12 +37,14 @@
     <string name="basket_delete_confirmation">Apakah Anda ingin menghapus produk ini dari keranjang?</string>
     <string name="basket_add_product">+ Keranjang</string>
     <string name="basket_checkout">Checkout</string>
-    <string name="basket_total">Total</string>
+    <string name="basket_total">Total Barang</string>
     <string name="basket_success_add_product_to_basket">Barang ditambahkan ke keranjang</string>
 
     <string name="account">Akun</string>
     <string name="account_phone">Ho Handphone</string>
     <string name="account_email">Email</string>
+
+    <string name="order_checkout">Checkout</string>
 
     <string name="address">Alamat Kirim</string>
 

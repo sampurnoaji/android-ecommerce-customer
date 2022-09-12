@@ -171,6 +171,7 @@
                     android:background="@android:color/darker_gray"
                     android:contentDescription="@string/product"
                     android:scaleType="centerCrop"
+                    android:src="@drawable/banner1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/labelLastOrderProduct" />

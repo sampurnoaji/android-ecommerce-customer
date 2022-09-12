@@ -12,7 +12,6 @@ import id.io.android.olebsai.domain.model.category.Category
 import id.io.android.olebsai.domain.model.category.CategoryType
 import id.io.android.olebsai.domain.model.product.Product
 import id.io.android.olebsai.domain.model.voucher.Voucher
-import id.io.android.olebsai.domain.repository.ProductRepository
 import id.io.android.olebsai.domain.usecase.product.GetProductPagingSourceUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -27,11 +26,11 @@ class HomeViewModel @Inject constructor(
     }
 
     val images = listOf(
-        R.drawable.shipwreck_2,
-        R.drawable.grand_canyon,
-        R.drawable.horseshoe_bend,
-        R.drawable.muir_beach,
-        R.drawable.rainbow_falls,
+        R.drawable.banner1,
+        R.drawable.banner2,
+        R.drawable.banner3,
+        R.drawable.banner4,
+        R.drawable.banner5,
     )
 
     val categories = listOf(
@@ -39,8 +38,6 @@ class HomeViewModel @Inject constructor(
         Category(id = 2, CategoryType.CRAFT),
         Category(id = 3, CategoryType.FASHION),
         Category(id = 4, CategoryType.CULINARY),
-        Category(id = 5, CategoryType.ELECTRONIC),
-        Category(id = 6, CategoryType.TOPUP),
     )
 
     val vouchers = listOf(

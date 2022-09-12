@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:contentDescription="@string/home_banner_content"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             app:layout_constraintDimensionRatio="2:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
