@@ -13,6 +13,8 @@ import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentBasketBinding
 import id.io.android.olebsai.presentation.MainActivity
 import id.io.android.olebsai.presentation.MainViewModel
+import id.io.android.olebsai.presentation.order.OrderCheckoutActivity
+import id.io.android.olebsai.presentation.order.ProductCheckout
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.ui.Dialog
 import id.io.android.olebsai.util.viewBinding
@@ -63,6 +65,27 @@ class BasketFragment :
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
+
+        binding.btnCheckout.setOnClickListener {
+            val products = arrayListOf<ProductCheckout>()
+            vm.selectedProducts.value?.map {
+                products.add(
+                    ProductCheckout(
+                        shopName = "Toko Maju Jaya",
+                        qty = it.first,
+                        imageUrl = it.second.imageUrl,
+                        name = it.second.name,
+                        total = it.second.price,
+                        originalPrice = it.second.originalPrice,
+                        discount = it.second.percentDiscount
+                    )
+                )
+            }
+            OrderCheckoutActivity.start(
+                requireContext(),
+                products = products
+            )
+        }
     }
 
     private fun setupProductList() {
@@ -85,7 +108,9 @@ class BasketFragment :
 
         vm.selectedProducts.observe(viewLifecycleOwner) { products ->
             binding.sectionButton.isVisible = products.isNotEmpty()
-            binding.tvTotal.text = products.sumOf { it.price }.toRupiah()
+            binding.tvTotal.text = products.sumOf {
+                it.first * it.second.price
+            }.toRupiah()
         }
     }
 }

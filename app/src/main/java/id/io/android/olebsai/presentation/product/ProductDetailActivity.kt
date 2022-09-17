@@ -1,5 +1,7 @@
 package id.io.android.olebsai.presentation.product
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
@@ -23,11 +25,26 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
 
     private var basketCountView: TextView? = null
 
+    companion object {
+        private const val KEY_PRODUCT_ID = "product-id"
+
+        @JvmStatic
+        fun start(context: Context, productId: Int) {
+            val starter = Intent(context, ProductDetailActivity::class.java)
+                .putExtra(KEY_PRODUCT_ID, productId)
+            context.startActivity(starter)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
         setupActionView()
         observeViewModel()
+
+        intent?.getIntExtra(KEY_PRODUCT_ID, 0)?.let {
+            vm.getProductDetail(it)
+        }
     }
 
     private fun setupView() {

@@ -29,7 +29,7 @@ class ProductPagingSource @Inject constructor(
             LoadResult.Page(
                 data = products.map { it.toDomain() },
                 prevKey = if (position == STARTING_KEY) null else position - 1,
-                nextKey = if (position == 10) null else position + (params.loadSize / 10)
+                nextKey = null
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

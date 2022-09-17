@@ -30,14 +30,13 @@ class ProductDetailViewModel @Inject constructor(
         get() = _basketProducts
 
     init {
-        getProductDetail()
         getBasketProducts()
     }
 
-    private fun getProductDetail() {
+    fun getProductDetail(productId: Int) {
         _product.value = LoadState.Loading
         viewModelScope.launch {
-            _product.value = productUseCases.getProductDetailUseCase(123)
+            _product.value = productUseCases.getProductDetailUseCase(productId)
         }
     }
 

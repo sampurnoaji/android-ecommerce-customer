@@ -22,13 +22,13 @@ class BasketViewModel @Inject constructor(
         get() = _items
 
 
-    val selectedProducts: LiveData<List<Product>> = Transformations.map(_items) {
+    val selectedProducts: LiveData<List<Pair<Int, Product>>> = Transformations.map(_items) {
         it.filter { item ->
             item.viewType == ProductBasketListAdapter.CONTENT_TYPE
         }.filter { item ->
             item.content!!.second.isSelected
         }.map { item ->
-            item.content!!.second.data
+            Pair(item.content!!.first, item.content.second.data)
         }
     }
 

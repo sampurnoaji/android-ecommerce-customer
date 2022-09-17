@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="cancel">Batal</string>
     <string name="close">Tutup</string>
+    <string name="pay">Bayar</string>
 
     <string name="home">Beranda</string>
     <string name="home_banner_content">Banner</string>
@@ -48,6 +49,8 @@
     <string name="order_checkout">Checkout</string>
 
     <string name="address">Alamat Kirim</string>
+    <string name="address_choose_other">Pilih Alamat Lain</string>
+    <string name="address_courier">Pengiriman</string>
 
     <string name="login">Login</string>
     <string name="login_username">Username</string>
@@ -59,6 +62,11 @@
     <string name="logout_confirmation">Apakah Anda ingin keluar?</string>
 
     <string name="detail">Rincian</string>
+
+    <string name="checkout_summary">Ringkasan</string>
+    <string name="checkout_product_total">Total Harga</string>
+    <string name="checkout_delivery_total">Total Ongkos Kirim</string>
+    <string name="checkout_total">Total Tagihan</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

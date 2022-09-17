@@ -35,11 +35,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
-        android:maxLines="2"
         android:minLines="1"
         app:layout_constraintBottom_toTopOf="@+id/tvPrice"
-        app:layout_constraintEnd_toStartOf="@+id/imgCheck"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imgProduct"
         app:layout_constraintTop_toTopOf="parent"
@@ -65,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/text_strike_through"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,26 +87,6 @@
         app:layout_constraintStart_toEndOf="@+id/tvOriginalPrice"
         app:layout_constraintTop_toTopOf="@+id/tvOriginalPrice"
         tools:text="20%" />
-
-    <ImageView
-        android:id="@+id/imgCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/basket_check"
-        android:src="@drawable/ic_baseline_check_box_outline_blank_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imgDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/basket_delete"
-        android:src="@drawable/ic_baseline_delete_outline_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:layout_width="match_parent"

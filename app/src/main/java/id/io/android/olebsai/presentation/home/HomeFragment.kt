@@ -1,6 +1,5 @@
 package id.io.android.olebsai.presentation.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -63,7 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val productListAdapter by lazy {
         ProductListAdapter(object : ProductListAdapter.Listener {
             override fun onProductClicked(id: Int) {
-                startActivity(Intent(requireContext(), ProductDetailActivity::class.java))
+                ProductDetailActivity.start(requireContext(), id)
             }
         })
     }
