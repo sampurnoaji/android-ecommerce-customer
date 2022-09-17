@@ -5,14 +5,13 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentBasketBinding
-import id.io.android.olebsai.domain.model.product.Product
+import id.io.android.olebsai.presentation.MainActivity
 import id.io.android.olebsai.presentation.MainViewModel
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.ui.Dialog
@@ -48,9 +47,16 @@ class BasketFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        resume()
         setupView()
         setupProductList()
         observeViewModel()
+    }
+
+    fun resume() {
+        if (actVm.isLoggedIn.value == false) {
+            (requireActivity() as MainActivity).navigateToLogin()
+        }
     }
 
     private fun setupView() {

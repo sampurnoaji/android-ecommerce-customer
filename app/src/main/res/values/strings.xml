@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="cancel">Batal</string>
+    <string name="close">Tutup</string>
 
     <string name="home">Beranda</string>
     <string name="home_banner_content">Banner</string>
@@ -49,6 +50,13 @@
     <string name="address">Alamat Kirim</string>
 
     <string name="login">Login</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_forgot_password">Lupa password</string>
+    <string name="login_error_form">Username dan Password harus diisi</string>
+
+    <string name="logout">Logout</string>
+    <string name="logout_confirmation">Apakah Anda ingin keluar?</string>
 
     <string name="detail">Rincian</string>
 

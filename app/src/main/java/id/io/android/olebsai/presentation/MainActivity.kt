@@ -1,6 +1,9 @@
 package id.io.android.olebsai.presentation
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,6 +16,7 @@ import id.io.android.olebsai.presentation.account.AccountFragment
 import id.io.android.olebsai.presentation.basket.BasketFragment
 import id.io.android.olebsai.presentation.category.CategoryFragment
 import id.io.android.olebsai.presentation.home.HomeFragment
+import id.io.android.olebsai.presentation.user.login.LoginActivity
 import id.io.android.olebsai.util.viewBinding
 
 @AndroidEntryPoint
@@ -26,6 +30,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val basketFragment by lazy { BasketFragment() }
     private val accountFragment by lazy { AccountFragment() }
     private var currentFragment: Fragment = homeFragment
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                vm.checkLoggedInStatus()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +61,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 R.id.menuBasket -> {
                     hideBottomNav()
                     showFragment(basketFragment)
+                    if (basketFragment.isAdded) basketFragment.resume()
                     true
                 }
                 R.id.menuAccount -> {
                     showBottomNav()
                     showFragment(accountFragment)
+                    if (accountFragment.isAdded) accountFragment.resume()
                     true
                 }
                 else -> false
@@ -86,11 +99,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         else super.onBackPressed()
     }
 
-    internal fun navigateToCategory(args: Bundle? = null) {
+    internal fun navigateToMenu(pageId: Int, args: Bundle? = null) {
         args?.let {
             vm.addBundleToNavigation(args)
         }
-        binding.bottomNavigation.selectedItemId = R.id.menuCategory
+        binding.bottomNavigation.selectedItemId = pageId
+    }
+
+    internal fun navigateToLogin() {
+        launcher.launch(Intent(this, LoginActivity::class.java))
     }
 
     private fun hideBottomNav() {

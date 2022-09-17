@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +22,7 @@ import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentHomeBinding
 import id.io.android.olebsai.domain.model.category.Category
 import id.io.android.olebsai.presentation.MainActivity
+import id.io.android.olebsai.presentation.MainViewModel
 import id.io.android.olebsai.presentation.category.CategoryFragment
 import id.io.android.olebsai.presentation.home.adapter.BannerListAdapter
 import id.io.android.olebsai.presentation.home.adapter.CategoryListAdapter
@@ -40,6 +42,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
     override val binding: FragmentHomeBinding by viewBinding(FragmentHomeBinding::bind)
     override val vm: HomeViewModel by viewModels()
+    private val actVm: MainViewModel by activityViewModels()
 
     private var carouselJob: Job? = null
 
@@ -47,7 +50,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val categoryListAdapter by lazy {
         CategoryListAdapter(vm.categories, object : CategoryListAdapter.Listener {
             override fun onCategoryClicked(category: Category) {
-                (requireActivity() as MainActivity).navigateToCategory(
+                (requireActivity() as MainActivity).navigateToMenu(
+                    R.id.menuCategory,
                     Bundle().apply {
                         putInt(CategoryFragment.CATEGORY_KEY, category.id)
                     }
@@ -66,10 +70,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupActionView()
+        observeViewModel()
         setupBannerCarousel(vm.images)
         setupCategoryList()
         setupVoucherList()
         setupProductList()
+    }
+
+    private fun setupActionView() {
+        binding.btnLogin.setOnClickListener {
+            (requireActivity() as MainActivity).navigateToLogin()
+        }
+    }
+
+    private fun observeViewModel() {
+        actVm.isLoggedIn.observe(viewLifecycleOwner) {
+            binding.btnLogin.isVisible = !it
+        }
     }
 
     private fun setupBannerCarousel(images: List<Int>) {
