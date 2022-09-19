@@ -14,6 +14,10 @@ class LoginViewModel @Inject constructor(private val userUseCases: UserUseCases)
     private var username = ""
     private var password = ""
 
+    private val _isEmptyForm = MutableLiveData(false)
+    val isEmptyForm: LiveData<Boolean>
+        get() = _isEmptyForm
+
     private val _isErrorForm = MutableLiveData(false)
     val isErrorForm: LiveData<Boolean>
         get() = _isErrorForm
@@ -24,19 +28,27 @@ class LoginViewModel @Inject constructor(private val userUseCases: UserUseCases)
 
     fun onUsernameChanged(username: String) {
         this.username = username
+        _isEmptyForm.value = false
         _isErrorForm.value = false
     }
 
     fun onPasswordChanged(password: String) {
         this.password = password
+        _isEmptyForm.value = false
         _isErrorForm.value = false
     }
 
     fun login() {
         if (username.isEmpty() || password.isEmpty()) {
+            _isEmptyForm.value = true
+            return
+        }
+
+        if (password != "123456") {
             _isErrorForm.value = true
             return
         }
+
         _login.value = LoadState.Success(true)
         userUseCases.setLoggedInUseCase(true)
     }

@@ -56,7 +56,8 @@
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_forgot_password">Lupa password</string>
-    <string name="login_error_form">Username dan Password harus diisi</string>
+    <string name="login_error_form_empty">Username dan Password harus diisi</string>
+    <string name="login_error_form_invalid">Username/Password salah</string>
 
     <string name="logout">Logout</string>
     <string name="logout_confirmation">Apakah Anda ingin keluar?</string>

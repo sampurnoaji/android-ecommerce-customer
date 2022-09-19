@@ -46,11 +46,21 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        vm.isEmptyForm.observe(this) {
+            if (it) {
+                Dialog(
+                    context = this,
+                    message = getString(R.string.login_error_form_empty),
+                    positiveButtonText = getString(R.string.close),
+                ).show()
+            }
+        }
+
         vm.isErrorForm.observe(this) {
             if (it) {
                 Dialog(
                     context = this,
-                    message = getString(R.string.login_error_form),
+                    message = getString(R.string.login_error_form_invalid),
                     positiveButtonText = getString(R.string.close),
                 ).show()
             }
