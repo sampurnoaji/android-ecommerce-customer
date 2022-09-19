@@ -3,11 +3,14 @@ package id.io.android.olebsai.presentation.order
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.databinding.ActivityOrderCheckoutBinding
+import id.io.android.olebsai.domain.model.address.Address
+import id.io.android.olebsai.presentation.account.address.list.AddressListActivity
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.viewBinding
 
@@ -18,6 +21,18 @@ class OrderCheckoutActivity : AppCompatActivity() {
     private val vm by viewModels<OrderCheckoutViewModel>()
 
     private val productCheckoutListAdapter by lazy { ProductCheckoutListAdapter() }
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            when (it.resultCode) {
+                AddressListActivity.RESULT_SELECT_ADDRESS -> {
+                    it.data?.getParcelableExtra<Address>(AddressListActivity.KEY_SELECTED_ADDRESS)
+                        ?.let { address ->
+                            vm.updateAddress(address)
+                        }
+                }
+            }
+        }
 
     companion object {
         private const val KEY_PRODUCTS = "products"
@@ -34,6 +49,8 @@ class OrderCheckoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupView()
+        setupActionView()
+        observeViewModel()
     }
 
     private fun setupView() {
@@ -55,6 +72,23 @@ class OrderCheckoutActivity : AppCompatActivity() {
             binding.tvProductTotal.text = productTotal.toRupiah()
             binding.tvDeliveryTotal.text = "Rp 0"
             binding.tvSummaryTotal.text = productTotal.toRupiah()
+        }
+    }
+
+    private fun setupActionView() {
+        binding.tvAddressSelect.setOnClickListener {
+            vm.address.value?.id?.let { id -> AddressListActivity.start(this, launcher, id) }
+        }
+    }
+
+    private fun observeViewModel() {
+        vm.address.observe(this) {
+            with(binding) {
+                tvAddressLabel.text = "${it.label} - ${it.name}"
+                tvPhone.text = it.phone
+                tvAddress.text = it.address
+                tvAddressNote.text = it.note
+            }
         }
     }
 }

@@ -51,10 +51,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tvAddressViewMore"
+                    android:id="@+id/tvAddressSelect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/address_choose_other"
+                    android:text="@string/address_select_other"
                     android:textColor="?colorPrimary"
                     android:textSize="11sp"
                     android:textStyle="italic"
@@ -67,17 +67,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Rumah - Noge"
                     android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@+id/labelAddress" />
+                    app:layout_constraintTop_toBottomOf="@+id/labelAddress"
+                    tools:text="Rumah - Noge" />
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAddressLabel"
+                    tools:text="087123456789" />
 
                 <TextView
                     android:id="@+id/tvAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Jl Letjen Suprapto No 18, Parit Benut, Kabupaten Karimun, Kepri, Indonesia"
-                    app:layout_constraintTop_toBottomOf="@+id/tvAddressLabel" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvPhone"
+                    tools:text="Jl Letjen Suprapto No 18, Parit Benut, Kabupaten Karimun, Kepri, Indonesia" />
 
                 <TextView
                     android:id="@+id/tvAddressNote"
@@ -85,12 +93,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:drawablePadding="4dp"
-                    android:text="Cat warna kuning, samping Toko Besi"
                     android:textSize="12sp"
                     android:textStyle="italic"
                     app:drawableStartCompat="@drawable/ic_baseline_sticky_note_2_16"
                     app:drawableTint="@android:color/darker_gray"
-                    app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvAddress"
+                    tools:text="Cat warna kuning, samping Toko Besi" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

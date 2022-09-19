@@ -49,8 +49,10 @@
     <string name="order_checkout">Checkout</string>
 
     <string name="address">Alamat Kirim</string>
-    <string name="address_choose_other">Pilih Alamat Lain</string>
+    <string name="address_select">Pilih Alamat</string>
+    <string name="address_select_other">Pilih Alamat Lain</string>
     <string name="address_courier">Pengiriman</string>
+    <string name="address_list">Daftar Alamat</string>
 
     <string name="login">Login</string>
     <string name="login_username">Username</string>
