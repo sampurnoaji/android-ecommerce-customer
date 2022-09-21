@@ -33,8 +33,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                vm.checkLoggedInStatus()
+            when (it.resultCode) {
+                Activity.RESULT_OK -> vm.checkLoggedInStatus()
+                Activity.RESULT_CANCELED -> navigateToMenu(R.id.menuHome)
             }
         }
 
