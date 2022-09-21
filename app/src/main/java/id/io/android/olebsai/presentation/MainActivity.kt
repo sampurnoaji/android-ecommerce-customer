@@ -1,6 +1,7 @@
 package id.io.android.olebsai.presentation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,10 +42,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }
 
+    companion object {
+        private const val ARGS_PAGE_ID = "page-id"
+
+        @JvmStatic
+        fun start(context: Context, pageId: Int? = null) {
+            val starter = Intent(context, MainActivity::class.java).apply {
+                putExtra(ARGS_PAGE_ID, pageId)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(starter)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupFragments()
         observeViewModel()
+        checkArguments()
     }
 
     private fun setupFragments() {
@@ -86,6 +101,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun observeViewModel() {
         vm.basketProducts.observe(this) {
             setBasketProductsCountBadge(it.size)
+        }
+    }
+
+    private fun checkArguments() {
+        intent?.extras?.getInt(ARGS_PAGE_ID)?.let {
+            navigateToMenu(it)
         }
     }
 

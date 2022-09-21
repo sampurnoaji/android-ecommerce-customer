@@ -71,10 +71,11 @@
     <string name="checkout_product_total">Total Harga</string>
     <string name="checkout_delivery_total">Total Ongkos Kirim</string>
     <string name="checkout_total">Total Tagihan</string>
-    
+
     <string name="trx">Transaksi</string>
     <string name="trx_empty">Transaksi Kosong</string>
     <string name="trx_order_date">Tanggal Order</string>
+    <string name="trx_order_processed">Transaksi Anda sedang diproses</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

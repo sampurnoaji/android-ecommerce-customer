@@ -13,8 +13,8 @@ import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentBasketBinding
 import id.io.android.olebsai.presentation.MainActivity
 import id.io.android.olebsai.presentation.MainViewModel
-import id.io.android.olebsai.presentation.order.OrderCheckoutActivity
-import id.io.android.olebsai.presentation.order.ProductCheckout
+import id.io.android.olebsai.presentation.order.checkout.OrderCheckoutActivity
+import id.io.android.olebsai.presentation.order.checkout.ProductCheckout
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.ui.Dialog
 import id.io.android.olebsai.util.viewBinding

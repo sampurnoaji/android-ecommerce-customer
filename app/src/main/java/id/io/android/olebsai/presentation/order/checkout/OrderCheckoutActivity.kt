@@ -1,4 +1,4 @@
-package id.io.android.olebsai.presentation.order
+package id.io.android.olebsai.presentation.order.checkout
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.databinding.ActivityOrderCheckoutBinding
 import id.io.android.olebsai.domain.model.address.Address
 import id.io.android.olebsai.presentation.account.address.list.AddressListActivity
+import id.io.android.olebsai.presentation.order.processed.OrderProcessedActivity
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.viewBinding
 
@@ -78,6 +79,10 @@ class OrderCheckoutActivity : AppCompatActivity() {
     private fun setupActionView() {
         binding.tvAddressSelect.setOnClickListener {
             vm.address.value?.id?.let { id -> AddressListActivity.start(this, launcher, id) }
+        }
+
+        binding.btnPay.setOnClickListener {
+            OrderProcessedActivity.start(this)
         }
     }
 

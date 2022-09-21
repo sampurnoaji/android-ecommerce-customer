@@ -1,4 +1,4 @@
-package id.io.android.olebsai.presentation.order
+package id.io.android.olebsai.presentation.order.checkout
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
