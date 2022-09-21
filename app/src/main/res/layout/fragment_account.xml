@@ -221,7 +221,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:background="@drawable/text_discount"
+                    android:background="@drawable/text_chip_green"
                     android:paddingHorizontal="4dp"
                     android:text="20%"
                     android:textColor="@color/green_primary"

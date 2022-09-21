@@ -16,6 +16,7 @@ import id.io.android.olebsai.presentation.account.AccountFragment
 import id.io.android.olebsai.presentation.basket.BasketFragment
 import id.io.android.olebsai.presentation.category.CategoryFragment
 import id.io.android.olebsai.presentation.home.HomeFragment
+import id.io.android.olebsai.presentation.order.history.TrxFragment
 import id.io.android.olebsai.presentation.user.login.LoginActivity
 import id.io.android.olebsai.util.viewBinding
 
@@ -28,6 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val homeFragment by lazy { HomeFragment() }
     private val categoryFragment by lazy { CategoryFragment() }
     private val basketFragment by lazy { BasketFragment() }
+    private val trxFragment by lazy { TrxFragment() }
     private val accountFragment by lazy { AccountFragment() }
     private var currentFragment: Fragment = homeFragment
 
@@ -63,6 +65,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     hideBottomNav()
                     showFragment(basketFragment)
                     if (basketFragment.isAdded) basketFragment.resume()
+                    true
+                }
+                R.id.menuTrx -> {
+                    showBottomNav()
+                    showFragment(trxFragment)
                     true
                 }
                 R.id.menuAccount -> {
