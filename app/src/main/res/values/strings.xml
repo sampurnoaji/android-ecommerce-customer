@@ -55,6 +55,8 @@
     <string name="address_courier">Pengiriman</string>
     <string name="address_list">Daftar Alamat</string>
 
+    <string name="register">Daftar</string>
+
     <string name="login">Login</string>
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>

@@ -44,7 +44,7 @@ class LoginViewModel @Inject constructor(private val userUseCases: UserUseCases)
             return
         }
 
-        if (password != "123456") {
+        if (username != "customer" || password != "123456") {
             _isErrorForm.value = true
             return
         }
