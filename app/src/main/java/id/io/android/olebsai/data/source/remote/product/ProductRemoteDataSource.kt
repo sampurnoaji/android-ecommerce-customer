@@ -8,9 +8,9 @@ import javax.inject.Inject
 class ProductRemoteDataSource @Inject constructor(private val api: ProductService) :
     ResponseHelper() {
 
-    suspend fun getProductList(page: Int): ProductListResponse? =
+    suspend fun getProductList(page: Int): ProductListResponse =
         call { api.getProductList(page).data }
 
     suspend fun getProductDetail(id: Int): ProductDetailResponse =
-        call { api.getProductDetail(id).data!! }
+        call { api.getProductDetail(id).data }
 }

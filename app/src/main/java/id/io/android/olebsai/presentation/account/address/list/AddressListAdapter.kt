@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import id.io.android.olebsai.R
 import id.io.android.olebsai.databinding.ItemAddressBinding
 import id.io.android.olebsai.domain.model.address.Address
-import id.io.android.olebsai.util.ui.Selection
 
 class AddressListAdapter(private val listener: Listener) :
-    ListAdapter<Selection<Address>, AddressListAdapter.ContentViewHolder>(DIFF_UTIL) {
+    ListAdapter<Address, AddressListAdapter.ContentViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentViewHolder {
         return ContentViewHolder(
@@ -29,41 +28,46 @@ class AddressListAdapter(private val listener: Listener) :
 
     class ContentViewHolder(private val binding: ItemAddressBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Selection<Address>, listener: Listener) {
+        fun bind(item: Address, listener: Listener) {
             with(binding) {
+                root.setOnClickListener {
+                    listener.onSelectAddress(item)
+                }
+
                 imgCheck.apply {
                     setImageResource(
-                        if (item.isSelected) R.drawable.ic_baseline_check_box_24
+                        if (item.isDefault) R.drawable.ic_baseline_check_box_24
                         else R.drawable.ic_baseline_check_box_outline_blank_24
                     )
                     setOnClickListener {
-                        listener.onSelectAddress(item.data.id)
+                        if (!item.isDefault) listener.onSetAddressDefault(item.id)
                     }
                 }
 
-                tvLabelName.text = "${item.data.label} - ${item.data.name}"
-                tvPhone.text = item.data.phone
-                tvAddress.text = item.data.address
-                tvAddressNote.text = item.data.note
+                tvLabelName.text = "${item.label} - ${item.name}"
+                tvPhone.text = item.phone
+                tvAddress.text = item.address
+                tvAddressNote.text = item.note
             }
         }
     }
 
     companion object {
-        val DIFF_UTIL = object : DiffUtil.ItemCallback<Selection<Address>>() {
+        val DIFF_UTIL = object : DiffUtil.ItemCallback<Address>() {
             override fun areItemsTheSame(
-                oldItem: Selection<Address>,
-                newItem: Selection<Address>
-            ): Boolean = oldItem.data == newItem.data
+                oldItem: Address,
+                newItem: Address
+            ): Boolean = oldItem == newItem
 
             override fun areContentsTheSame(
-                oldItem: Selection<Address>,
-                newItem: Selection<Address>
-            ): Boolean = oldItem.isSelected == newItem.isSelected
+                oldItem: Address,
+                newItem: Address
+            ): Boolean = oldItem.id == newItem.id
         }
     }
 
     interface Listener {
-        fun onSelectAddress(id: Int)
+        fun onSelectAddress(address: Address)
+        fun onSetAddressDefault(id: Int)
     }
 }

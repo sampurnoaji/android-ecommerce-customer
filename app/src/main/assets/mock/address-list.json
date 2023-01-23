@@ -1,0 +1,24 @@
+{
+  "data": {
+    "addresses": [
+      {
+        "id": 1,
+        "label": "Rumah",
+        "name": "Noge Bams",
+        "phone": "087123456789",
+        "address": "Jl Letjen Suprapto No 18, Parit Benut, Kabupaten Karimun, Kepri, Indonesia",
+        "note": "Cat warna kuning",
+        "isDefault": true
+      },
+      {
+        "id": 2,
+        "label": "Kantor",
+        "name": "Noge Bams",
+        "phone": "087123456789",
+        "address": "Jl Soekarno No 4, Parit Benut, Kabupaten Karimun, Kepri, Indonesia",
+        "note": "Gedung Merah Putih",
+        "isDefault": false
+      }
+    ]
+  }
+}

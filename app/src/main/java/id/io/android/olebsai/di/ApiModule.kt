@@ -10,14 +10,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.io.android.olebsai.BuildConfig
+import id.io.android.olebsai.data.source.remote.address.AddressService
 import id.io.android.olebsai.data.source.remote.product.ProductService
 import id.io.android.olebsai.data.source.remote.user.UserService
 import id.io.android.olebsai.util.remote.MockNetworkInterceptor
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -78,11 +79,16 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideUserService(retrofit: Retrofit): UserService =
+    fun providesUserService(retrofit: Retrofit): UserService =
         retrofit.create(UserService::class.java)
 
     @Singleton
     @Provides
-    fun provideProductService(retrofit: Retrofit): ProductService =
+    fun providesProductService(retrofit: Retrofit): ProductService =
         retrofit.create(ProductService::class.java)
+
+    @Singleton
+    @Provides
+    fun providesAddressService(retrofit: Retrofit): AddressService =
+        retrofit.create(AddressService::class.java)
 }

@@ -4,17 +4,26 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/secondaryLightColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Surface</item>
+        <item name="toolbarStyle">@style/Toolbar</item>
         <item name="materialButtonStyle">@style/Button</item>
         <item name="textInputStyle">@style/TextInputLayout</item>
+    </style>
+
+    <style name="Theme.Primary" parent="AppTheme">
+        <item name="colorSecondaryVariant">?colorPrimary</item>
+    </style>
+
+    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar" >
+        <item name="titleTextColor">?colorOnPrimary</item>
+        <item name="navigationIconTint">?colorOnPrimary</item>
     </style>
 
     <style name="Button" parent="Widget.MaterialComponents.Button">

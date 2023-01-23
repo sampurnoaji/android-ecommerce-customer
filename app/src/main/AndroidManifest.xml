@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".presentation.account.address.add.AddressAddActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.order.processed.OrderProcessedActivity"
             android:exported="false" />
         <activity

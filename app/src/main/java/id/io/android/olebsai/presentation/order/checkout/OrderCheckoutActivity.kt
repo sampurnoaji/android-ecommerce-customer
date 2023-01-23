@@ -78,7 +78,7 @@ class OrderCheckoutActivity : AppCompatActivity() {
 
     private fun setupActionView() {
         binding.tvAddressSelect.setOnClickListener {
-            vm.address.value?.id?.let { id -> AddressListActivity.start(this, launcher, id) }
+            AddressListActivity.start(this, launcher, vm.address.value?.id)
         }
 
         binding.btnPay.setOnClickListener {

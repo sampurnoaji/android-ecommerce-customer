@@ -10,5 +10,6 @@ data class Address(
     val name: String,
     val phone: String,
     val address: String,
-    val note: String
+    val note: String,
+    val isDefault: Boolean,
 ) : Parcelable

@@ -1,8 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="cancel">Batal</string>
     <string name="close">Tutup</string>
+    <string name="delete">Hapus</string>
+    <string name="edit">Ubah</string>
     <string name="pay">Bayar</string>
     <string name="track">Lacak</string>
+    <string name="save">Simpan</string>
+
+    <string name="fill_all_field">Lengkapi semua isian</string>
 
     <string name="home">Beranda</string>
     <string name="home_banner_content">Banner</string>
@@ -54,6 +59,18 @@
     <string name="address_select_other">Pilih Alamat Lain</string>
     <string name="address_courier">Pengiriman</string>
     <string name="address_list">Daftar Alamat</string>
+    <string name="address_add">Tambah Alamat</string>
+    <string name="address_edit">Ubah Alamat</string>
+    <string name="address_delete">Hapus Alamat</string>
+    <string name="address_delete_dialog_message">Apakah Anda ingin menghapus alamat ini?</string>
+    <string name="address_set_default_dialog_message">Apakah Anda ingin menjadikan alamat ini sebagai default?</string>
+    <string name="address_full">Alamat Lengkap</string>
+    <string name="address_label">Label Alamat</string>
+    <string name="address_label_helper">Contoh: Rumah/Kantor/Balai</string>
+    <string name="address_recipient">Penerima</string>
+    <string name="address_recipient_phone">No HP Penerima</string>
+    <string name="address_note">Catatan</string>
+    <string name="address_note_helper">Contoh: Pagar rumah kuning</string>
 
     <string name="register">Daftar</string>
 

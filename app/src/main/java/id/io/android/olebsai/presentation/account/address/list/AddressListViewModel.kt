@@ -3,63 +3,42 @@ package id.io.android.olebsai.presentation.account.address.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.io.android.olebsai.domain.model.address.Address
-import id.io.android.olebsai.util.ui.Selection
+import id.io.android.olebsai.domain.repository.AddressRepository
+import id.io.android.olebsai.util.LoadState
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class AddressListViewModel @Inject constructor() : ViewModel() {
+class AddressListViewModel @Inject constructor(
+    private val repository: AddressRepository,
+) : ViewModel() {
 
-    private val _address = MutableLiveData<List<Selection<Address>>>()
-    val address: LiveData<List<Selection<Address>>>
-        get() = _address
+    private val _addressListResult = MutableLiveData<LoadState<List<Address>>>()
+    val addressListResult: LiveData<LoadState<List<Address>>>
+        get() = _addressListResult
 
-    private var _selectedAddress: Address? = null
-    val selectedAddress: Address?
-        get() = _selectedAddress
-
-    companion object {
-        val addressDummy = listOf(
-            Address(
-                id = 1,
-                label = "Rumah",
-                name = "Noge Bams",
-                phone = "087123456789",
-                address = "Jl Letjen Suprapto No 18, Parit Benut, Kabupaten Karimun, Kepri, Indonesia",
-                note = "Cat warna kuning"
-            ),
-            Address(
-                id = 2,
-                label = "Kantor",
-                name = "Noge Bams",
-                phone = "087123456789",
-                address = "Jl Soekarno No 4, Parit Benut, Kabupaten Karimun, Kepri, Indonesia",
-                note = "Gedung Merah Putih"
-            )
-        )
-    }
+    private val _setAddressDefaultResult = MutableLiveData<LoadState<Any>>()
+    val setAddressDefaultResult: LiveData<LoadState<Any>>
+        get() = _setAddressDefaultResult
 
     init {
-        _address.value = addressDummy.map {
-            Selection(
-                isSelected = false,
-                data = it
-            )
+        getAddressList()
+    }
+
+    fun getAddressList() {
+        _addressListResult.value = LoadState.Loading
+        viewModelScope.launch {
+            _addressListResult.value = repository.getAddressList()
         }
     }
 
-    fun selectAddress(id: Int) {
-        _address.value?.let { items ->
-            _address.value = items.map {
-                if (it.data.id == id) {
-                    _selectedAddress = it.data
-                }
-                Selection(
-                    isSelected = it.data.id == id,
-                    data = it.data
-                )
-            }
+    fun setAddressDefault(addressId: Int) {
+        _setAddressDefaultResult.value = LoadState.Loading
+        viewModelScope.launch {
+            _setAddressDefaultResult.value = repository.setAddressDefault(addressId)
         }
     }
 }

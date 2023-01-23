@@ -5,5 +5,5 @@ import id.io.android.olebsai.util.remote.ResponseHelper
 import javax.inject.Inject
 
 class UserRemoteDataSource @Inject constructor(private val api: UserService): ResponseHelper() {
-    suspend fun getUser(): UserResponse? = call { api.getUser().data }
+    suspend fun getUser(): UserResponse = call { api.getUser().data }
 }
