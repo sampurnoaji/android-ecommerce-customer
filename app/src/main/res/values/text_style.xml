@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Text" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    
+    <style name="Text.Heading1">
+        <item name="android:textSize">32sp</item>
+    </style>
+    <style name="Text.Heading1.ExtraBold">
+        <item name="android:fontFamily">@font/poppins_extrabold</item>
+    </style>
+
+    <style name="Text.Heading2">
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="Text.Heading2.SemiBold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="Text.Heading3">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="Text.Heading3.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+    <style name="Text.Heading3.SemiBold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+    <style name="Text.Heading3.Bold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="Text.Heading4">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="Text.Heading4.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+    <style name="Text.Heading4.SemiBold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+    <style name="Text.Heading4.Bold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="Text.Heading5">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="Text.Heading5.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+    <style name="Text.Heading5.SemiBold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+    
+    <style name="Text.Heading6">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.Heading6.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+    <style name="Text.Heading6.SemiBold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="Text.Heading7">
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="Text.Heading7.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+</resources>

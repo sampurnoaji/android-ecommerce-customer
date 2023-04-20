@@ -1,22 +1,24 @@
 package id.io.android.olebsai.presentation.user.login
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
+import id.io.android.olebsai.core.BaseActivity
 import id.io.android.olebsai.databinding.ActivityLoginBinding
-import id.io.android.olebsai.util.LoadState
+import id.io.android.olebsai.presentation.user.otp.OtpActivity
+import id.io.android.olebsai.presentation.user.register.RegisterActivity
 import id.io.android.olebsai.util.ui.Dialog
 import id.io.android.olebsai.util.viewBinding
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
-    private val binding by viewBinding(ActivityLoginBinding::inflate)
-    private val vm by viewModels<LoginViewModel>()
+    override val binding by viewBinding(ActivityLoginBinding::inflate)
+    override val vm by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +28,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupActionView() {
-        with(binding.toolbar) {
-            setSupportActionBar(this)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            setNavigationOnClickListener { onBackPressed() }
-        }
+        binding.imgBack.setOnClickListener { onBackPressed() }
 
         binding.etUsername.doOnTextChanged { text, _, _, _ ->
             vm.onUsernameChanged(text.toString())
@@ -42,6 +40,10 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnLogin.setOnClickListener {
             vm.login()
+        }
+
+        binding.btnRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
@@ -66,11 +68,22 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        vm.login.observe(this) {
-            if (it is LoadState.Success) {
-                setResult(Activity.RESULT_OK)
-                finish()
+        vm.loginResult.observe(
+            onLoading = {},
+            onSuccess = {
+                it?.first?.let { user ->
+                    if (user.otpFlag) {
+                        vm.setLoggedIn()
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    } else {
+                        OtpActivity.start(this, user)
+                    }
+                }
+            },
+            onError = {
+                showErrorDialog(it?.message.toString())
             }
-        }
+        )
     }
 }

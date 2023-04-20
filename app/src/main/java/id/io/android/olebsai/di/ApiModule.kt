@@ -13,6 +13,7 @@ import id.io.android.olebsai.BuildConfig
 import id.io.android.olebsai.data.source.remote.address.AddressService
 import id.io.android.olebsai.data.source.remote.product.ProductService
 import id.io.android.olebsai.data.source.remote.user.UserService
+import id.io.android.olebsai.di.interceptor.AuthInterceptor
 import id.io.android.olebsai.util.remote.MockNetworkInterceptor
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
@@ -53,12 +54,14 @@ object ApiModule {
     @Singleton
     @Provides
     fun providesOkHttpClient(
+        authInterceptor: AuthInterceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor,
         mockNetworkInterceptor: MockNetworkInterceptor,
         chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient =
         if (BuildConfig.DEBUG) {
             OkHttpClient.Builder()
+                .addInterceptor(authInterceptor)
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(mockNetworkInterceptor)
                 .addInterceptor(chuckerInterceptor)

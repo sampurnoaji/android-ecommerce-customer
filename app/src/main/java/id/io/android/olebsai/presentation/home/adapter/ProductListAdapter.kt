@@ -2,25 +2,15 @@ package id.io.android.olebsai.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import id.io.android.olebsai.R
+import androidx.recyclerview.widget.ListAdapter
 import id.io.android.olebsai.databinding.ItemProductBinding
-import id.io.android.olebsai.domain.model.product.Product
-import id.io.android.olebsai.util.toRupiah
+import id.io.android.olebsai.domain.model.product.WProduct
 
-class ProductListAdapter(private val listener: Listener)
-    : PagingDataAdapter<Product, ProductListAdapter.ContentViewHolder>(DIFF_CALLBACK) {
-
-    override fun onBindViewHolder(holder: ContentViewHolder, position: Int) {
-        val product = getItem(position)
-        if (product != null) holder.bind(product, listener)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentViewHolder {
-        return ContentViewHolder(
+class ProductListAdapter(private val listener: ProductViewHolder.Listener) :
+    ListAdapter<WProduct, ProductViewHolder>(DIFF_CALLBACK) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        return ProductViewHolder(
             ItemProductBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -29,37 +19,17 @@ class ProductListAdapter(private val listener: Listener)
         )
     }
 
-    class ContentViewHolder(private val binding: ItemProductBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product, listener: Listener) {
-            binding.imgProduct.load(product.imageUrl) {
-                placeholder(android.R.color.darker_gray)
-                error(android.R.color.darker_gray)
-            }
-            binding.tvName.text = product.name
-            binding.tvPrice.text = product.price.toRupiah()
-            binding.tvOriginalPrice.text = product.originalPrice.toRupiah()
-            binding.tvPercentDiscount.text = "${product.percentDiscount}%"
-            binding.tvRating.text = product.rating.toString()
-            binding.tvSoldCount.text = "Terjual ${product.soldCount}"
-
-            binding.root.setOnClickListener {
-                listener.onProductClicked(product.id)
-            }
-        }
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+        holder.bind(currentList[position], listener)
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Product>() {
-            override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean =
-                oldItem.hashCode() == newItem.hashCode()
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WProduct>() {
+            override fun areItemsTheSame(oldItem: WProduct, newItem: WProduct): Boolean =
+                oldItem.produkId == newItem.produkId
 
-            override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean =
+            override fun areContentsTheSame(oldItem: WProduct, newItem: WProduct): Boolean =
                 oldItem == newItem
         }
-    }
-
-    interface Listener {
-        fun onProductClicked(id: Int)
     }
 }

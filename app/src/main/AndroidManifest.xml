@@ -11,7 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".presentation.account.address.add.AddressAddActivity"
             android:exported="false" />
@@ -22,17 +23,24 @@
             android:name=".presentation.account.address.list.AddressListActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.user.otp.OtpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.user.register.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.user.login.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.order.checkout.OrderCheckoutActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.product.ProductDetailActivity"
+            android:name=".presentation.product.detail.ProductDetailActivity"
             android:exported="false" />
         <activity
             android:name="id.io.android.olebsai.presentation.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -8,7 +8,7 @@ import javax.inject.Inject
 class AddressRemoteDataSource @Inject constructor(private val service: AddressService) :
     ResponseHelper() {
 
-    suspend fun getAddressList(): AddressListResponse = call { service.getAddressList().data }
+    suspend fun getAddressList(): AddressListResponse = call { service.getAddressList().data!! }
     suspend fun setAddressDefault(addressId: Int): Any =
         call { service.setAddressDefault(addressId) }
 

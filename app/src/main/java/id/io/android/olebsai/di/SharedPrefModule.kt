@@ -16,6 +16,8 @@ import javax.inject.Singleton
 object SharedPrefModule {
 
     private const val PREF_NAME = "app_pref"
+    const val KEY_USER_TOKEN = "user_token"
+    const val KEY_USER = "user"
 
     @Singleton
     @Provides

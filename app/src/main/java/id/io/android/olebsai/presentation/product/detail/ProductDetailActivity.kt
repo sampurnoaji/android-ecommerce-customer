@@ -1,4 +1,4 @@
-package id.io.android.olebsai.presentation.product
+package id.io.android.olebsai.presentation.product.detail
 
 import android.content.Context
 import android.content.Intent
@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
-import coil.load
+import androidx.core.view.isGone
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseActivity
 import id.io.android.olebsai.databinding.ActivityProductDetailBinding
-import id.io.android.olebsai.domain.model.product.Product
+import id.io.android.olebsai.domain.model.product.WProduct
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.viewBinding
 
@@ -29,7 +28,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         private const val KEY_PRODUCT_ID = "product-id"
 
         @JvmStatic
-        fun start(context: Context, productId: Int) {
+        fun start(context: Context, productId: String) {
             val starter = Intent(context, ProductDetailActivity::class.java)
                 .putExtra(KEY_PRODUCT_ID, productId)
             context.startActivity(starter)
@@ -42,16 +41,15 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         setupActionView()
         observeViewModel()
 
-        intent?.getIntExtra(KEY_PRODUCT_ID, 0)?.let {
+        intent?.getStringExtra(KEY_PRODUCT_ID)?.let {
             vm.getProductDetail(it)
         }
     }
 
     private fun setupView() {
         with(binding.toolbar) {
-            setSupportActionBar(this)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            setNavigationOnClickListener { onBackPressed() }
+            imgBack.setOnClickListener { onBackPressed() }
+            tvTitle.text = getString(R.string.product_detail)
         }
     }
 
@@ -70,33 +68,25 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
 
     private fun observeViewModel() {
         vm.product.observe(
-            onLoading = {
-                binding.pbLoading.isVisible = true
-            },
-            onSuccess = {
-                binding.pbLoading.isVisible = false
-                inflateProductData(it)
+            onLoading = {},
+            onSuccess = { product ->
+                product?.let { inflateProductData(it) }
             },
             onError = {
-                binding.pbLoading.isVisible = false
+                showErrorDialog(it?.message.toString())
             }
         )
 
         vm.insertProduct.observe(
-            onLoading = {
-                binding.pbLoading.isVisible = true
-            },
+            onLoading = {},
             onSuccess = {
-                binding.pbLoading.isVisible = false
                 Snackbar.make(
                     binding.root,
                     getString(R.string.basket_success_add_product_to_basket),
                     Snackbar.LENGTH_SHORT
                 ).show()
             },
-            onError = {
-                binding.pbLoading.isVisible = false
-            }
+            onError = {}
         )
     }
 
@@ -106,26 +96,31 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         }
     }
 
-    private fun inflateProductData(product: Product?) {
-        product?.let {
-            with(binding) {
-                imgProduct.load(product.imageUrl) {
-                    placeholder(R.color.background)
-                }
-                tvName.text = product.name
-                tvPrice.text = product.price.toRupiah()
-                tvOriginalPrice.text = product.originalPrice.toRupiah()
-                tvPercentDiscount.text = "${product.percentDiscount}%"
-                tvRating.text = product.rating.toString()
-                tvSoldCount.text = "Terjual ${product.soldCount}"
-
-                tvShopName.text = product.shopName
-                tvCondition.text = product.condition
-                tvDimension.text = product.dimension
-                tvMinOrder.text = product.minOrder
-                tvCategory.text = product.category
-                tvDesc.text = product.description
+    private fun inflateProductData(product: WProduct) {
+        with(binding) {
+//            imgProduct.load(product.imageUrl) {
+//                placeholder(R.color.background)
+//            }
+            tvName.text = product.namaProduk
+            if (product.isHargaPromo) {
+                tvPrice.text = product.hargaPromo.toRupiah()
+                tvOriginalPrice.text = product.hargaNormal.toRupiah()
+                tvPercentDiscount.text = "${product.discount()}%"
+            } else {
+                tvPrice.text = product.hargaNormal.toRupiah()
+                tvOriginalPrice.isGone = true
+                tvPercentDiscount.isGone = true
             }
+//            tvRating.text = product.rating.toString()
+            tvSoldCount.text = "Terjual ${product.qtyTerjual}"
+
+            tvShopName.text = product.namaToko
+            tvCondition.text = "Baru"
+//            tvDimension.text = product.dimension
+//            tvMinOrder.text = product.minOrder
+            tvCategory.text = product.namaKategori
+            tvSubCategory.text = product.namaSubKategori
+            tvDesc.text = product.deskripsi
         }
     }
 

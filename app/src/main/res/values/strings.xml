@@ -6,6 +6,7 @@
     <string name="pay">Bayar</string>
     <string name="track">Lacak</string>
     <string name="save">Simpan</string>
+    <string name="verify">Verifikasi</string>
 
     <string name="fill_all_field">Lengkapi semua isian</string>
 
@@ -33,6 +34,7 @@
     <string name="product_dimension">Dimensi</string>
     <string name="product_min_order">Min. Pemesanan</string>
     <string name="product_category">Kategori</string>
+    <string name="product_sub_category">Sub Kategori</string>
     <string name="product_desc">Deskripsi</string>
     <string name="product_shop">Toko</string>
     <string name="product_last_order">Produk Terakhir Dibeli</string>
@@ -73,8 +75,17 @@
     <string name="address_note_helper">Contoh: Pagar rumah kuning</string>
 
     <string name="register">Daftar</string>
+    <string name="register_header">Selamat datang di Oleb Sai!</string>
+    <string name="register_desc">Hai, nampaknya kamu pengguna baru. Kamu dapat menggunakan aplikasi setelah mendaftar.</string>
+    <string name="register_phone_helper">Contoh: 082123456789</string>
+    <string name="register_repeat_password">Ulangi Password</string>
+    <string name="register_username">Nama Lengkap</string>
+    <string name="register_success">Register berhasil</string>
+    <string name="register_failed">Register gagal</string>
 
     <string name="login">Login</string>
+    <string name="login_header">Selamat datang!</string>
+    <string name="login_desc">Kamu dapat melanjutkan dari bagian terakhir yang kamu tinggalkan.</string>
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_forgot_password">Lupa password</string>
@@ -96,6 +107,13 @@
     <string name="trx_order_date">Tanggal Order</string>
     <string name="trx_order_processed">Transaksi Anda sedang diproses</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="form_email_invalid">Email tidak valid</string>
+    <string name="form_phone_invalid">No HP tidak valid</string>
+    <string name="form_password_not_equal">Password tidak sama</string>
+    <string name="form_required_field">Wajib diisi</string>
+
+    <string name="otp_title">Input OTP</string>
+    <string name="otp_header">Masukkan kode OTP di email</string>
+    <string name="otp_desc">Cek folder kotak masuk di emailmu, jangan lupa cek folder spam juga ya!</string>
+    <string name="otp_error_six_digit">OTP harus 6 digit</string>
 </resources>

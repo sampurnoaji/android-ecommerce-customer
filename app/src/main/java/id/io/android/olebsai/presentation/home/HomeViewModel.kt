@@ -1,29 +1,28 @@
 package id.io.android.olebsai.presentation.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.io.android.olebsai.R
 import id.io.android.olebsai.domain.model.category.Category
 import id.io.android.olebsai.domain.model.category.CategoryType
-import id.io.android.olebsai.domain.model.product.Product
+import id.io.android.olebsai.domain.model.user.FrontPageData
 import id.io.android.olebsai.domain.model.voucher.Voucher
-import id.io.android.olebsai.domain.usecase.product.GetProductPagingSourceUseCase
-import kotlinx.coroutines.flow.Flow
+import id.io.android.olebsai.domain.repository.UserRepository
+import id.io.android.olebsai.util.LoadState
+import id.io.android.olebsai.util.SingleLiveEvent
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getProductPagingSourceUseCase: GetProductPagingSourceUseCase
+    private val repository: UserRepository,
 ) : ViewModel() {
 
-    companion object {
-        private const val ITEMS_PER_PAGE = 10
-    }
+    private val _frontPageData = SingleLiveEvent<LoadState<FrontPageData>>()
+    val frontPageData: LiveData<LoadState<FrontPageData>>
+        get() = _frontPageData
 
     val images = listOf(
         R.drawable.banner1,
@@ -45,8 +44,10 @@ class HomeViewModel @Inject constructor(
         Voucher(id = 1, name = "Gratis Ongkir", desc = "Sisa 2 hari lagi"),
     )
 
-    val products: Flow<PagingData<Product>> = Pager(
-        config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
-        pagingSourceFactory = { getProductPagingSourceUseCase() }
-    ).flow.cachedIn(viewModelScope)
+    fun getFrontPageData() {
+        _frontPageData.value = LoadState.Loading
+        viewModelScope.launch {
+            _frontPageData.value = repository.getFrontPageData()
+        }
+    }
 }

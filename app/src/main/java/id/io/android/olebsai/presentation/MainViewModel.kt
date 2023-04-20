@@ -10,6 +10,7 @@ import id.io.android.olebsai.domain.model.product.Product
 import id.io.android.olebsai.domain.usecase.product.ProductUseCases
 import id.io.android.olebsai.domain.usecase.user.UserUseCases
 import id.io.android.olebsai.util.NoParams
+import id.io.android.olebsai.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class MainViewModel @Inject constructor(
     private val productUseCases: ProductUseCases
 ) : ViewModel() {
 
-    private val _isLoggedIn = MutableLiveData(false)
+    private val _isLoggedIn = SingleLiveEvent<Boolean>()
     val isLoggedIn: LiveData<Boolean>
         get() = _isLoggedIn
 

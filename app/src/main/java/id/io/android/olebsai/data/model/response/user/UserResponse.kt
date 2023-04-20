@@ -2,7 +2,6 @@ package id.io.android.olebsai.data.model.response.user
 
 
 import com.squareup.moshi.Json
-import id.io.android.olebsai.domain.model.User
 
 data class UserResponse(
     @field:Json(name = "avatar")
@@ -15,7 +14,4 @@ data class UserResponse(
     val id: Int? = null,
     @field:Json(name = "last_name")
     val lastName: String? = null
-) {
-
-    fun toDomain(): User = User(id = id ?: 0)
-}
+)

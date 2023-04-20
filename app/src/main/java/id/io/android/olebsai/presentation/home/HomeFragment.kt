@@ -5,10 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,14 +23,14 @@ import id.io.android.olebsai.presentation.category.CategoryFragment
 import id.io.android.olebsai.presentation.home.adapter.BannerListAdapter
 import id.io.android.olebsai.presentation.home.adapter.CategoryListAdapter
 import id.io.android.olebsai.presentation.home.adapter.ProductListAdapter
+import id.io.android.olebsai.presentation.home.adapter.ProductViewHolder
 import id.io.android.olebsai.presentation.home.adapter.VoucherListAdapter
-import id.io.android.olebsai.presentation.product.ProductDetailActivity
+import id.io.android.olebsai.presentation.product.detail.ProductDetailActivity
 import id.io.android.olebsai.util.dpToPx
 import id.io.android.olebsai.util.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -60,9 +57,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
     private val voucherListAdapter by lazy { VoucherListAdapter(vm.vouchers) }
     private val productListAdapter by lazy {
-        ProductListAdapter(object : ProductListAdapter.Listener {
-            override fun onProductClicked(id: Int) {
-                ProductDetailActivity.start(requireContext(), id)
+        ProductListAdapter(object : ProductViewHolder.Listener {
+            override fun onProductClicked(id: String) {
+                if (actVm.isLoggedIn.value == true)
+                    ProductDetailActivity.start(requireContext(), id)
+                else (requireActivity() as MainActivity).navigateToLogin()
             }
         })
     }
@@ -71,6 +70,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
         setupActionView()
         observeViewModel()
+        vm.getFrontPageData()
+
         setupBannerCarousel(vm.images)
         setupCategoryList()
         setupVoucherList()
@@ -87,6 +88,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         actVm.isLoggedIn.observe(viewLifecycleOwner) {
             binding.btnLogin.isVisible = !it
         }
+
+        vm.frontPageData.observe(
+            onLoading = {},
+            onSuccess = {
+                productListAdapter.submitList(it?.featuredProduk)
+            },
+            onError = {}
+        )
     }
 
     private fun setupBannerCarousel(images: List<Int>) {
@@ -140,20 +149,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.rvProduct.apply {
             adapter = productListAdapter
             layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                vm.products.collectLatest {
-                    productListAdapter.submitData(it)
-                }
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                productListAdapter.loadStateFlow.collect {
-                    binding.appendProgress.isVisible = it.source.append is LoadState.Loading
-                }
-            }
         }
     }
 

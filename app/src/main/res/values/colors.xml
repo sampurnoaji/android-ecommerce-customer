@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primary_50">#CD002E</color>
+    <color name="primary_10">#FFEBEF</color>
+
+    <color name="blue_gray_50">#7D82A0</color>
+    <color name="blue_gray_10">#F3F4F6</color>
+
+    <color name="blue_black_50">#252525</color>
+
+    <color name="red_50">#D64219</color>
+    <color name="red_10">#FDE8CF</color>
+
+    <color name="error">#FF5454</color>
+
+    <color name="green_50">#63BC1E</color>
+    <color name="green_10">#ECFCD0</color>
+
+    <color name="blue_50">#1474E3</color>
+    <color name="blue_10">#D0EEFD</color>
+
+    <color name="orange_50">#FFB764</color>
+    <color name="orange_10">#FFF3D8</color>
+
+    <color name="yellow_50">#F9D758</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 

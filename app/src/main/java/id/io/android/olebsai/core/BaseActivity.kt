@@ -49,22 +49,23 @@ abstract class BaseActivity<B : ViewBinding, VM : ViewModel> : AppCompatActivity
         }
     }
 
-    private fun showLoading() {
-        loading = MaterialAlertDialogBuilder(this)
-            .setView(R.layout.dialog_loading)
-            .setCancelable(false)
-            .create()
-            .apply {
-                this.window?.let { window ->
-                    window.setDimAmount(0.75F)
-                    window.setBackgroundDrawableResource(android.R.color.transparent)
-                    this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+    fun showLoading() {
+        if (loading == null)
+            loading = MaterialAlertDialogBuilder(this)
+                .setView(R.layout.dialog_loading)
+                .setCancelable(false)
+                .create()
+                .apply {
+                    this.window?.let { window ->
+                        window.setDimAmount(0.75F)
+                        window.setBackgroundDrawableResource(android.R.color.transparent)
+                        this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+                    }
                 }
-            }
         loading?.show()
     }
 
-    private fun hideLoading() {
+    fun hideLoading() {
         loading?.hide()
     }
 
@@ -75,5 +76,10 @@ abstract class BaseActivity<B : ViewBinding, VM : ViewModel> : AppCompatActivity
             positiveButtonText = getString(R.string.close),
             positiveAction = { onCloseDialog?.invoke() }
         ).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        loading?.hide()
     }
 }
