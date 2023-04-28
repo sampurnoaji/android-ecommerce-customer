@@ -55,7 +55,10 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
 
     private fun setupActionView() {
         binding.btnAddToCart.setOnClickListener {
-            vm.addProductToBasket()
+            vm.addProductToBasket(
+                catatan = "",
+                qty = 1
+            )
         }
     }
 

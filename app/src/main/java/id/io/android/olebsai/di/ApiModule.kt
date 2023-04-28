@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.io.android.olebsai.BuildConfig
 import id.io.android.olebsai.data.source.remote.address.AddressService
+import id.io.android.olebsai.data.source.remote.basket.BasketService
 import id.io.android.olebsai.data.source.remote.product.ProductService
 import id.io.android.olebsai.data.source.remote.user.UserService
 import id.io.android.olebsai.di.interceptor.AuthInterceptor
@@ -94,4 +95,9 @@ object ApiModule {
     @Provides
     fun providesAddressService(retrofit: Retrofit): AddressService =
         retrofit.create(AddressService::class.java)
+
+    @Singleton
+    @Provides
+    fun providesBasketService(retrofit: Retrofit): BasketService =
+        retrofit.create(BasketService::class.java)
 }

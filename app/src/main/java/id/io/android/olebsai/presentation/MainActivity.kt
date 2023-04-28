@@ -77,7 +77,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     true
                 }
                 R.id.menuBasket -> {
-                    hideBottomNav()
                     showFragment(basketFragment)
                     if (basketFragment.isAdded) basketFragment.resume()
                     true
@@ -99,9 +98,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun observeViewModel() {
-        vm.basketProducts.observe(this) {
-            setBasketProductsCountBadge(it.size)
-        }
+//        vm.basketProducts.observe(this) {
+//            setBasketProductsCountBadge(it.size)
+//        }
     }
 
     private fun checkArguments() {

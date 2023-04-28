@@ -1,8 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="add">Tambah</string>
     <string name="cancel">Batal</string>
     <string name="close">Tutup</string>
     <string name="delete">Hapus</string>
     <string name="edit">Ubah</string>
+    <string name="min">Kurangi</string>
     <string name="pay">Bayar</string>
     <string name="track">Lacak</string>
     <string name="save">Simpan</string>
@@ -47,6 +49,8 @@
     <string name="basket_delete_confirmation">Apakah Anda ingin menghapus produk ini dari keranjang?</string>
     <string name="basket_add_product">+ Keranjang</string>
     <string name="basket_checkout">Checkout</string>
+    <string name="basket_note">Catatan</string>
+    <string name="basket_note_add">Tambah Catatan</string>
     <string name="basket_total">Total Barang</string>
     <string name="basket_success_add_product_to_basket">Barang ditambahkan ke keranjang</string>
 

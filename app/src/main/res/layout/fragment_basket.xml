@@ -17,14 +17,13 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
             app:title="@string/basket" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProduct"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/white"
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toTopOf="@+id/sectionButton"
@@ -82,12 +81,11 @@
 
         <TextView
             android:id="@+id/tvTotal"
+            style="@style/Text.Heading5.SemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:textColor="?colorPrimary"
-            android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/labelTotal"
             app:layout_constraintTop_toBottomOf="@+id/labelTotal"

@@ -5,9 +5,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import id.io.android.olebsai.data.repository.AddressRepositoryImpl
+import id.io.android.olebsai.data.repository.BasketRepositoryImpl
 import id.io.android.olebsai.data.repository.ProductRepositoryImpl
 import id.io.android.olebsai.data.repository.UserRepositoryImpl
 import id.io.android.olebsai.domain.repository.AddressRepository
+import id.io.android.olebsai.domain.repository.BasketRepository
 import id.io.android.olebsai.domain.repository.ProductRepository
 import id.io.android.olebsai.domain.repository.UserRepository
 
@@ -22,4 +24,7 @@ interface RepositoryModule {
 
     @Binds
     fun bindsAddressRepository(repositoryImpl: AddressRepositoryImpl): AddressRepository
+
+    @Binds
+    fun bindsBasketRepository(repositoryImpl: BasketRepositoryImpl): BasketRepository
 }

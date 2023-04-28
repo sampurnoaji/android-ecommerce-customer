@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
+import id.io.android.olebsai.R
 import id.io.android.olebsai.util.LoadState
+import id.io.android.olebsai.util.ui.Dialog
 
 
 abstract class BaseFragment<B : ViewBinding, VM : ViewModel>(@LayoutRes id: Int) : Fragment(id) {
@@ -35,5 +37,14 @@ abstract class BaseFragment<B : ViewBinding, VM : ViewModel>(@LayoutRes id: Int)
                 }
             }
         }
+    }
+
+    fun showErrorDialog(message: String, onCloseDialog: (() -> Unit)? = null) {
+        Dialog(
+            context = requireContext(),
+            message = message,
+            positiveButtonText = getString(R.string.close),
+            positiveAction = { onCloseDialog?.invoke() }
+        ).show()
     }
 }

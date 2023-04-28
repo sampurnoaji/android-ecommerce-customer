@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.io.android.olebsai.domain.model.product.Product
 import id.io.android.olebsai.domain.model.product.WProduct
+import id.io.android.olebsai.domain.repository.BasketRepository
 import id.io.android.olebsai.domain.repository.ProductRepository
 import id.io.android.olebsai.domain.usecase.product.ProductUseCases
 import id.io.android.olebsai.util.LoadState
@@ -18,15 +19,16 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
     private val repository: ProductRepository,
-    private val productUseCases: ProductUseCases
+    private val productUseCases: ProductUseCases,
+    private val basketRepository: BasketRepository,
 ) : ViewModel() {
 
     private val _product = SingleLiveEvent<LoadState<WProduct>>()
     val product: LiveData<LoadState<WProduct>>
         get() = _product
 
-    private val _insertProduct = MutableLiveData<LoadState<Boolean>>()
-    val insertProduct: LiveData<LoadState<Boolean>>
+    private val _insertProduct = SingleLiveEvent<LoadState<String>>()
+    val insertProduct: LiveData<LoadState<String>>
         get() = _insertProduct
 
     private val _basketProducts = MutableLiveData<List<Product>>()
@@ -44,17 +46,20 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    fun addProductToBasket() {
+    fun addProductToBasket(
+        qty: Int,
+        catatan: String,
+    ) {
         if (_product.value is LoadState.Success) {
-            (_product.value as LoadState.Success<Product>).data.let {
+            (_product.value as LoadState.Success<WProduct>).data.let {
                 _insertProduct.value = LoadState.Loading
                 viewModelScope.launch {
-                    try {
-                        productUseCases.insertProductToBasketUseCase(it)
-                        _insertProduct.value = LoadState.Success(true)
-                    } catch (e: Exception) {
-                        _insertProduct.value = LoadState.Error()
-                    }
+                    _insertProduct.value = basketRepository.addProductToBasket(
+                        productId = it.produkId,
+                        qty = qty,
+                        tokoId = it.tokoId,
+                        catatan = catatan
+                    )
                 }
             }
         }
