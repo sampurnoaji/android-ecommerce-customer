@@ -9,4 +9,5 @@ data class User(
     val username: String,
     val email: String,
     val otpFlag: Boolean,
+    val phone: String,
 ): Parcelable

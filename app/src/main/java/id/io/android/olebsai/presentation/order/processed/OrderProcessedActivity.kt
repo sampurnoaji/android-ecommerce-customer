@@ -3,6 +3,7 @@ package id.io.android.olebsai.presentation.order.processed
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import id.io.android.olebsai.R
 import id.io.android.olebsai.databinding.ActivityOrderProcessedBinding
@@ -29,7 +30,11 @@ class OrderProcessedActivity : AppCompatActivity() {
             MainActivity.start(this, R.id.menuTrx)
             finish()
         }
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
-    override fun onBackPressed() {}
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {}
+    }
 }

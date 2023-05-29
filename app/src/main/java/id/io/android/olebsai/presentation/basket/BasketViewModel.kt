@@ -39,6 +39,10 @@ class BasketViewModel @Inject constructor(
     val removeProductResult: LiveData<LoadState<String>>
         get() = _removeProductResult
 
+    private val _checkoutResult = SingleLiveEvent<LoadState<String>>()
+    val checkoutResult: LiveData<LoadState<String>>
+        get() = _checkoutResult
+
     val selectedProducts: LiveData<List<Pair<Int, BasketItem>>> = Transformations.map(_items) {
         it.filter { item ->
             item.viewType == ProductBasketListAdapter.CONTENT_TYPE
@@ -121,6 +125,13 @@ class BasketViewModel @Inject constructor(
         _removeProductResult.value = LoadState.Loading
         viewModelScope.launch {
             _removeProductResult.value = repository.removeProduct(productId)
+        }
+    }
+
+    fun checkout(basketIds: List<String>, namaJasaPengiriman: String) {
+        _checkoutResult.value = LoadState.Loading
+        viewModelScope.launch {
+            _checkoutResult.value = repository.checkout(basketIds, namaJasaPengiriman)
         }
     }
 }

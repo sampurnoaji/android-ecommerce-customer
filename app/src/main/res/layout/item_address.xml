@@ -25,10 +25,10 @@
 
         <TextView
             android:id="@+id/tvLabelName"
+            style="@style/Text.Heading5.SemiBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/imgCheck"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +36,7 @@
 
         <TextView
             android:id="@+id/tvPhone"
+            style="@style/Text.Heading5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -44,24 +45,26 @@
 
         <TextView
             android:id="@+id/tvAddress"
+            style="@style/Text.Heading5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Jl Letjen Suprapto No 18, Parit Benut, Kabupaten Karimun, Kepri, Indonesia"
-            app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+            app:layout_constraintTop_toBottomOf="@+id/tvPhone"
+            tools:text="Jl Letjen Suprapto No 18, Parit Benut, Kabupaten Karimun, Kepri, Indonesia" />
 
         <TextView
             android:id="@+id/tvAddressNote"
+            style="@style/Text.Heading6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:drawablePadding="4dp"
-            android:text="Cat warna kuning, samping Toko Besi"
-            android:textSize="12sp"
+            android:textColor="@color/blue_gray_50"
             android:textStyle="italic"
             app:drawableStartCompat="@drawable/ic_baseline_sticky_note_2_16"
             app:drawableTint="@android:color/darker_gray"
-            app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+            app:layout_constraintTop_toBottomOf="@+id/tvAddress"
+            tools:text="Cat warna kuning, samping Toko Besi" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

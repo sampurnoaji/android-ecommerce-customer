@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "id.io.android.olebsai.customer"
         minSdk 23
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -62,7 +62,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Security
-    def security_crypto = "1.0.0"
+    def security_crypto = "1.1.0-alpha01"
     implementation("androidx.security:security-crypto:$security_crypto")
     
     // Dependency Injection
@@ -101,7 +101,9 @@ dependencies {
     def paging = "3.1.1"
     def coil = "2.0.0-rc03"
     def lottie = "5.2.0"
+    def swipeRefreshLayout = "1.1.0"
     implementation "androidx.paging:paging-runtime:$paging"
     implementation("io.coil-kt:coil:$coil")
     implementation("com.airbnb.android:lottie:$lottie")
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayout"
 }

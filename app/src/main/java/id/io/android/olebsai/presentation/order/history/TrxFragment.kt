@@ -2,6 +2,7 @@ package id.io.android.olebsai.presentation.order.history
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.io.android.olebsai.R
@@ -22,6 +23,11 @@ class TrxFragment : BaseFragment<FragmentTrxBinding, TrxViewModel>(R.layout.frag
     }
 
     private fun setupView() {
+        with(binding.toolbar) {
+            imgBack.isGone = true
+            tvTitle.text = getString(R.string.trx)
+        }
+
         with(binding.rvTrx) {
             adapter = trxListAdapter
             layoutManager = LinearLayoutManager(requireContext())

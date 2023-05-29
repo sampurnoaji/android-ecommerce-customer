@@ -15,4 +15,5 @@ interface BasketRepository {
     suspend fun updateQty(basketId: String, qty: Int): LoadState<String>
     suspend fun updateNote(basketId: String, note: String): LoadState<String>
     suspend fun removeProduct(productId: String): LoadState<String>
+    suspend fun checkout(basketIds: List<String>, namaJasaPengiriman: String): LoadState<String>
 }

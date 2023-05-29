@@ -6,25 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".presentation.order.checkout.OrderCheckoutActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            style="@style/Widget.MaterialComponents.Toolbar.Surface"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="@string/order_checkout" />
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="wrap_content" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/sectionButton"
-        app:layout_constraintTop_toBottomOf="@+id/appBar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,12 +33,10 @@
 
                 <TextView
                     android:id="@+id/labelAddress"
+                    style="@style/Text.Heading4.SemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/address"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,18 +94,16 @@
 
             <TextView
                 android:id="@+id/tvShopName"
+                style="@style/Text.Heading4.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="?colorOnPrimary"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
-                android:text="Toko Maju Jaya"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Toko Maju Jaya" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvProduct"
@@ -137,12 +125,10 @@
 
                 <TextView
                     android:id="@+id/labelCourier"
+                    style="@style/Text.Heading4.SemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/address_courier"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -163,20 +149,26 @@
 
                         <TextView
                             android:id="@+id/tvCourierName"
-                            android:layout_width="match_parent"
+                            style="@style/Text.Heading5"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Bebas Ongkir (Rp 0)"
-                            android:textColor="@color/black"
+                            android:text="@string/checkout_courier_select"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tvCourierEstimate"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Estimasi tiba 20-23 Sep"
-                            app:layout_constraintTop_toBottomOf="@+id/tvCourierName" />
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView"
+                            app:layout_constraintStart_toStartOf="@+id/tvCourierName"
+                            app:layout_constraintTop_toBottomOf="@+id/tvCourierName"
+                            tools:text="Estimasi tiba 20-23 Sep" />
 
                         <ImageView
+                            android:id="@+id/imageView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/address_courier"
@@ -198,32 +190,30 @@
 
                 <TextView
                     android:id="@+id/labelSummary"
+                    style="@style/Text.Heading4.SemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/checkout_summary"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/labelProductTotal"
+                    style="@style/Text.Heading5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/checkout_product_total"
-                    android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/labelSummary" />
 
                 <TextView
                     android:id="@+id/labelDeliveryTotal"
+                    style="@style/Text.Heading5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/checkout_delivery_total"
-                    android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/labelProductTotal" />
 
@@ -232,18 +222,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Rp 120.000"
                     app:layout_constraintBottom_toBottomOf="@+id/labelProductTotal"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Rp 120.000" />
 
                 <TextView
                     android:id="@+id/tvDeliveryTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Rp 0"
                     app:layout_constraintBottom_toBottomOf="@+id/labelDeliveryTotal"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Rp 0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -270,12 +260,11 @@
 
         <TextView
             android:id="@+id/tvSummaryTotal"
+            style="@style/Text.Heading4.SemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:textColor="?colorPrimary"
-            android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/labelSummaryTotal"
             app:layout_constraintTop_toBottomOf="@+id/labelSummaryTotal"

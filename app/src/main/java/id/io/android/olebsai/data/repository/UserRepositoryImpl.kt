@@ -2,6 +2,7 @@ package id.io.android.olebsai.data.repository
 
 import id.io.android.olebsai.data.source.local.user.UserLocalDataSource
 import id.io.android.olebsai.data.source.remote.user.UserRemoteDataSource
+import id.io.android.olebsai.domain.model.address.Address
 import id.io.android.olebsai.domain.model.user.FrontPageData
 import id.io.android.olebsai.domain.model.user.LoginParams
 import id.io.android.olebsai.domain.model.user.RegisterParams
@@ -10,6 +11,8 @@ import id.io.android.olebsai.domain.repository.UserRepository
 import id.io.android.olebsai.util.LoadState
 import id.io.android.olebsai.util.remote.ResponseHelper
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class UserRepositoryImpl @Inject constructor(
     private val localDataSource: UserLocalDataSource,
@@ -33,6 +36,36 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getFrontPageData(): LoadState<FrontPageData> {
         return map { remoteDataSource.getFrontPageData().toDomain() }
+    }
+
+    override suspend fun getMasterUser(): LoadState<User> {
+        return map { remoteDataSource.getUser().toDomain() }
+    }
+
+    override fun getAddressList(): Flow<List<Address>> {
+        return localDataSource.getAddressList().map {
+            it.map { addressEntity -> addressEntity.toDomain() }
+        }
+    }
+
+    override suspend fun addAddress(address: Address) {
+        localDataSource.addAddress(address.toEntity())
+    }
+
+    override suspend fun updateAddress(address: Address) {
+        localDataSource.updateAddress(address.toEntity())
+    }
+
+    override suspend fun deleteAddress(addressId: Int) {
+        localDataSource.deleteAddress(addressId)
+    }
+
+    override suspend fun setDefaultAddress(address: Address) {
+        localDataSource.setDefaultAddress(address.toEntity())
+    }
+
+    override suspend fun getDefaultAddress(): Address? {
+        return localDataSource.getDefaultAddress()?.toDomain()
     }
 
     override fun isLoggedIn(): Boolean = localDataSource.isLoggedIn()

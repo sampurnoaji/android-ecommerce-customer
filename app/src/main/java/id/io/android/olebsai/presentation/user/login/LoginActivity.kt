@@ -82,7 +82,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 }
             },
             onError = {
-                showErrorDialog(it?.message.toString())
+                showInfoDialog(it?.message.toString())
             }
         )
     }

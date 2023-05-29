@@ -1,6 +1,7 @@
 package id.io.android.olebsai.data.source.remote.basket
 
 import id.io.android.olebsai.data.model.request.basket.AddProductToBasketRequest
+import id.io.android.olebsai.data.model.request.basket.CheckoutRequest
 import id.io.android.olebsai.data.model.request.basket.RemoveProductRequest
 import id.io.android.olebsai.data.model.request.basket.UpdateNoteRequest
 import id.io.android.olebsai.data.model.request.basket.UpdateQtyRequest
@@ -43,5 +44,11 @@ class BasketRemoteDataSource @Inject constructor(private val service: BasketServ
 
     suspend fun removeProduct(productId: String): String {
         return call { service.removeProduct(RemoveProductRequest(productId)).message.orEmpty() }
+    }
+
+    suspend fun checkout(basketIds: List<String>, namaJasaPengiriman: String): String {
+        return call {
+            service.checkout(CheckoutRequest(basketIds, namaJasaPengiriman)).message.orEmpty()
+        }
     }
 }

@@ -1,10 +1,8 @@
 package id.io.android.olebsai.presentation.account.address.add
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,6 +12,7 @@ import id.io.android.olebsai.databinding.ActivityAddressAddBinding
 import id.io.android.olebsai.domain.model.address.Address
 import id.io.android.olebsai.util.ui.Dialog
 import id.io.android.olebsai.util.viewBinding
+import java.util.Date
 
 @AndroidEntryPoint
 class AddressAddActivity : BaseActivity<ActivityAddressAddBinding, AddressAddViewModel>() {
@@ -21,7 +20,7 @@ class AddressAddActivity : BaseActivity<ActivityAddressAddBinding, AddressAddVie
     override val binding by viewBinding(ActivityAddressAddBinding::inflate)
     override val vm by viewModels<AddressAddViewModel>()
 
-    private var addressId: Int? = null
+    private var address: Address? = null
 
     companion object {
         private const val KEY_ADDRESS = "address"
@@ -29,10 +28,9 @@ class AddressAddActivity : BaseActivity<ActivityAddressAddBinding, AddressAddVie
         @JvmStatic
         fun start(
             context: Context,
-            launcher: ActivityResultLauncher<Intent>,
             address: Address? = null
         ) {
-            launcher.launch(
+            context.startActivity(
                 Intent(context, AddressAddActivity::class.java)
                     .putExtra(KEY_ADDRESS, address)
             )
@@ -55,18 +53,18 @@ class AddressAddActivity : BaseActivity<ActivityAddressAddBinding, AddressAddVie
         }
 
         intent.getParcelableExtra<Address>(KEY_ADDRESS)?.let {
-            addressId = it.id
+            address = it
 
             binding.etLabel.setText(it.label)
             binding.etRecipient.setText(it.name)
             binding.etRecipientPhone.setText(it.phone)
             binding.etAddressFull.setText(it.address)
             binding.etNote.setText(it.note)
-
-            binding.btnAddAddress.isVisible = false
-            binding.btnEdit.isVisible = true
-            binding.btnDelete.isVisible = true
         }
+
+        binding.btnAddAddress.isVisible = address == null
+        binding.btnEdit.isVisible = address != null
+        binding.btnDelete.isVisible = address != null
     }
 
     private fun setupActionView() {
@@ -84,7 +82,7 @@ class AddressAddActivity : BaseActivity<ActivityAddressAddBinding, AddressAddVie
                 message = getString(R.string.address_delete_dialog_message),
                 positiveButtonText = getString(R.string.delete),
                 positiveAction = {
-                    addressId?.let { vm.deleteAddress(it) }
+                    address?.let { vm.deleteAddress(it.id) }
                 },
                 negativeButtonText = getString(R.string.cancel)
             ).show()
@@ -95,38 +93,35 @@ class AddressAddActivity : BaseActivity<ActivityAddressAddBinding, AddressAddVie
         vm.addAddressResult.observe(
             onLoading = {},
             onSuccess = {
-                setResult(Activity.RESULT_OK)
-                finish()
+                showInfoDialog(getString(R.string.address_add_success)) { finish() }
             },
             onError = {
-                showErrorDialog(it?.message.orEmpty())
+                showInfoDialog(getString(R.string.address_add_failed))
             }
         )
 
         vm.updateAddressResult.observe(
             onLoading = {},
             onSuccess = {
-                setResult(Activity.RESULT_OK)
                 finish()
             },
             onError = {
-                showErrorDialog(it?.message.orEmpty())
+                showInfoDialog(it?.message.orEmpty())
             }
         )
 
         vm.deleteAddressResult.observe(
             onLoading = {},
             onSuccess = {
-                setResult(Activity.RESULT_OK)
                 finish()
             },
             onError = {
-                showErrorDialog(it?.message.orEmpty())
+                showInfoDialog(it?.message.orEmpty())
             }
         )
     }
 
-    private fun validateInput(isAddNewAddress: Boolean = false) {
+    private fun validateInput(isAddNewAddress: Boolean = true) {
         val label = binding.etLabel.text.toString().trim()
         val name = binding.etRecipient.text.toString().trim()
         val phone = binding.etRecipientPhone.text.toString().trim()
@@ -141,13 +136,13 @@ class AddressAddActivity : BaseActivity<ActivityAddressAddBinding, AddressAddVie
             ).show()
         } else {
             val input = Address(
-                id = addressId ?: 0,
+                id = this.address?.id ?: Date().time.toInt(),
                 label = label,
                 name = name,
                 phone = phone,
                 address = address,
                 note = note,
-                isDefault = false,
+                isDefault = this.address?.isDefault ?: false,
             )
             if (isAddNewAddress) vm.addAddress(input)
             else vm.updateAddress(input)

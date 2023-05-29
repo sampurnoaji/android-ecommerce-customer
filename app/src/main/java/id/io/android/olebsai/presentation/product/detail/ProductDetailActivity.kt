@@ -5,14 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isGone
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseActivity
 import id.io.android.olebsai.databinding.ActivityProductDetailBinding
 import id.io.android.olebsai.domain.model.product.WProduct
+import id.io.android.olebsai.presentation.user.login.LoginActivity
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.viewBinding
 
@@ -48,19 +49,26 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
 
     private fun setupView() {
         with(binding.toolbar) {
-            imgBack.setOnClickListener { onBackPressed() }
+            imgBack.setOnClickListener { finish() }
             tvTitle.text = getString(R.string.product_detail)
         }
     }
 
     private fun setupActionView() {
         binding.btnAddToCart.setOnClickListener {
-            vm.addProductToBasket(
-                catatan = "",
-                qty = 1
-            )
+            if (vm.checkLoggedInStatus()) {
+                vm.addProductToBasket(
+                    catatan = "",
+                    qty = 1
+                )
+            } else {
+                launcher.launch(Intent(this, LoginActivity::class.java))
+            }
         }
     }
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_product_detail, menu)
@@ -76,20 +84,20 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
                 product?.let { inflateProductData(it) }
             },
             onError = {
-                showErrorDialog(it?.message.toString())
+                showInfoDialog(it?.message.toString())
             }
         )
 
         vm.insertProduct.observe(
             onLoading = {},
             onSuccess = {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.basket_success_add_product_to_basket),
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                showInfoDialog(getString(R.string.basket_add_product_to_basket_success))
             },
-            onError = {}
+            onError = {
+                showInfoDialog(
+                    it?.message ?: getString(R.string.basket_add_product_to_basket_failed)
+                )
+            }
         )
     }
 
@@ -118,7 +126,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
             tvSoldCount.text = "Terjual ${product.qtyTerjual}"
 
             tvShopName.text = product.namaToko
-            tvCondition.text = "Baru"
+//            tvCondition.text = "Baru"
 //            tvDimension.text = product.dimension
 //            tvMinOrder.text = product.minOrder
             tvCategory.text = product.namaKategori

@@ -66,10 +66,10 @@ abstract class BaseActivity<B : ViewBinding, VM : ViewModel> : AppCompatActivity
     }
 
     fun hideLoading() {
-        loading?.hide()
+        loading?.dismiss()
     }
 
-    fun showErrorDialog(message: String, onCloseDialog: (() -> Unit)? = null) {
+    fun showInfoDialog(message: String, onCloseDialog: (() -> Unit)? = null) {
         Dialog(
             context = this,
             message = message,
@@ -80,6 +80,6 @@ abstract class BaseActivity<B : ViewBinding, VM : ViewModel> : AppCompatActivity
 
     override fun onDestroy() {
         super.onDestroy()
-        loading?.hide()
+        loading?.dismiss()
     }
 }

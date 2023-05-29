@@ -40,7 +40,7 @@ class AddressListAdapter(private val listener: Listener) :
                         else R.drawable.ic_baseline_check_box_outline_blank_24
                     )
                     setOnClickListener {
-                        if (!item.isDefault) listener.onSetAddressDefault(item.id)
+                        if (!item.isDefault) listener.onSetAddressDefault(item)
                     }
                 }
 
@@ -68,6 +68,6 @@ class AddressListAdapter(private val listener: Listener) :
 
     interface Listener {
         fun onSelectAddress(address: Address)
-        fun onSetAddressDefault(id: Int)
+        fun onSetAddressDefault(address: Address)
     }
 }

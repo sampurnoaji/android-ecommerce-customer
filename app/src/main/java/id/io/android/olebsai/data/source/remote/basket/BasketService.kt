@@ -1,6 +1,7 @@
 package id.io.android.olebsai.data.source.remote.basket
 
 import id.io.android.olebsai.data.model.request.basket.AddProductToBasketRequest
+import id.io.android.olebsai.data.model.request.basket.CheckoutRequest
 import id.io.android.olebsai.data.model.request.basket.RemoveProductRequest
 import id.io.android.olebsai.data.model.request.basket.UpdateNoteRequest
 import id.io.android.olebsai.data.model.request.basket.UpdateQtyRequest
@@ -30,4 +31,7 @@ interface BasketService {
 
     @POST("$BASKET/delete")
     suspend fun removeProduct(@Body request: RemoveProductRequest): BaseResponse<Any>
+
+    @POST("/v1/pesanan/checkout")
+    suspend fun checkout(@Body request: CheckoutRequest): BaseResponse<String>
 }

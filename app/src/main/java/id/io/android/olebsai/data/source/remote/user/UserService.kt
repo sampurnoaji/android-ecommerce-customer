@@ -5,11 +5,10 @@ import id.io.android.olebsai.data.model.request.user.login.LoginWithOtpRequest
 import id.io.android.olebsai.data.model.request.user.register.RegisterRequest
 import id.io.android.olebsai.data.model.response.BaseResponse
 import id.io.android.olebsai.data.model.response.user.FrontPageDataResponse
-import id.io.android.olebsai.data.model.response.user.UserResponse
 import id.io.android.olebsai.data.model.response.user.LoginResponse
+import id.io.android.olebsai.data.model.response.user.UserResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface UserService {
@@ -20,8 +19,7 @@ interface UserService {
         const val FRONT_PAGE = "v1/front-page"
     }
 
-    @Headers("mock:true")
-    @GET("user")
+    @GET("v1/master-user/get-by-token")
     suspend fun getUser(): BaseResponse<UserResponse>
 
     @POST(REGISTER)

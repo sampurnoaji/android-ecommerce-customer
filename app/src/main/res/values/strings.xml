@@ -52,7 +52,8 @@
     <string name="basket_note">Catatan</string>
     <string name="basket_note_add">Tambah Catatan</string>
     <string name="basket_total">Total Barang</string>
-    <string name="basket_success_add_product_to_basket">Barang ditambahkan ke keranjang</string>
+    <string name="basket_add_product_to_basket_failed">Gagal menambahkan ke keranjang</string>
+    <string name="basket_add_product_to_basket_success">Barang ditambahkan ke keranjang</string>
 
     <string name="account">Akun</string>
     <string name="account_phone">Ho Handphone</string>
@@ -61,9 +62,12 @@
     <string name="order_checkout">Checkout</string>
 
     <string name="address">Alamat Kirim</string>
+    <string name="address_add_success">Alamat berhasil ditambahkan</string>
+    <string name="address_add_failed">Alamat gagal ditambahkan</string>
     <string name="address_select">Pilih Alamat</string>
     <string name="address_select_other">Pilih Alamat Lain</string>
     <string name="address_courier">Pengiriman</string>
+    <string name="address_empty">Alamat Kosong</string>
     <string name="address_list">Daftar Alamat</string>
     <string name="address_add">Tambah Alamat</string>
     <string name="address_edit">Ubah Alamat</string>
@@ -95,12 +99,14 @@
     <string name="login_forgot_password">Lupa password</string>
     <string name="login_error_form_empty">Username dan Password harus diisi</string>
     <string name="login_error_form_invalid">Username/Password salah</string>
+    <string name="login_to_your_account">Login ke Akun kamu</string>
 
     <string name="logout">Logout</string>
     <string name="logout_confirmation">Apakah Anda ingin keluar?</string>
 
     <string name="detail">Rincian</string>
 
+    <string name="checkout_courier_select">Pilih jasa kirim</string>
     <string name="checkout_summary">Ringkasan</string>
     <string name="checkout_product_total">Total Harga</string>
     <string name="checkout_delivery_total">Total Ongkos Kirim</string>
@@ -110,6 +116,7 @@
     <string name="trx_empty">Transaksi Kosong</string>
     <string name="trx_order_date">Tanggal Order</string>
     <string name="trx_order_processed">Transaksi Anda sedang diproses</string>
+    <string name="trx_order_see">Lihat Pesanan</string>
 
     <string name="form_email_invalid">Email tidak valid</string>
     <string name="form_phone_invalid">No HP tidak valid</string>

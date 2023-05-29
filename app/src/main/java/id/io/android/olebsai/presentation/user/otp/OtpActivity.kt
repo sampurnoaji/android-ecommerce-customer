@@ -50,7 +50,7 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>() {
                 finish()
             },
             onError = {
-                showErrorDialog(it?.message.orEmpty())
+                showInfoDialog(it?.message.orEmpty())
             }
         )
     }

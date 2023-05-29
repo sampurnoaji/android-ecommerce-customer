@@ -21,5 +21,6 @@ data class LoginResponse(
         username = nama.orEmpty(),
         email = email.orEmpty(),
         otpFlag = otpFlag ?: false,
+        phone = "",
     )
 }

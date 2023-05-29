@@ -3,17 +3,21 @@ package id.io.android.olebsai.presentation.order.checkout
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.io.android.olebsai.R
 import id.io.android.olebsai.databinding.ActivityOrderCheckoutBinding
-import id.io.android.olebsai.domain.model.address.Address
+import id.io.android.olebsai.domain.model.basket.BasketItem
 import id.io.android.olebsai.presentation.account.address.list.AddressListActivity
 import id.io.android.olebsai.presentation.order.processed.OrderProcessedActivity
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.viewBinding
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OrderCheckoutActivity : AppCompatActivity() {
@@ -23,25 +27,13 @@ class OrderCheckoutActivity : AppCompatActivity() {
 
     private val productCheckoutListAdapter by lazy { ProductCheckoutListAdapter() }
 
-    private val launcher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            when (it.resultCode) {
-                AddressListActivity.RESULT_SELECT_ADDRESS -> {
-                    it.data?.getParcelableExtra<Address>(AddressListActivity.KEY_SELECTED_ADDRESS)
-                        ?.let { address ->
-                            vm.updateAddress(address)
-                        }
-                }
-            }
-        }
-
     companion object {
         private const val KEY_PRODUCTS = "products"
 
         @JvmStatic
-        fun start(context: Context, products: ArrayList<ProductCheckout>?) {
+        fun start(context: Context, items: ArrayList<BasketItem>) {
             val starter = Intent(context, OrderCheckoutActivity::class.java)
-                .putParcelableArrayListExtra(KEY_PRODUCTS, products)
+                .putParcelableArrayListExtra(KEY_PRODUCTS, items)
             context.startActivity(starter)
         }
     }
@@ -51,25 +43,29 @@ class OrderCheckoutActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupView()
         setupActionView()
-        observeViewModel()
+        getDefaultAddress()
     }
 
     private fun setupView() {
         with(binding.toolbar) {
-            setSupportActionBar(this)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            setNavigationOnClickListener { onBackPressed() }
+            imgBack.setOnClickListener { finish() }
+            tvTitle.text = getString(R.string.checkout_summary)
         }
+
+        //TODO nama toko
+        binding.tvShopName.text = "Nama Toko"
 
         with(binding.rvProduct) {
             adapter = productCheckoutListAdapter
             layoutManager = LinearLayoutManager(this@OrderCheckoutActivity)
         }
 
-        intent?.getParcelableArrayListExtra<ProductCheckout>(KEY_PRODUCTS)?.let { products ->
-            productCheckoutListAdapter.submitList(products)
+        intent?.getParcelableArrayListExtra<BasketItem>(KEY_PRODUCTS)?.let { items ->
+            productCheckoutListAdapter.submitList(items)
 
-            val productTotal = products.sumOf { it.total * it.qty }
+            val productTotal = items.sumOf {
+                it.qtyPembelian * (if (it.product.isHargaPromo) it.product.hargaPromo else it.product.hargaNormal)
+            }
             binding.tvProductTotal.text = productTotal.toRupiah()
             binding.tvDeliveryTotal.text = "Rp 0"
             binding.tvSummaryTotal.text = productTotal.toRupiah()
@@ -78,7 +74,7 @@ class OrderCheckoutActivity : AppCompatActivity() {
 
     private fun setupActionView() {
         binding.tvAddressSelect.setOnClickListener {
-            AddressListActivity.start(this, launcher, vm.address.value?.id)
+            AddressListActivity.start(this)
         }
 
         binding.btnPay.setOnClickListener {
@@ -86,13 +82,17 @@ class OrderCheckoutActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeViewModel() {
-        vm.address.observe(this) {
-            with(binding) {
-                tvAddressLabel.text = "${it.label} - ${it.name}"
-                tvPhone.text = it.phone
-                tvAddress.text = it.address
-                tvAddressNote.text = it.note
+    private fun getDefaultAddress() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.getDefaultAddress().let {
+                    with(binding) {
+                        tvAddressLabel.text = "${it?.label.orEmpty()} - ${it?.name.orEmpty()}"
+                        tvAddress.text = it?.address
+                        tvAddressNote.text = it?.note
+                        tvPhone.text = it?.phone
+                    }
+                }
             }
         }
     }

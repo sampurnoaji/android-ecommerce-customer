@@ -40,4 +40,11 @@ class BasketRepositoryImpl @Inject constructor(
     override suspend fun removeProduct(productId: String): LoadState<String> {
         return map { remoteDataSource.removeProduct(productId) }
     }
+
+    override suspend fun checkout(
+        basketIds: List<String>,
+        namaJasaPengiriman: String
+    ): LoadState<String> {
+        return map { remoteDataSource.checkout(basketIds, namaJasaPengiriman) }
+    }
 }

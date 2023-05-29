@@ -37,7 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/address_label"
-                app:helperText="@string/address_label_helper">
+                app:helperText="@string/address_label_helper"
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLabel"
@@ -52,7 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/address_recipient">
+                android:hint="@string/address_recipient"
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRecipient"
@@ -66,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/address_recipient_phone">
+                android:hint="@string/address_recipient_phone"
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRecipientPhone"
@@ -82,7 +85,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/address_full">
+                android:hint="@string/address_full"
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAddressFull"
@@ -98,7 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/address_note"
-                app:helperText="@string/address_note_helper">
+                app:helperText="@string/address_note_helper"
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etNote"
@@ -133,6 +138,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/edit"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnDelete" />
@@ -146,6 +152,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:text="@string/delete"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnEdit"
         app:layout_constraintStart_toStartOf="parent" />

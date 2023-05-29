@@ -13,7 +13,7 @@ class TrxViewModel @Inject constructor(): ViewModel() {
         Trx(
             id = 1,
             date = "12 Sep 2022",
-            status = "Sedang Dikirim",
+            status = "Sedang Diproses",
             products = listOf(
                 Product(
                     id = 1,

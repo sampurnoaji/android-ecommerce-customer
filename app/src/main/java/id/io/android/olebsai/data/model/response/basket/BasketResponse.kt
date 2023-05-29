@@ -65,7 +65,7 @@ data class BasketResponse(
         catatan = catatan.orEmpty(),
         qtyPembelian = qtyPembelian ?: 0,
         product = WProduct(
-            approvedBy = approvedBy ?: Any(),
+            approvedBy = approvedBy?.toString() ?: "",
             deskripsi = deskripsi.orEmpty(),
             hargaNormal = hargaNormal ?: 0,
             hargaPromo = hargaPromo ?: 0,

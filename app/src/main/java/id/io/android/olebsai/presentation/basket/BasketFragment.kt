@@ -3,8 +3,8 @@ package id.io.android.olebsai.presentation.basket
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +15,8 @@ import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.DialogUpdateNoteBinding
 import id.io.android.olebsai.databinding.FragmentBasketBinding
-import id.io.android.olebsai.presentation.MainActivity
-import id.io.android.olebsai.presentation.MainViewModel
+import id.io.android.olebsai.domain.model.basket.BasketItem
 import id.io.android.olebsai.presentation.order.checkout.OrderCheckoutActivity
-import id.io.android.olebsai.presentation.order.checkout.ProductCheckout
 import id.io.android.olebsai.util.LoadState
 import id.io.android.olebsai.util.toRupiah
 import id.io.android.olebsai.util.ui.Dialog
@@ -30,7 +28,6 @@ class BasketFragment :
 
     override val binding: FragmentBasketBinding by viewBinding(FragmentBasketBinding::bind)
     override val vm: BasketViewModel by viewModels()
-    private val actVm: MainViewModel by activityViewModels()
 
     private val productBasketListAdapter by lazy { ProductBasketListAdapter(itemListener) }
 
@@ -44,31 +41,20 @@ class BasketFragment :
 
     fun resume() {
         vm.getBasket()
-        if (actVm.isLoggedIn.value == false) {
-            (requireActivity() as MainActivity).navigateToLogin()
-        }
     }
 
     private fun setupView() {
+        with(binding.toolbar) {
+            imgBack.isGone = true
+            tvTitle.text = getString(R.string.basket)
+        }
+
         binding.btnCheckout.setOnClickListener {
-            val products = arrayListOf<ProductCheckout>()
-            vm.selectedProducts.value?.map {
-//                products.add(
-//                    ProductCheckout(
-//                        shopName = "Toko Maju Jaya",
-//                        qty = it.first,
-//                        imageUrl = it.second.imageUrl,
-//                        name = it.second.name,
-//                        total = it.second.price,
-//                        originalPrice = it.second.originalPrice,
-//                        discount = it.second.percentDiscount
-//                    )
-//                )
+            vm.selectedProducts.value?.let { selectedProduct ->
+                OrderCheckoutActivity.start(
+                    requireContext(),
+                    selectedProduct.map { it.second } as ArrayList<BasketItem>)
             }
-            OrderCheckoutActivity.start(
-                requireContext(),
-                products = products
-            )
         }
     }
 

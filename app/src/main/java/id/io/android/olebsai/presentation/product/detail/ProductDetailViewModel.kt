@@ -9,6 +9,7 @@ import id.io.android.olebsai.domain.model.product.Product
 import id.io.android.olebsai.domain.model.product.WProduct
 import id.io.android.olebsai.domain.repository.BasketRepository
 import id.io.android.olebsai.domain.repository.ProductRepository
+import id.io.android.olebsai.domain.repository.UserRepository
 import id.io.android.olebsai.domain.usecase.product.ProductUseCases
 import id.io.android.olebsai.util.LoadState
 import id.io.android.olebsai.util.NoParams
@@ -21,6 +22,7 @@ class ProductDetailViewModel @Inject constructor(
     private val repository: ProductRepository,
     private val productUseCases: ProductUseCases,
     private val basketRepository: BasketRepository,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     private val _product = SingleLiveEvent<LoadState<WProduct>>()
@@ -38,6 +40,8 @@ class ProductDetailViewModel @Inject constructor(
     init {
         getBasketProducts()
     }
+
+    fun checkLoggedInStatus(): Boolean = userRepository.isLoggedIn()
 
     fun getProductDetail(productId: String) {
         _product.value = LoadState.Loading

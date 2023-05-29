@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +37,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             when (it.resultCode) {
                 Activity.RESULT_OK -> vm.checkLoggedInStatus()
-                Activity.RESULT_CANCELED -> navigateToMenu(R.id.menuHome)
             }
         }
 
@@ -55,10 +53,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        vm.checkLoggedInStatus()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupFragments()
-        observeViewModel()
         checkArguments()
     }
 
@@ -67,40 +69,32 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menuHome -> {
-                    showBottomNav()
                     showFragment(homeFragment)
                     true
                 }
                 R.id.menuCategory -> {
-                    showBottomNav()
                     showFragment(categoryFragment)
                     true
                 }
                 R.id.menuBasket -> {
-                    showFragment(basketFragment)
-                    if (basketFragment.isAdded) basketFragment.resume()
-                    true
+                    requireLoggedInAction {
+                        showFragment(basketFragment)
+                        if (basketFragment.isAdded) basketFragment.resume()
+                    }
                 }
                 R.id.menuTrx -> {
-                    showBottomNav()
                     showFragment(trxFragment)
                     true
                 }
                 R.id.menuAccount -> {
-                    showBottomNav()
-                    showFragment(accountFragment)
-                    if (accountFragment.isAdded) accountFragment.resume()
-                    true
+                    requireLoggedInAction {
+                        showFragment(accountFragment)
+                        if (accountFragment.isAdded) accountFragment.resume()
+                    }
                 }
                 else -> false
             }
         }
-    }
-
-    private fun observeViewModel() {
-//        vm.basketProducts.observe(this) {
-//            setBasketProductsCountBadge(it.size)
-//        }
     }
 
     private fun checkArguments() {
@@ -124,7 +118,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onBackPressed() {
         if (currentFragment != homeFragment) binding.bottomNavigation.selectedItemId = R.id.menuHome
-        else super.onBackPressed()
+        else finish()
     }
 
     internal fun navigateToMenu(pageId: Int, args: Bundle? = null) {
@@ -138,15 +132,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         launcher.launch(Intent(this, LoginActivity::class.java))
     }
 
-    private fun hideBottomNav() {
-        binding.bottomNavigation.isVisible = false
-    }
-
-    private fun showBottomNav() {
-        binding.bottomNavigation.isVisible = true
-    }
-
-    private fun setBasketProductsCountBadge(count: Int) {
-        binding.bottomNavigation.getOrCreateBadge(R.id.menuBasket).number = count
+    private fun requireLoggedInAction(action: () -> Unit): Boolean {
+        return if (vm.isLoggedIn.value == false) {
+            navigateToLogin()
+            false
+        }
+        else {
+            action()
+            true
+        }
     }
 }

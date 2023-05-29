@@ -2,6 +2,7 @@ package id.io.android.olebsai.presentation.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -43,28 +44,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private var carouselJob: Job? = null
 
     private val bannerListAdapter by lazy { BannerListAdapter(vm.images) }
-    private val categoryListAdapter by lazy {
-        CategoryListAdapter(vm.categories, object : CategoryListAdapter.Listener {
-            override fun onCategoryClicked(category: Category) {
-                (requireActivity() as MainActivity).navigateToMenu(
-                    R.id.menuCategory,
-                    Bundle().apply {
-                        putInt(CategoryFragment.CATEGORY_KEY, category.id)
-                    }
-                )
-            }
-        })
-    }
+    private val categoryListAdapter by lazy { CategoryListAdapter(vm.categories, categoryListener) }
     private val voucherListAdapter by lazy { VoucherListAdapter(vm.vouchers) }
-    private val productListAdapter by lazy {
-        ProductListAdapter(object : ProductViewHolder.Listener {
-            override fun onProductClicked(id: String) {
-                if (actVm.isLoggedIn.value == true)
-                    ProductDetailActivity.start(requireContext(), id)
-                else (requireActivity() as MainActivity).navigateToLogin()
-            }
-        })
-    }
+    private val productListAdapter by lazy { ProductListAdapter(productListener) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,6 +61,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun setupActionView() {
+        binding.toolbar.imgBack.isGone = true
+
+        with(binding.swipeRefreshLayout) {
+            setOnRefreshListener {
+                vm.getFrontPageData()
+                isRefreshing = false
+            }
+        }
+
         binding.btnLogin.setOnClickListener {
             (requireActivity() as MainActivity).navigateToLogin()
         }
@@ -149,6 +140,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.rvProduct.apply {
             adapter = productListAdapter
             layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
+        }
+    }
+
+    private val categoryListener = object : CategoryListAdapter.Listener {
+        override fun onCategoryClicked(category: Category) {
+            if (actVm.isLoggedIn.value == false) {
+                (requireActivity() as MainActivity).navigateToLogin()
+                return
+            }
+            (requireActivity() as MainActivity).navigateToMenu(
+                R.id.menuCategory,
+                Bundle().apply {
+                    putInt(CategoryFragment.CATEGORY_KEY, category.id)
+                }
+            )
+        }
+    }
+
+    private val productListener = object : ProductViewHolder.Listener {
+        override fun onProductClicked(id: String) {
+            ProductDetailActivity.start(requireContext(), id)
         }
     }
 

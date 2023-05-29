@@ -14,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentCategoryBinding
-import id.io.android.olebsai.presentation.MainActivity
 import id.io.android.olebsai.presentation.MainViewModel
 import id.io.android.olebsai.presentation.home.adapter.ProductViewHolder
 import id.io.android.olebsai.presentation.product.detail.ProductDetailActivity
@@ -40,9 +39,7 @@ class CategoryFragment :
         ProductListVerticalAdapter(
             object : ProductViewHolder.Listener {
                 override fun onProductClicked(id: String) {
-                    if (actVm.isLoggedIn.value == true)
-                        ProductDetailActivity.start(requireContext(), id)
-                    else (requireActivity() as MainActivity).navigateToLogin()
+                    ProductDetailActivity.start(requireContext(), id)
                 }
             }
         )
