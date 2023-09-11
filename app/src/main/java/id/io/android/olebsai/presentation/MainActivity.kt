@@ -1,10 +1,15 @@
 package id.io.android.olebsai.presentation
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -12,11 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseActivity
 import id.io.android.olebsai.databinding.ActivityMainBinding
-import id.io.android.olebsai.presentation.account.AccountFragment
 import id.io.android.olebsai.presentation.basket.BasketFragment
 import id.io.android.olebsai.presentation.category.CategoryFragment
 import id.io.android.olebsai.presentation.home.HomeFragment
-import id.io.android.olebsai.presentation.order.history.TrxFragment
+import id.io.android.olebsai.presentation.order.history.OrderFragment
 import id.io.android.olebsai.presentation.user.login.LoginActivity
 import id.io.android.olebsai.util.viewBinding
 
@@ -29,8 +33,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val homeFragment by lazy { HomeFragment() }
     private val categoryFragment by lazy { CategoryFragment() }
     private val basketFragment by lazy { BasketFragment() }
-    private val trxFragment by lazy { TrxFragment() }
-    private val accountFragment by lazy { AccountFragment() }
+    private val trxFragment by lazy { OrderFragment() }
+//    private val accountFragment by lazy { AccountFragment() }
     private var currentFragment: Fragment = homeFragment
 
     private val launcher =
@@ -53,6 +57,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    private val notificationPermissionLauncher = registerForActivityResult(RequestPermission()) {}
+
+    override fun onStart() {
+        super.onStart()
+        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         vm.checkLoggedInStatus()
@@ -72,26 +87,31 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     showFragment(homeFragment)
                     true
                 }
+
                 R.id.menuCategory -> {
                     showFragment(categoryFragment)
                     true
                 }
+
                 R.id.menuBasket -> {
                     requireLoggedInAction {
                         showFragment(basketFragment)
                         if (basketFragment.isAdded) basketFragment.resume()
                     }
                 }
+
                 R.id.menuTrx -> {
                     showFragment(trxFragment)
                     true
                 }
-                R.id.menuAccount -> {
-                    requireLoggedInAction {
-                        showFragment(accountFragment)
-                        if (accountFragment.isAdded) accountFragment.resume()
-                    }
-                }
+
+//                R.id.menuAccount -> {
+//                    requireLoggedInAction {
+//                        showFragment(accountFragment)
+//                        if (accountFragment.isAdded) accountFragment.resume()
+//                    }
+//                }
+
                 else -> false
             }
         }
@@ -136,8 +156,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         return if (vm.isLoggedIn.value == false) {
             navigateToLogin()
             false
-        }
-        else {
+        } else {
             action()
             true
         }

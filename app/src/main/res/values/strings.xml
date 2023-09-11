@@ -1,16 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="add">Tambah</string>
+    <string name="buy">Beli</string>
     <string name="cancel">Batal</string>
     <string name="close">Tutup</string>
     <string name="delete">Hapus</string>
     <string name="edit">Ubah</string>
+    <string name="finish">Selesai</string>
     <string name="min">Kurangi</string>
+    <string name="process">Proses</string>
     <string name="pay">Bayar</string>
     <string name="track">Lacak</string>
     <string name="save">Simpan</string>
     <string name="verify">Verifikasi</string>
 
     <string name="fill_all_field">Lengkapi semua isian</string>
+
+    <string name="error_happened">Terjadi kesalahan</string>
 
     <string name="home">Beranda</string>
     <string name="home_banner_content">Banner</string>
@@ -55,15 +60,20 @@
     <string name="basket_add_product_to_basket_failed">Gagal menambahkan ke keranjang</string>
     <string name="basket_add_product_to_basket_success">Barang ditambahkan ke keranjang</string>
 
-    <string name="account">Akun</string>
+    <string name="account">Profil</string>
     <string name="account_phone">Ho Handphone</string>
     <string name="account_email">Email</string>
-
-    <string name="order_checkout">Checkout</string>
+    <string name="account_edit">Ubah Profil</string>
+    <string name="account_edit_success">Profil berhasil diubah</string>
 
     <string name="address">Alamat Kirim</string>
+    <string name="address_district">Kota</string>
+    <string name="address_postal_code">Kode Pos</string>
+    <string name="address_province">Provinsi</string>
+    <string name="address_sub_district">Kecamatan</string>
     <string name="address_add_success">Alamat berhasil ditambahkan</string>
     <string name="address_add_failed">Alamat gagal ditambahkan</string>
+    <string name="address_load_failed">Gagal mendapatkan alamat</string>
     <string name="address_select">Pilih Alamat</string>
     <string name="address_select_other">Pilih Alamat Lain</string>
     <string name="address_courier">Pengiriman</string>
@@ -107,16 +117,22 @@
     <string name="detail">Rincian</string>
 
     <string name="checkout_courier_select">Pilih jasa kirim</string>
+    <string name="checkout_courier_failed">Gagal memuat Jasa kirim</string>
     <string name="checkout_summary">Ringkasan</string>
     <string name="checkout_product_total">Total Harga</string>
     <string name="checkout_delivery_total">Total Ongkos Kirim</string>
     <string name="checkout_total">Total Tagihan</string>
 
-    <string name="trx">Transaksi</string>
-    <string name="trx_empty">Transaksi Kosong</string>
-    <string name="trx_order_date">Tanggal Order</string>
-    <string name="trx_order_processed">Transaksi Anda sedang diproses</string>
-    <string name="trx_order_see">Lihat Pesanan</string>
+    <string name="order">Pesanan</string>
+    <string name="order_empty">Pesanan Kosong</string>
+    <string name="order_date">Tanggal Pesanan</string>
+    <string name="order_processed">Pesanan Anda sedang diproses</string>
+    <string name="order_see">Lihat Pesanan</string>
+    <string name="order_product_ordered">Produk yang dibeli</string>
+    <string name="order_pay_failed">Pembayaran gagal</string>
+    <string name="order_pay_success">Pembayaran berhasil</string>
+    <string name="order_finish_failed">Pesanan gagal diselesaikan</string>
+    <string name="order_finish_success">Pesanan diselesaikan</string>
 
     <string name="form_email_invalid">Email tidak valid</string>
     <string name="form_phone_invalid">No HP tidak valid</string>
@@ -127,4 +143,6 @@
     <string name="otp_header">Masukkan kode OTP di email</string>
     <string name="otp_desc">Cek folder kotak masuk di emailmu, jangan lupa cek folder spam juga ya!</string>
     <string name="otp_error_six_digit">OTP harus 6 digit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

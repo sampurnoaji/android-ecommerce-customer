@@ -3,6 +3,7 @@ package id.io.android.olebsai.data.model.response.address
 
 import com.squareup.moshi.Json
 import id.io.android.olebsai.domain.model.address.Address
+import id.io.android.olebsai.domain.model.user.ApiAddress
 
 data class AddressListResponse(
     @field:Json(name = "addresses")
@@ -35,6 +36,10 @@ data class AddressListResponse(
                 name = it?.name.orEmpty(),
                 note = it?.note.orEmpty(),
                 phone = it?.phone.orEmpty(),
+                province = ApiAddress("",""),
+                district = ApiAddress("",""),
+                subDistrict = ApiAddress("",""),
+                postalCode = "",
             )
         } ?: emptyList()
     }

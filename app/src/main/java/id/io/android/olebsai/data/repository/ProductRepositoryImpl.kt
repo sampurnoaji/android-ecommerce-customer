@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import id.io.android.olebsai.data.source.local.product.ProductLocalDataSource
 import id.io.android.olebsai.data.source.remote.product.ProductPagingSource
 import id.io.android.olebsai.data.source.remote.product.ProductRemoteDataSource
+import id.io.android.olebsai.domain.model.product.Category
 import id.io.android.olebsai.domain.model.product.Product
 import id.io.android.olebsai.domain.model.product.WProduct
 import id.io.android.olebsai.domain.repository.ProductRepository
@@ -20,18 +21,18 @@ class ProductRepositoryImpl @Inject constructor(
     private val localDataSource: ProductLocalDataSource
 ) : ProductRepository, ResponseHelper() {
 
-    override fun getProductList(query: String): Flow<PagingData<WProduct>> {
+    override fun getProductList(query: String, kategoriId: String?): Flow<PagingData<WProduct>> {
         return Pager(
             config = PagingConfig(
                 enablePlaceholders = false,
                 pageSize = ProductPagingSource.ITEMS_PER_PAGE
             ),
-            pagingSourceFactory = { ProductPagingSource(remoteDataSource, query) }
+            pagingSourceFactory = { ProductPagingSource(remoteDataSource, query, kategoriId) }
         ).flow
     }
 
-    override fun getProductPagingSource(query: String): ProductPagingSource =
-        ProductPagingSource(remoteDataSource, query)
+    override fun getProductPagingSource(query: String, kategoriId: String?): ProductPagingSource =
+        ProductPagingSource(remoteDataSource, query, kategoriId)
 
     override suspend fun getProductDetail(id: String): LoadState<WProduct> {
         return map { remoteDataSource.getProductDetail(id).toDomain() }
@@ -51,5 +52,9 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun deleteProductBasket(productId: Int) {
         localDataSource.deleteBasketProduct(productId)
+    }
+
+    override suspend fun getCategories(): LoadState<List<Category>> {
+        return map { remoteDataSource.getCategories().data.map { it.toDomain() } }
     }
 }

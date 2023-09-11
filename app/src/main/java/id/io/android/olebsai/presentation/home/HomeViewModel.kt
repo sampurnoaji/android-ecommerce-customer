@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.io.android.olebsai.R
-import id.io.android.olebsai.domain.model.category.Category
-import id.io.android.olebsai.domain.model.category.CategoryType
 import id.io.android.olebsai.domain.model.user.FrontPageData
 import id.io.android.olebsai.domain.model.voucher.Voucher
 import id.io.android.olebsai.domain.repository.UserRepository
@@ -17,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: UserRepository,
+    private val repository: UserRepository
 ) : ViewModel() {
 
     private val _frontPageData = SingleLiveEvent<LoadState<FrontPageData>>()
@@ -32,12 +30,12 @@ class HomeViewModel @Inject constructor(
         R.drawable.banner5,
     )
 
-    val categories = listOf(
-        Category(id = 1, CategoryType.ALL),
-        Category(id = 2, CategoryType.CRAFT),
-        Category(id = 3, CategoryType.FASHION),
-        Category(id = 4, CategoryType.CULINARY),
-    )
+//    val categories = listOf(
+//        Category(id = 1, CategoryType.ALL),
+//        Category(id = 2, CategoryType.CRAFT),
+//        Category(id = 3, CategoryType.FASHION),
+//        Category(id = 4, CategoryType.CULINARY),
+//    )
 
     val vouchers = listOf(
         Voucher(id = 1, name = "Cashback Rp 10.000", desc = "Sisa 5 hari lagi"),

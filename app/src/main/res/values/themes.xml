@@ -16,6 +16,7 @@
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="materialButtonStyle">@style/Button</item>
         <item name="textInputStyle">@style/TextInputLayout</item>
+        <item name="editTextStyle">@style/TextInputEditText</item>
     </style>
 
     <style name="Theme.Primary" parent="AppTheme">

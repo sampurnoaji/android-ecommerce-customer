@@ -3,13 +3,15 @@ package id.io.android.olebsai.presentation.category
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseFragment
@@ -28,13 +30,6 @@ class CategoryFragment :
     override val vm: CategoryViewModel by viewModels()
     private val actVm: MainViewModel by activityViewModels()
 
-    //    private val categoryListAdapter by lazy {
-//        CategoryListVerticalAdapter(object : CategoryListVerticalAdapter.Listener {
-//            override fun onCategoryClicked(id: Int) {
-//                vm.onCategoryChanged(id)
-//            }
-//        })
-//    }
     private val productListAdapter by lazy {
         ProductListVerticalAdapter(
             object : ProductViewHolder.Listener {
@@ -51,19 +46,19 @@ class CategoryFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupSearchView()
-//        setupCategoryList()
+        setupActionView()
         setupProductList()
         observeViewModel()
+
+        vm.getCategories()
     }
 
-    private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener{
+    private fun setupActionView() {
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    vm.getSearchProductStream(query.orEmpty()).collectLatest {
-                        productListAdapter.submitData(it)
-                    }
+                    vm.onQueryChanged(query.orEmpty())
+                    productListAdapter.refresh()
                 }
                 return true
             }
@@ -71,28 +66,28 @@ class CategoryFragment :
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
                     viewLifecycleOwner.lifecycleScope.launch {
-                        vm.getSearchProductStream("").collectLatest {
-                            productListAdapter.submitData(it)
-                        }
+                        vm.onQueryChanged("")
+                        productListAdapter.refresh()
                     }
                 }
                 return false
             }
         })
-    }
 
-//    private fun setupCategoryList() {
-//        binding.rvCategory.apply {
-//            adapter = categoryListAdapter
-//            layoutManager =
-//                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//        }
-//    }
+        binding.categoryChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.isEmpty()) vm.onCategoryChanged(null)
+            else {
+                val chip = group.children.filter { (it as Chip).isChecked }.first() as Chip
+                vm.onCategoryChanged(chip.tag as String)
+            }
+            productListAdapter.refresh()
+        }
+    }
 
     private fun setupProductList() {
         binding.rvProduct.apply {
             adapter = productListAdapter
-            layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -106,12 +101,28 @@ class CategoryFragment :
     private fun observeViewModel() {
         actVm.navigationBundle.observe(viewLifecycleOwner) {
             it?.getInt(CATEGORY_KEY)?.let { id ->
-                vm.onCategoryChanged(id)
+//                vm.onCategoryChanged(id)
             }
         }
 
-//        vm.categories.observe(viewLifecycleOwner) {
-//            categoryListAdapter.submitList(it)
-//        }
+        vm.categoriesResult.observe(
+            onLoading = {},
+            onSuccess = {
+                with(binding.categoryChipGroup) {
+                    it?.forEach { category ->
+                        addView(Chip(context).apply {
+                            val drawable = ChipDrawable.createFromAttributes(
+                                context, null, 0,
+                                com.google.android.material.R.style.Widget_MaterialComponents_Chip_Choice
+                            )
+                            setChipDrawable(drawable)
+                            text = category.namaKategori
+                            tag = category.kategoriId
+                        })
+                    }
+                }
+            },
+            onError = {}
+        )
     }
 }

@@ -3,9 +3,10 @@
     package="id.io.android.olebsai">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name="id.io.android.olebsai.core.App"
+        android:name=".core.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,11 +15,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".presentation.account.AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.order.detail.OrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.account.update.UpdateProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".presentation.account.address.add.AddressAddActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".presentation.order.processed.OrderProcessedActivity"
+            android:name=".presentation.order.success.SuccessActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.account.address.list.AddressListActivity"
@@ -39,7 +50,7 @@
             android:name=".presentation.product.detail.ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name="id.io.android.olebsai.presentation.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

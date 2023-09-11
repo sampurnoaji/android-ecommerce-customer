@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.core.view.isGone
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
+import id.io.android.olebsai.R.string
 import id.io.android.olebsai.core.BaseActivity
 import id.io.android.olebsai.databinding.ActivityProductDetailBinding
 import id.io.android.olebsai.domain.model.product.WProduct
@@ -50,7 +51,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
     private fun setupView() {
         with(binding.toolbar) {
             imgBack.setOnClickListener { finish() }
-            tvTitle.text = getString(R.string.product_detail)
+            tvTitle.text = getString(string.product_detail)
         }
     }
 
@@ -91,11 +92,11 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         vm.insertProduct.observe(
             onLoading = {},
             onSuccess = {
-                showInfoDialog(getString(R.string.basket_add_product_to_basket_success))
+                showInfoDialog(getString(string.basket_add_product_to_basket_success))
             },
             onError = {
                 showInfoDialog(
-                    it?.message ?: getString(R.string.basket_add_product_to_basket_failed)
+                    it?.message ?: getString(string.basket_add_product_to_basket_failed)
                 )
             }
         )
@@ -122,13 +123,9 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
                 tvOriginalPrice.isGone = true
                 tvPercentDiscount.isGone = true
             }
-//            tvRating.text = product.rating.toString()
             tvSoldCount.text = "Terjual ${product.qtyTerjual}"
 
             tvShopName.text = product.namaToko
-//            tvCondition.text = "Baru"
-//            tvDimension.text = product.dimension
-//            tvMinOrder.text = product.minOrder
             tvCategory.text = product.namaKategori
             tvSubCategory.text = product.namaSubKategori
             tvDesc.text = product.deskripsi

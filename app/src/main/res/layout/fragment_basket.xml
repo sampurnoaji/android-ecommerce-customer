@@ -85,11 +85,11 @@
             tools:text="Rp 230.000" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCheckout"
+            android:id="@+id/btnBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="@string/basket_checkout"
+            android:text="@string/buy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

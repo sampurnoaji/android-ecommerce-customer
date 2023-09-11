@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import id.io.android.olebsai.databinding.ItemCategoryVerticalBinding
-import id.io.android.olebsai.domain.model.category.Category
+import id.io.android.olebsai.domain.model.product.Category
 import id.io.android.olebsai.util.dpToPx
 import id.io.android.olebsai.util.ui.Selection
 
@@ -28,20 +29,24 @@ class CategoryListVerticalAdapter(
         fun bind(item: Selection<Category>, listener: Listener) {
             val category = item.data
             val context = binding.root.context
-            binding.imgCategory.setImageResource(category.type.imageRes)
-            binding.tvName.text = context.getString(category.type.stringRes)
+            with(binding) {
+                imgCategory.load(category.gambarIcon)
+                tvName.text = category.namaKategori
 
-            binding.root.strokeWidth =
-                if (item.isSelected) 2.dpToPx(context.resources.displayMetrics) else 0
-
-            binding.root.setOnClickListener {
-                listener.onCategoryClicked(category.id)
+                root.apply {
+                    strokeWidth =
+                        if (item.isSelected) 2.dpToPx(context.resources.displayMetrics)
+                        else 0
+                    setOnClickListener {
+                        listener.onCategoryClicked(category)
+                    }
+                }
             }
         }
     }
 
     interface Listener {
-        fun onCategoryClicked(id: Int)
+        fun onCategoryClicked(category: Category)
     }
 
     companion object {
@@ -49,12 +54,12 @@ class CategoryListVerticalAdapter(
             override fun areItemsTheSame(
                 oldItem: Selection<Category>,
                 newItem: Selection<Category>
-            ): Boolean = oldItem.data.id == newItem.data.id
+            ): Boolean = oldItem.data == newItem.data
 
             override fun areContentsTheSame(
                 oldItem: Selection<Category>,
                 newItem: Selection<Category>
-            ): Boolean = oldItem == newItem
+            ): Boolean = oldItem.data.kategoriId == newItem.data.kategoriId
         }
     }
 }

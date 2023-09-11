@@ -8,6 +8,7 @@ import javax.inject.Inject
 class ProductPagingSource @Inject constructor(
     private val remoteDataSource: ProductRemoteDataSource,
     private val query: String,
+    private val kategoriId: String?,
 ) : PagingSource<Int, WProduct>() {
 
     companion object {
@@ -30,6 +31,7 @@ class ProductPagingSource @Inject constructor(
                 page = position,
                 size = params.loadSize,
                 namaProduk = query,
+                kategoriId = kategoriId,
             )
             val products = response.products.orEmpty().filter { it.status == "AKTIF" }
             val endOfPaginationReached = products.isEmpty()

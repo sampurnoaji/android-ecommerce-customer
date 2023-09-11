@@ -1,10 +1,13 @@
 package id.io.android.olebsai.presentation.user.register
 
+import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.io.android.olebsai.domain.model.user.ApiAddress
 import id.io.android.olebsai.domain.model.user.RegisterParams
+import id.io.android.olebsai.domain.model.user.User
 import id.io.android.olebsai.domain.repository.UserRepository
 import id.io.android.olebsai.util.LoadState
 import id.io.android.olebsai.util.SingleLiveEvent
@@ -46,7 +49,13 @@ class RegisterViewModel @Inject constructor(
         this.repeatPassword = password.trim()
     }
 
-    fun register() {
+    fun register(
+        address: Editable?,
+        selectedProvince: ApiAddress?,
+        selectedDistrict: ApiAddress?,
+        selectedSubDistrict: ApiAddress?,
+        postalCode: Editable?
+    ) {
         _register.value = LoadState.Loading
         viewModelScope.launch {
             _register.value = repository.register(
@@ -54,7 +63,17 @@ class RegisterViewModel @Inject constructor(
                     name = name,
                     email = email,
                     phoneNumber = phoneNumber,
-                    password = password
+                    password = password,
+                    address = User.Address(
+                        alamat = if (address.isNullOrBlank()) "" else address.toString(),
+                        provinsi = selectedProvince?.name.orEmpty(),
+                        provinsiId = selectedProvince?.id.orEmpty(),
+                        kota = selectedDistrict?.name.orEmpty(),
+                        kotaId = selectedDistrict?.id.orEmpty(),
+                        kecamatan = selectedSubDistrict?.name.orEmpty(),
+                        kecamatanId = selectedSubDistrict?.id.orEmpty(),
+                        kodePos = if (postalCode.isNullOrBlank()) "" else postalCode.toString()
+                    )
                 )
             )
         }

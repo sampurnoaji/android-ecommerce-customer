@@ -7,9 +7,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,10 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentHomeBinding
-import id.io.android.olebsai.domain.model.category.Category
+import id.io.android.olebsai.domain.model.product.Category
 import id.io.android.olebsai.presentation.MainActivity
 import id.io.android.olebsai.presentation.MainViewModel
-import id.io.android.olebsai.presentation.category.CategoryFragment
+import id.io.android.olebsai.presentation.account.AccountActivity
+import id.io.android.olebsai.presentation.category.CategoryViewModel
 import id.io.android.olebsai.presentation.home.adapter.BannerListAdapter
 import id.io.android.olebsai.presentation.home.adapter.CategoryListAdapter
 import id.io.android.olebsai.presentation.home.adapter.ProductListAdapter
@@ -40,11 +40,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     override val binding: FragmentHomeBinding by viewBinding(FragmentHomeBinding::bind)
     override val vm: HomeViewModel by viewModels()
     private val actVm: MainViewModel by activityViewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     private var carouselJob: Job? = null
 
     private val bannerListAdapter by lazy { BannerListAdapter(vm.images) }
-    private val categoryListAdapter by lazy { CategoryListAdapter(vm.categories, categoryListener) }
+    private val categoryListAdapter by lazy { CategoryListAdapter(categoryListener) }
     private val voucherListAdapter by lazy { VoucherListAdapter(vm.vouchers) }
     private val productListAdapter by lazy { ProductListAdapter(productListener) }
 
@@ -52,7 +53,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
         setupActionView()
         observeViewModel()
+
         vm.getFrontPageData()
+        categoryViewModel.getCategories()
 
         setupBannerCarousel(vm.images)
         setupCategoryList()
@@ -61,7 +64,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun setupActionView() {
-        binding.toolbar.imgBack.isGone = true
+        with(binding.toolbar) {
+            imgBack.isGone = true
+            fabAction.isVisible = true
+            fabAction.setOnClickListener {
+                AccountActivity.start(requireContext())
+            }
+        }
 
         with(binding.swipeRefreshLayout) {
             setOnRefreshListener {
@@ -77,13 +86,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun observeViewModel() {
         actVm.isLoggedIn.observe(viewLifecycleOwner) {
-            binding.btnLogin.isVisible = !it
+            binding.btnLogin.isGone = it
+            binding.toolbar.fabAction.isVisible = it
         }
 
         vm.frontPageData.observe(
-            onLoading = {},
             onSuccess = {
                 productListAdapter.submitList(it?.featuredProduk)
+            },
+            onError = {}
+        )
+
+        categoryViewModel.categoriesResult.observe(
+            onLoading = {},
+            onSuccess = {
+                categoryListAdapter.submitList(it)
             },
             onError = {}
         )
@@ -139,7 +156,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun setupProductList() {
         binding.rvProduct.apply {
             adapter = productListAdapter
-            layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
     }
 
@@ -152,7 +169,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             (requireActivity() as MainActivity).navigateToMenu(
                 R.id.menuCategory,
                 Bundle().apply {
-                    putInt(CategoryFragment.CATEGORY_KEY, category.id)
+//                    putInt(CategoryFragment.CATEGORY_KEY, category.id)
                 }
             )
         }

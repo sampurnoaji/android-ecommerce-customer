@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.io.android.olebsai.domain.model.basket.BasketItem
+import id.io.android.olebsai.domain.model.basket.Courier
 import id.io.android.olebsai.domain.repository.BasketRepository
 import id.io.android.olebsai.util.LoadState
 import id.io.android.olebsai.util.SingleLiveEvent
@@ -43,6 +44,10 @@ class BasketViewModel @Inject constructor(
     val checkoutResult: LiveData<LoadState<String>>
         get() = _checkoutResult
 
+    private val _checkOngkirResult = SingleLiveEvent<LoadState<List<Courier>>>()
+    val checkOngkirResult: LiveData<LoadState<List<Courier>>>
+        get() = _checkOngkirResult
+
     val selectedProducts: LiveData<List<Pair<Int, BasketItem>>> = Transformations.map(_items) {
         it.filter { item ->
             item.viewType == ProductBasketListAdapter.CONTENT_TYPE
@@ -64,12 +69,12 @@ class BasketViewModel @Inject constructor(
         val items = mutableListOf<ProductBasketListAdapter.Item>()
         val group = products.groupBy { it.product.tokoId }
         group.forEach {
-            items.add(
-                ProductBasketListAdapter.Item(
-                    viewType = ProductBasketListAdapter.HEADER_TYPE,
-                    header = it.key
-                )
-            )
+//            items.add(
+//                ProductBasketListAdapter.Item(
+//                    viewType = ProductBasketListAdapter.HEADER_TYPE,
+//                    header = it.key
+//                )
+//            )
             val groupedProducts = it.value.groupBy { basket -> basket.product.produkId }
             groupedProducts.forEach { groupedProduct ->
                 val count = groupedProduct.value.count { basket ->
@@ -128,10 +133,29 @@ class BasketViewModel @Inject constructor(
         }
     }
 
-    fun checkout(basketIds: List<String>, namaJasaPengiriman: String) {
+    fun checkout(
+        basketIds: List<String>,
+        namaJasaPengiriman: String,
+        servisJasaPengiriman: String,
+        estimasiSampai: String,
+        ongkir: Long
+    ) {
         _checkoutResult.value = LoadState.Loading
         viewModelScope.launch {
-            _checkoutResult.value = repository.checkout(basketIds, namaJasaPengiriman)
+            _checkoutResult.value = repository.checkout(
+                basketIds,
+                namaJasaPengiriman,
+                servisJasaPengiriman,
+                estimasiSampai,
+                ongkir
+            )
+        }
+    }
+
+    fun checkOngkir(keranjangIds: List<String>) {
+        _checkOngkirResult.value = LoadState.Loading
+        viewModelScope.launch {
+            _checkOngkirResult.value = repository.checkOngkir(keranjangIds)
         }
     }
 }

@@ -28,7 +28,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private fun setupActionView() {
-        binding.imgBack.setOnClickListener { onBackPressed() }
+        binding.imgBack.setOnClickListener { finish() }
 
         binding.etUsername.doOnTextChanged { text, _, _, _ ->
             vm.onUsernameChanged(text.toString())

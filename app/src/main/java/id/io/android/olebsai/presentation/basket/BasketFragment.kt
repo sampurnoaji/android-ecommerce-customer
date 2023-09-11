@@ -49,7 +49,7 @@ class BasketFragment :
             tvTitle.text = getString(R.string.basket)
         }
 
-        binding.btnCheckout.setOnClickListener {
+        binding.btnBuy.setOnClickListener {
             vm.selectedProducts.value?.let { selectedProduct ->
                 OrderCheckoutActivity.start(
                     requireContext(),
@@ -87,7 +87,6 @@ class BasketFragment :
         }
 
         vm.updateQtyResult.observe(
-            onLoading = {},
             onSuccess = {
                 vm.getBasket()
             },
@@ -97,7 +96,6 @@ class BasketFragment :
         )
 
         vm.updateNoteResult.observe(
-            onLoading = {},
             onSuccess = {
                 vm.getBasket()
             },
@@ -107,7 +105,6 @@ class BasketFragment :
         )
 
         vm.removeProductResult.observe(
-            onLoading = {},
             onSuccess = {
                 vm.getBasket()
             },

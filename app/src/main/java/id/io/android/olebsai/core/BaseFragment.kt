@@ -18,14 +18,13 @@ abstract class BaseFragment<B : ViewBinding, VM : ViewModel>(@LayoutRes id: Int)
     fun <T> LiveData<LoadState<T>>.observe(
         onSuccess: (T?) -> Unit,
         onError: (LoadState.Error?) -> Unit,
-        onLoading: () -> Unit = {},
-        embedLoading: Boolean = true,
+        onLoading: (() -> Unit)? = null,
     ) {
         observe(viewLifecycleOwner) {
             when (it) {
                 is LoadState.Loading -> {
-                    if (embedLoading) (requireActivity() as BaseActivity<*, *>).showLoading()
-                    onLoading()
+                    if (onLoading != null) onLoading()
+                    else (requireActivity() as BaseActivity<*, *>).showLoading()
                 }
                 is LoadState.Success -> {
                     (requireActivity() as BaseActivity<*, *>).hideLoading()

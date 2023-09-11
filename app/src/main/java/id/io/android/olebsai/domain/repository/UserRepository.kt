@@ -1,6 +1,7 @@
 package id.io.android.olebsai.domain.repository
 
 import id.io.android.olebsai.domain.model.address.Address
+import id.io.android.olebsai.domain.model.user.ApiAddress
 import id.io.android.olebsai.domain.model.user.FrontPageData
 import id.io.android.olebsai.domain.model.user.LoginParams
 import id.io.android.olebsai.domain.model.user.RegisterParams
@@ -12,6 +13,7 @@ interface UserRepository {
     suspend fun register(registerParams: RegisterParams): LoadState<String>
     suspend fun login(loginParams: LoginParams): LoadState<Pair<User, String>>
     suspend fun loginWithOtp(loginParams: LoginParams): LoadState<String>
+    suspend fun updateProfile(registerParams: RegisterParams): LoadState<Any>
     suspend fun getFrontPageData(): LoadState<FrontPageData>
     suspend fun getMasterUser(): LoadState<User>
 
@@ -21,11 +23,14 @@ interface UserRepository {
     suspend fun deleteAddress(addressId: Int)
     suspend fun setDefaultAddress(address: Address)
     suspend fun getDefaultAddress(): Address?
+    suspend fun getProvinces(): LoadState<List<ApiAddress>>
+    suspend fun getDistricts(idPropinsi: String): LoadState<List<ApiAddress>>
+    suspend fun getSubDistricts(idKota: String): LoadState<List<ApiAddress>>
 
     fun isLoggedIn(): Boolean
     fun setLoggedIn(isLoggedIn: Boolean)
     fun setToken(token: String)
     fun getToken(): String
     fun saveUser(user: User)
-    fun getUser(): User?
+    fun getUserCached(): User?
 }

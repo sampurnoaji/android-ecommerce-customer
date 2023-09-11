@@ -3,6 +3,7 @@ package id.io.android.olebsai.data.repository
 import id.io.android.olebsai.data.source.local.user.UserLocalDataSource
 import id.io.android.olebsai.data.source.remote.user.UserRemoteDataSource
 import id.io.android.olebsai.domain.model.address.Address
+import id.io.android.olebsai.domain.model.user.ApiAddress
 import id.io.android.olebsai.domain.model.user.FrontPageData
 import id.io.android.olebsai.domain.model.user.LoginParams
 import id.io.android.olebsai.domain.model.user.RegisterParams
@@ -32,6 +33,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun loginWithOtp(loginParams: LoginParams): LoadState<String> {
         return map { remoteDataSource.loginWithOtp(loginParams) }
+    }
+
+    override suspend fun updateProfile(registerParams: RegisterParams): LoadState<Any> {
+        return map { remoteDataSource.updateProfile(registerParams) }
     }
 
     override suspend fun getFrontPageData(): LoadState<FrontPageData> {
@@ -68,6 +73,30 @@ class UserRepositoryImpl @Inject constructor(
         return localDataSource.getDefaultAddress()?.toDomain()
     }
 
+    override suspend fun getProvinces(): LoadState<List<ApiAddress>> {
+        return map {
+            remoteDataSource.getProvinces().map {
+                ApiAddress(id = it.idPropinsi.orEmpty(), name = it.namaPropinsi.orEmpty())
+            }
+        }
+    }
+
+    override suspend fun getDistricts(idPropinsi: String): LoadState<List<ApiAddress>> {
+        return map {
+            remoteDataSource.getDistricts(idPropinsi).map {
+                ApiAddress(id = it.idKota.orEmpty(), name = it.namaKota.orEmpty())
+            }
+        }
+    }
+
+    override suspend fun getSubDistricts(idKota: String): LoadState<List<ApiAddress>> {
+        return map {
+            remoteDataSource.getSubDistricts(idKota).map {
+                ApiAddress(id = it.idKecamatan.orEmpty(), name = it.namaKecamatan.orEmpty())
+            }
+        }
+    }
+
     override fun isLoggedIn(): Boolean = localDataSource.isLoggedIn()
     override fun setLoggedIn(isLoggedIn: Boolean) {
         localDataSource.setLoggedIn(isLoggedIn)
@@ -83,5 +112,5 @@ class UserRepositoryImpl @Inject constructor(
         localDataSource.saveUser(user)
     }
 
-    override fun getUser(): User? = localDataSource.getUser()
+    override fun getUserCached(): User? = localDataSource.getUser()
 }

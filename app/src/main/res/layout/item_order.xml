@@ -15,16 +15,38 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/labelOrderDate"
-            style="@style/Text.Heading6.Medium"
+            android:id="@+id/tvShopName"
+            style="@style/Text.Heading4.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/tvOrderId"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="MULIA JASA" />
+
+        <TextView
+            android:id="@+id/tvOrderId"
+            style="@style/Text.Heading6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/trx_order_date"
+            app:layout_constraintBottom_toBottomOf="@+id/tvShopName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvShopName"
+            tools:text="#1231modemd23mdoeimdeded" />
+
+        <TextView
+            android:id="@+id/labelOrderDate"
+            style="@style/Text.Heading6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/order_date"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tvShopName" />
 
         <TextView
             android:id="@+id/tvOrderDate"
+            style="@style/Text.Heading5.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +55,7 @@
 
         <TextView
             android:id="@+id/tvStatus"
-            style="@style/Text.Heading6.SemiBold"
+            style="@style/Text.Heading5.SemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/text_chip_orange"
@@ -43,19 +65,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvOrderDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/labelOrderDate"
-            tools:text="Sedang Dikirim" />
-
-        <ImageView
-            android:id="@+id/imgProduct"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/product"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:background="@android:color/darker_gray" />
+            tools:text="BELUM BAYAR" />
 
         <View
             android:id="@+id/divider"
@@ -66,42 +76,35 @@
             app:layout_constraintTop_toBottomOf="@+id/tvOrderDate" />
 
         <TextView
-            android:id="@+id/tvProductName"
-            style="@style/Text.Heading5.SemiBold"
+            android:id="@+id/tvCourierName"
+            style="@style/Text.Heading5.Medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:minLines="1"
-            app:layout_constraintBottom_toTopOf="@+id/tvProductCount"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imgProduct"
-            app:layout_constraintTop_toTopOf="@+id/imgProduct"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Baju Batik Anyam" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/labelTotal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            tools:text="Citra Van Titipan Kilat (TIKI)" />
 
         <TextView
-            android:id="@+id/tvProductCount"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvCourierEstimate"
+            style="@style/Text.Heading6"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgProduct"
-            app:layout_constraintStart_toStartOf="@+id/tvProductName"
-            app:layout_constraintTop_toBottomOf="@+id/tvProductName"
-            tools:text="1 Barang" />
+            app:layout_constraintEnd_toStartOf="@+id/labelTotal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCourierName"
+            tools:text="REG 5-6 hari" />
 
         <TextView
             android:id="@+id/labelTotal"
+            style="@style/Text.Heading6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/checkout_total"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgProduct" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
         <TextView
             android:id="@+id/tvTotal"
@@ -109,19 +112,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelTotal"
-            tools:text="Rp 120.000" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnTrack"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/track"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/labelTotal" />
-
+            app:layout_constraintTop_toBottomOf="@+id/labelTotal"
+            tools:text="Rp 123.000" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
