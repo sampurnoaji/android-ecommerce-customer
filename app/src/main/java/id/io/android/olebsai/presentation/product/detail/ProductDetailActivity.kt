@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isGone
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
 import id.io.android.olebsai.R.string
@@ -24,7 +25,11 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
     override val binding by viewBinding(ActivityProductDetailBinding::inflate)
     override val vm: ProductDetailViewModel by viewModels()
 
+    private val imagesAdapter by lazy { ProductImageListAdapter() }
+
     private var basketCountView: TextView? = null
+
+    private var imagesCount = 0
 
     companion object {
         private const val KEY_PRODUCT_ID = "product-id"
@@ -37,10 +42,14 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         }
     }
 
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
         setupActionView()
+        setupImagesViewPager()
         observeViewModel()
 
         intent?.getStringExtra(KEY_PRODUCT_ID)?.let {
@@ -68,8 +77,20 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         }
     }
 
-    private val launcher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
+    private fun setupImagesViewPager() {
+        with(binding.vpProduct) {
+            adapter = imagesAdapter
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            registerOnPageChangeCallback(
+                object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        super.onPageSelected(position)
+                        binding.tvImagesCount.text = "${position + 1} / $imagesCount"
+                    }
+                }
+            )
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_product_detail, menu)
@@ -79,10 +100,13 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
     }
 
     private fun observeViewModel() {
-        vm.product.observe(
+        vm.productDetailResult.observe(
             onLoading = {},
             onSuccess = { product ->
-                product?.let { inflateProductData(it) }
+                product?.let {
+                    imagesCount = product.listPicture.size
+                    inflateProductData(it)
+                }
             },
             onError = {
                 showInfoDialog(it?.message.toString())
@@ -110,9 +134,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
 
     private fun inflateProductData(product: WProduct) {
         with(binding) {
-//            imgProduct.load(product.imageUrl) {
-//                placeholder(R.color.background)
-//            }
+            imagesAdapter.submitList(product.listPicture.map { it.url })
             tvName.text = product.namaProduk
             if (product.isHargaPromo) {
                 tvPrice.text = product.hargaPromo.toRupiah()
@@ -134,5 +156,12 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
 
     private fun setBasketProductsCountBadge(count: Int) {
         basketCountView?.text = count.toString()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.vpProduct.unregisterOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {}
+        )
     }
 }

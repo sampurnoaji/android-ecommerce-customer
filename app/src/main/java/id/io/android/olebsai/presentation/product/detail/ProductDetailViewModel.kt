@@ -25,9 +25,9 @@ class ProductDetailViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    private val _product = SingleLiveEvent<LoadState<WProduct>>()
-    val product: LiveData<LoadState<WProduct>>
-        get() = _product
+    private val _productDetailResult = SingleLiveEvent<LoadState<WProduct>>()
+    val productDetailResult: LiveData<LoadState<WProduct>>
+        get() = _productDetailResult
 
     private val _insertProduct = SingleLiveEvent<LoadState<String>>()
     val insertProduct: LiveData<LoadState<String>>
@@ -44,9 +44,9 @@ class ProductDetailViewModel @Inject constructor(
     fun checkLoggedInStatus(): Boolean = userRepository.isLoggedIn()
 
     fun getProductDetail(productId: String) {
-        _product.value = LoadState.Loading
+        _productDetailResult.value = LoadState.Loading
         viewModelScope.launch {
-            _product.value = repository.getProductDetail(productId)
+            _productDetailResult.value = repository.getProductDetail(productId)
         }
     }
 
@@ -54,8 +54,8 @@ class ProductDetailViewModel @Inject constructor(
         qty: Int,
         catatan: String,
     ) {
-        if (_product.value is LoadState.Success) {
-            (_product.value as LoadState.Success<WProduct>).data.let {
+        if (_productDetailResult.value is LoadState.Success) {
+            (_productDetailResult.value as LoadState.Success<WProduct>).data.let {
                 _insertProduct.value = LoadState.Loading
                 viewModelScope.launch {
                     _insertProduct.value = basketRepository.addProductToBasket(
