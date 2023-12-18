@@ -33,7 +33,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val homeFragment by lazy { HomeFragment() }
     private val categoryFragment by lazy { CategoryFragment() }
     private val basketFragment by lazy { BasketFragment() }
-    private val trxFragment by lazy { OrderFragment() }
+    private val orderFragment by lazy { OrderFragment() }
 //    private val accountFragment by lazy { AccountFragment() }
     private var currentFragment: Fragment = homeFragment
 
@@ -100,8 +100,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     }
                 }
 
-                R.id.menuTrx -> {
-                    showFragment(trxFragment)
+                R.id.menuOrder -> {
+                    requireLoggedInAction {
+                        showFragment(orderFragment)
+                    }
                     true
                 }
 

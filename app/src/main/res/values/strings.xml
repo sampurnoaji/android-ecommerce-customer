@@ -125,7 +125,8 @@
 
     <string name="order">Pesanan</string>
     <string name="order_empty">Pesanan Kosong</string>
-    <string name="order_date">Tanggal Pesanan</string>
+    <string name="order_date_checkout">Tanggal Pesanan</string>
+    <string name="order_date_paid">Tanggal Dibayar</string>
     <string name="order_processed">Pesanan Anda sedang diproses</string>
     <string name="order_see">Lihat Pesanan</string>
     <string name="order_product_ordered">Produk yang dibeli</string>

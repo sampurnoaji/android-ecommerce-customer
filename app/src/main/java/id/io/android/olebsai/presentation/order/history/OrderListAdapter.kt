@@ -52,14 +52,25 @@ class OrderListAdapter(private val listener: Listener) :
 fun ItemOrderBinding.setValue(order: Order) {
     tvShopName.text = order.namaToko
     tvOrderId.text = "#${order.nomorPesanan}"
-    tvOrderDate.text = order.tglCheckout
-    tvStatus.apply {
-        text = order.status.status
-        when (order.status) {
-            Order.Status.SELESAI -> setBackgroundResource(R.drawable.text_chip_green)
-            else -> {}
+    tvStatus.text = order.status.status
+
+    when (order.status) {
+        Order.Status.SELESAI -> {
+            tvStatus.setBackgroundResource(R.drawable.text_chip_green)
+            tvOrderDate.text = order.tglCheckout
+        }
+        Order.Status.DIKEMAS -> {
+            labelOrderDate.text = root.context.getString(R.string.order_date_paid)
+            tvOrderDate.text = order.tglBayar
+        }
+        Order.Status.BELUM_BAYAR -> {
+            tvOrderDate.text = order.tglCheckout
+        }
+        else -> {
+            tvOrderDate.text = order.tglCheckout
         }
     }
+
     tvCourierName.text = order.namaJasaPengiriman
     tvCourierEstimate.text = "${order.servisJasaPengiriman} ${order.estimasiSampai} hari"
     tvTotal.text = order.totalBayar.toRupiah()

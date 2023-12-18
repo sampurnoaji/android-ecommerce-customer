@@ -50,7 +50,7 @@ class SuccessActivity : AppCompatActivity() {
                     btnAction.apply {
                         text = getString(R.string.order_see)
                         setOnClickListener {
-                            MainActivity.start(this@SuccessActivity, R.id.menuTrx)
+                            MainActivity.start(this@SuccessActivity, R.id.menuOrder)
                             finish()
                         }
                     }

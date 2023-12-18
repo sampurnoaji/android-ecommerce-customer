@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:title="@string/basket" />
     <item
-        android:id="@+id/menuTrx"
+        android:id="@+id/menuOrder"
         android:icon="@drawable/ic_baseline_list_alt_24"
         android:title="@string/order" />
 <!--    <item-->
