@@ -20,7 +20,6 @@ import id.io.android.olebsai.presentation.MainViewModel
 import id.io.android.olebsai.presentation.home.adapter.ProductViewHolder
 import id.io.android.olebsai.presentation.product.detail.ProductDetailActivity
 import id.io.android.olebsai.util.viewBinding
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -91,7 +90,7 @@ class CategoryFragment :
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                vm.products.collectLatest {
+                vm.products.collect {
                     productListAdapter.submitData(it)
                 }
             }

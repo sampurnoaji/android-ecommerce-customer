@@ -116,7 +116,9 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         vm.insertProduct.observe(
             onLoading = {},
             onSuccess = {
-                showInfoDialog(getString(string.basket_add_product_to_basket_success))
+                showInfoDialog(getString(string.basket_add_product_to_basket_success)) {
+                    finish()
+                }
             },
             onError = {
                 showInfoDialog(
@@ -136,6 +138,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
         with(binding) {
             imagesAdapter.submitList(product.listPicture.map { it.url })
             tvName.text = product.namaProduk
+
             if (product.isHargaPromo) {
                 tvPrice.text = product.hargaPromo.toRupiah()
                 tvOriginalPrice.text = product.hargaNormal.toRupiah()
@@ -148,8 +151,18 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding, Product
             tvSoldCount.text = "Terjual ${product.qtyTerjual}"
 
             tvShopName.text = product.namaToko
+            tvWeight.text = "${product.beratGram} gram"
             tvCategory.text = product.namaKategori
             tvSubCategory.text = product.namaSubKategori
+
+            product.qtyStock.let { stock ->
+                if (stock == 0) {
+                    btnAddToCart.text = getString(string.product_stock_empty)
+                    btnAddToCart.isEnabled = false
+                }
+                tvStock.text = stock.toString()
+            }
+
             tvDesc.text = product.deskripsi
         }
     }

@@ -74,6 +74,15 @@
             tools:text="20%" />
 
         <TextView
+            android:id="@+id/tvShopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@id/tvPercentDiscount"
+            tools:text="Mulia Jasa" />
+
+        <TextView
             android:id="@+id/tvRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,7 +93,7 @@
             app:drawableStartCompat="@drawable/ic_baseline_star_16"
             app:drawableTint="@color/orange_primary"
             app:layout_constraintStart_toStartOf="@+id/tvName"
-            app:layout_constraintTop_toBottomOf="@id/tvOriginalPrice"
+            app:layout_constraintTop_toBottomOf="@id/tvShopName"
             tools:text="4.9" />
 
         <TextView
@@ -93,7 +102,7 @@
             android:layout_height="wrap_content"
             android:textSize="11sp"
             app:layout_constraintStart_toStartOf="@+id/tvName"
-            app:layout_constraintTop_toBottomOf="@id/tvOriginalPrice"
+            app:layout_constraintTop_toBottomOf="@id/tvRating"
             tools:text="Terjual 17" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

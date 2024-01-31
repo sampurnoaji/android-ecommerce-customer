@@ -6,6 +6,8 @@ import id.io.android.olebsai.domain.model.product.WProduct
 data class ProductResponse(
     @field:Json(name = "approvedBy")
     val approvedBy: Any? = null,
+    @field:Json(name = "beratGram")
+    val beratGram: Int? = null,
     @field:Json(name = "deskripsi")
     val deskripsi: String? = null,
     @field:Json(name = "hargaNormal")
@@ -54,6 +56,7 @@ data class ProductResponse(
 
     fun toDomain() = WProduct(
         approvedBy = approvedBy?.toString() ?: "",
+        beratGram = beratGram ?: 0,
         deskripsi = deskripsi.orEmpty(),
         hargaNormal = hargaNormal ?: 0,
         hargaPromo = hargaPromo ?: 0,

@@ -2,6 +2,7 @@ package id.io.android.olebsai.presentation.order.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -57,6 +58,7 @@ fun ItemOrderBinding.setValue(order: Order) {
     when (order.status) {
         Order.Status.SELESAI -> {
             tvStatus.setBackgroundResource(R.drawable.text_chip_green)
+            tvStatus.setTextColor(ContextCompat.getColor(root.context, R.color.green_50))
             tvOrderDate.text = order.tglCheckout
         }
         Order.Status.DIKEMAS -> {

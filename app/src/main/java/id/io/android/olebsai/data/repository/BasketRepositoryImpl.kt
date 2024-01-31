@@ -1,6 +1,7 @@
 package id.io.android.olebsai.data.repository
 
 import id.io.android.olebsai.data.source.remote.basket.BasketRemoteDataSource
+import id.io.android.olebsai.data.source.remote.basket.OrderPagingSource
 import id.io.android.olebsai.domain.model.basket.BasketItem
 import id.io.android.olebsai.domain.model.basket.Courier
 import id.io.android.olebsai.domain.model.order.Order
@@ -76,8 +77,8 @@ class BasketRepositoryImpl @Inject constructor(
         return map { remoteDataSource.getActiveOrders().map { it.toDomain() } }
     }
 
-    override suspend fun getDoneOrders(): LoadState<List<Order>> {
-        return map { remoteDataSource.getDoneOrders().map { it.toDomain() } }
+    override fun getOrderPagingSource(): OrderPagingSource {
+        return OrderPagingSource(remoteDataSource)
     }
 
     override suspend fun getOrderDetail(headerId: String): LoadState<OrderDetail> {

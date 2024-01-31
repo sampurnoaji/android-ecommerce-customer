@@ -28,6 +28,8 @@ class ProductViewHolder(private val binding: ItemProductBinding) :
             }
 //                tvRating.text = product.rating.toString()
             tvSoldCount.text = "Terjual ${product.qtyTerjual}"
+            tvShopName.text = product.namaToko
+
 
             binding.root.setOnClickListener {
                 listener.onProductClicked(product.produkId)

@@ -162,45 +162,6 @@
                             tools:text="Toko Maju Terus" />
                     </TableRow>
 
-                    <TableRow android:visibility="gone">
-
-                        <TextView
-                            android:text="@string/product_condition"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvCondition"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="4dp"
-                            tools:text="Baru" />
-                    </TableRow>
-
-                    <TableRow android:visibility="gone">
-
-                        <TextView
-                            android:text="@string/product_dimension"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvDimension"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="4dp"
-                            tools:text="100 gram" />
-                    </TableRow>
-
-                    <TableRow android:visibility="gone">
-
-                        <TextView
-                            android:text="@string/product_min_order"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvMinOrder"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="4dp"
-                            tools:text="1 Buah" />
-                    </TableRow>
-
                     <TableRow>
 
                         <TextView
@@ -225,6 +186,58 @@
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="4dp"
                             tools:text="Kuliner" />
+                    </TableRow>
+
+                    <TableRow android:visibility="gone">
+
+                        <TextView
+                            android:text="@string/product_condition"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvCondition"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="Baru" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/product_weight"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvWeight"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="100 gram" />
+                    </TableRow>
+
+                    <TableRow android:visibility="gone">
+
+                        <TextView
+                            android:text="@string/product_min_order"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvMinOrder"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="1 Buah" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/product_stock"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvStock"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            tools:text="12" />
                     </TableRow>
                 </TableLayout>
 

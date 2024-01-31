@@ -37,10 +37,12 @@ abstract class BaseActivity<B : ViewBinding, VM : ViewModel> : AppCompatActivity
                     if (embedLoading) showLoading()
                     onLoading()
                 }
+
                 is LoadState.Success -> {
                     hideLoading()
                     onSuccess(it.data)
                 }
+
                 is LoadState.Error -> {
                     hideLoading()
                     onError(it)
@@ -69,11 +71,15 @@ abstract class BaseActivity<B : ViewBinding, VM : ViewModel> : AppCompatActivity
         loading?.dismiss()
     }
 
-    fun showInfoDialog(message: String, onCloseDialog: (() -> Unit)? = null) {
+    fun showInfoDialog(
+        message: String,
+        buttonText: String = getString(R.string.close),
+        onCloseDialog: (() -> Unit)? = null
+    ) {
         Dialog(
             context = this,
             message = message,
-            positiveButtonText = getString(R.string.close),
+            positiveButtonText = buttonText,
             positiveAction = { onCloseDialog?.invoke() }
         ).show()
     }

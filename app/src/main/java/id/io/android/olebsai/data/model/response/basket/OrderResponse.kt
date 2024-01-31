@@ -6,6 +6,7 @@ import id.io.android.olebsai.domain.model.order.Order
 import id.io.android.olebsai.domain.model.order.Order.Status.BELUM_BAYAR
 import id.io.android.olebsai.domain.model.order.Order.Status.DIKEMAS
 import id.io.android.olebsai.domain.model.order.Order.Status.DIKIRIM
+import id.io.android.olebsai.domain.model.order.Order.Status.DITERIMA
 import id.io.android.olebsai.domain.model.order.Order.Status.SELESAI
 import id.io.android.olebsai.domain.model.order.Order.Status.UNDEFINED
 
@@ -58,6 +59,7 @@ data class OrderResponse(
             "BELUM BAYAR" -> BELUM_BAYAR
             "DIKEMAS" -> DIKEMAS
             "DIKIRIM" -> DIKIRIM
+            "DITERIMA" -> DITERIMA
             "SELESAI" -> SELESAI
             else -> UNDEFINED
         },

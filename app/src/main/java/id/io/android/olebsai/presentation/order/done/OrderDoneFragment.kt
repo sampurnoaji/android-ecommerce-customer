@@ -2,9 +2,10 @@ package id.io.android.olebsai.presentation.order.done
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.io.android.olebsai.R
@@ -12,10 +13,10 @@ import id.io.android.olebsai.core.BaseFragment
 import id.io.android.olebsai.databinding.FragmentOrderOngoingBinding
 import id.io.android.olebsai.domain.model.order.Order
 import id.io.android.olebsai.presentation.order.detail.OrderDetailActivity
-import id.io.android.olebsai.presentation.order.history.OrderListAdapter
-import id.io.android.olebsai.presentation.order.history.OrderListAdapter.Listener
+import id.io.android.olebsai.presentation.order.done.OrderPagingAdapter.Listener
 import id.io.android.olebsai.presentation.order.history.OrderViewModel
 import id.io.android.olebsai.util.viewBinding
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OrderDoneFragment :
@@ -24,8 +25,8 @@ class OrderDoneFragment :
     override val binding by viewBinding(FragmentOrderOngoingBinding::bind)
     override val vm: OrderViewModel by viewModels()
 
-    private val orderListAdapter by lazy {
-        OrderListAdapter(
+    private val orderPagingAdapter by lazy {
+        OrderPagingAdapter(
             object : Listener {
                 override fun onItemClicked(order: Order) {
                     OrderDetailActivity.start(requireContext(), order.headerId)
@@ -38,39 +39,29 @@ class OrderDoneFragment :
         super.onViewCreated(view, savedInstanceState)
         setupView()
         observeViewModel()
-
-        vm.getDoneOrders()
     }
 
     private fun setupView() {
         with(binding.rvOrder) {
-            adapter = orderListAdapter
+            adapter = orderPagingAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
         with(binding.root) {
             setOnRefreshListener {
-                vm.getDoneOrders()
+                orderPagingAdapter.refresh()
                 isRefreshing = false
             }
         }
     }
 
     private fun observeViewModel() {
-        vm.doneOrdersResult.observe(
-            onSuccess = { result ->
-                with(binding) {
-                    groupEmpty.isVisible = result.isNullOrEmpty()
-                    rvOrder.isGone = result.isNullOrEmpty()
-                    orderListAdapter.submitList(result)
-                }
-            },
-            onError = {
-                with(binding) {
-                    groupEmpty.isVisible = true
-                    rvOrder.isGone = true
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.doneOrders.collect {
+                    orderPagingAdapter.submitData(it)
                 }
             }
-        )
+        }
     }
 }

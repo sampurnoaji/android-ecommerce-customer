@@ -8,6 +8,8 @@ import id.io.android.olebsai.domain.model.product.WProduct
 data class BasketResponse(
     @field:Json(name = "approvedBy")
     val approvedBy: Any? = null,
+    @field:Json(name = "beratGram")
+    val beratGram: Int? = null,
     @field:Json(name = "catatan")
     val catatan: String? = null,
     @field:Json(name = "deskripsi")
@@ -66,6 +68,7 @@ data class BasketResponse(
         qtyPembelian = qtyPembelian ?: 0,
         product = WProduct(
             approvedBy = approvedBy?.toString() ?: "",
+            beratGram = beratGram ?: 0,
             deskripsi = deskripsi.orEmpty(),
             hargaNormal = hargaNormal ?: 0,
             hargaPromo = hargaPromo ?: 0,

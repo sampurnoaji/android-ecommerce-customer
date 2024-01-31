@@ -7,6 +7,7 @@ import kotlin.math.roundToInt
 @Parcelize
 data class WProduct(
     val approvedBy: String,
+    val beratGram: Int,
     val deskripsi: String,
     val hargaNormal: Long,
     val hargaPromo: Long,

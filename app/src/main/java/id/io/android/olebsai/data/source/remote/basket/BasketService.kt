@@ -17,6 +17,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface BasketService {
 
@@ -52,7 +53,10 @@ interface BasketService {
     suspend fun getActiveOrders(): BaseResponse<ActiveOrderResponse>
 
     @GET("v1/pesanan/get-histori-pesanan-buyer")
-    suspend fun getDoneOrders(): BaseResponse<ActiveOrderResponse>
+    suspend fun getDoneOrders(
+        @Query("pageNumber") page: Int,
+        @Query("pageSize") size: Int,
+    ): BaseResponse<ActiveOrderResponse>
 
     @GET("/v1/pesanan/get-list-pesanan-by-header/{headerId}")
     suspend fun getOrderDetail(
@@ -62,6 +66,6 @@ interface BasketService {
     @POST("/v1/pesanan/bayar")
     suspend fun payOrder(@Body request: OrderRequest): BaseResponse<Any>
 
-    @POST("/v1/pesanan//v1/pesanan/selesai")
+    @POST("/v1/pesanan/selesai")
     suspend fun finishOrder(@Body request: OrderRequest): BaseResponse<Any>
 }

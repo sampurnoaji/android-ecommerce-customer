@@ -49,7 +49,7 @@ class CourierListDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding.list) {
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
             adapter =
                 arguments?.obtainParcelableArrayList<Courier>(ARG_COURIERS)?.let {
                     val item = mutableListOf<Item>()

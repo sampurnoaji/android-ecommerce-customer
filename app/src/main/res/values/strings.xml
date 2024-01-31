@@ -47,6 +47,9 @@
     <string name="product_last_order">Produk Terakhir Dibeli</string>
     <string name="product_order_again">Beli Lagi</string>
     <string name="product_count_qty">%d x</string>
+    <string name="product_stock">Stok</string>
+    <string name="product_stock_empty">Stok Habis</string>
+    <string name="product_weight">Berat</string>
 
     <string name="basket">Keranjang</string>
     <string name="basket_check">Cek</string>

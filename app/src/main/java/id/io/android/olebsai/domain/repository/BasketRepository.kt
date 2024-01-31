@@ -1,5 +1,6 @@
 package id.io.android.olebsai.domain.repository
 
+import id.io.android.olebsai.data.source.remote.basket.OrderPagingSource
 import id.io.android.olebsai.domain.model.basket.BasketItem
 import id.io.android.olebsai.domain.model.basket.Courier
 import id.io.android.olebsai.domain.model.order.Order
@@ -28,7 +29,7 @@ interface BasketRepository {
 
     suspend fun checkOngkir(keranjangIds: List<String>): LoadState<List<Courier>>
     suspend fun getActiveOrders(): LoadState<List<Order>>
-    suspend fun getDoneOrders(): LoadState<List<Order>>
+    fun getOrderPagingSource(): OrderPagingSource
     suspend fun getOrderDetail(headerId: String): LoadState<OrderDetail>
     suspend fun payOrder(pesananHeaderId: String): LoadState<Any>
     suspend fun finishOrder(pesananHeaderId: String): LoadState<Any>

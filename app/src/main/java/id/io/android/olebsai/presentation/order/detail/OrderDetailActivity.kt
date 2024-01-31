@@ -113,7 +113,7 @@ class OrderDetailActivity : BaseActivity<ActivityOrderDetailBinding, OrderViewMo
     }
 
     private fun setupButtonAction(status: Status, headerId: String) {
-        binding.sectionButton.isVisible = status == BELUM_BAYAR
+        binding.sectionButton.isVisible = status == BELUM_BAYAR || status == DITERIMA
         with(binding.btnAction) {
             when (status) {
                 BELUM_BAYAR -> {
