@@ -104,7 +104,7 @@ dependencies {
     def coil = "2.0.0-rc03"
     def lottie = "5.2.0"
     def swipeRefreshLayout = "1.1.0"
-    implementation "androidx.paging:paging-runtime:$paging"
+    implementation "androidx.paging:paging-runtime-ktx:$paging"
     implementation("io.coil-kt:coil:$coil")
     implementation("com.airbnb.android:lottie:$lottie")
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayout"
