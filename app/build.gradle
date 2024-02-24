@@ -16,7 +16,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "id.io.android.olebsai.customer"
+        applicationId "io.olebsai.customer"
         minSdk 23
         targetSdk 33
         versionCode 1
@@ -36,6 +36,7 @@ android {
 
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release

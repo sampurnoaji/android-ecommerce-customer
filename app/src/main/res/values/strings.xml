@@ -96,6 +96,7 @@
     <string name="address_note_helper">Contoh: Pagar rumah kuning</string>
 
     <string name="register">Daftar</string>
+    <string name="register_email_helper">Contoh: email@example.com</string>
     <string name="register_header">Selamat datang di Oleb Sai!</string>
     <string name="register_desc">Hai, nampaknya kamu pengguna baru. Kamu dapat menggunakan aplikasi setelah mendaftar.</string>
     <string name="register_phone_helper">Contoh: 082123456789</string>
