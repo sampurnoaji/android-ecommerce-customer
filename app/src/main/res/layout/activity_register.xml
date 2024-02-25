@@ -211,6 +211,7 @@
                     android:digits="1234567890"
                     android:hint="@string/address_postal_code"
                     android:inputType="number"
+                    android:maxLength="5"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
